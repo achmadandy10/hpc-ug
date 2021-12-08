@@ -129,11 +129,11 @@ export const AppStyle = createGlobalStyle`
     ::-webkit-scrollbar {
         width: .50rem;
         background-color: var(--body-color);
-        border-radius: .5rem;
+        border-radius: 3px;
     }
 
     ::-webkit-scrollbar-thumb {
         background-color: var(--first-color);
-        border-radius: .5rem;
+        border-radius: 3px;
     }
 `
