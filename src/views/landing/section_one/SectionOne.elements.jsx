@@ -7,8 +7,8 @@ export const SectionOneContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 50px;
-    gap: 50px;
+    padding: 10px 80px;
+    gap: 20px;
 `
 
 export const SectionOneContentLeft = styled.div`
@@ -38,7 +38,7 @@ export const SectionOneButtonContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 10px;
 `
 
 export const SectionOneTitleFeature = styled.h4`

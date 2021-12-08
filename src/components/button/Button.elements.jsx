@@ -4,17 +4,32 @@ import styled from "styled-components";
 export const ButtonLinkContainer = styled(Link)`
     color: #FFFFFF;
     padding: 10px 24px;
-    border-radius: 8px;
-    height: ${({height}) => height ? `${height}px` : 0 };
-    width: ${({width}) => width ? `${width}px` : 0 };
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
-    ${({bgColor}) => {
-        if (bgColor === "transparent") {
+    ${({height}) => {
+        if (height) {
+            return `height: ${height}px;`
+        }
+    }}
+
+    ${({width}) => {
+        if (width) {
+            return `width: ${width}px;`
+        }
+    }}
+    
+    ${({type_button}) => {
+        if (type_button === "transparent") {
             return `
                 background: transparent;
+                color: var(--first-color);
             `
-        } else if (bgColor === "border") {
+        } else if (type_button === "border") {
             return `
+                color: var(--first-color);
                 border: 1px solid var(--first-color);
                 background: transparent;
             `

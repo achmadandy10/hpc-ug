@@ -189,14 +189,6 @@ export const NavbarLinkContainer = styled.div`
         flex-direction: column;
         transition: .1s ease-in-out;
         width: 100%;
-
-        &:hover {
-            background: var(--first-color);
-
-            & ${ NavbarLinkText } {
-                color: #FFFFFF;
-            }
-        }
     }
 
     &:hover ${ NavbarLinkVerticalPipe } {
@@ -244,6 +236,10 @@ export const NavbarLinkSubitem = styled(Link)`
 
     &:first-of-type {
         margin-top: 16px;
+        
+        @media only Screen and (max-width: 768px) {
+            margin-top: 0;
+        }
     }
 
     &:hover {
@@ -290,6 +286,32 @@ export const NavbarTopRight = styled.div`
     }
 `
 
+export const NavbarMenu = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    @media only Screen and (max-width: 768px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+`
+
+export const NavbarMenuContainer = styled.div`
+    background: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 20px;
+
+    @media only Screen and (max-width: 768px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+    }
+`
+
 export const NavbarContainer = styled.div`
     position: sticky;
     top: 0;
@@ -300,6 +322,30 @@ export const NavbarContainer = styled.div`
     backdrop-filter: saturate(180%) blur(20px);
     margin-bottom: 32px;
     padding: 11px 2% 11px 2%;
+
+    &.scroll {
+        border-bottom: 1px solid rgb(214, 214, 214);
+        
+        @media only Screen and (max-width: 768px) {
+            flex-direction: row;
+
+            & ${NavbarMenuContainer} {
+                align-items: flex-end;
+                justify-content: flex-end;
+            }
+
+            & ${NavbarMenu} {
+                display: none;
+            }
+        }
+
+    }
+
+    @media only Screen and (max-width: 768px) {
+        padding-left: 15px;
+        padding-right: 15px;
+        flex-direction: column;
+    }
 `
 
 export const NavbarTitle = styled(Link)`
@@ -308,25 +354,19 @@ export const NavbarTitle = styled(Link)`
     font-size: var(--h2-font-size);
     font-weight: var(--font-semi-bold);
     line-height: 50px;
-`
 
-export const NavbarMenuContainer = styled.div`
-    background: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
-`
-
-export const NavbarMenu = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px
+    @media only Screen and (max-width: 768px) {
+        line-height: 40px;
+    }
 `
 
 export const NavbarMenuLink = styled(Link)`
     color: var(--title-color);
     height: 50px;
     line-height: 50px;
+
+    @media only Screen and (max-width: 768px) {
+        height: 40px;
+        line-height: 40px;
+    }
 `

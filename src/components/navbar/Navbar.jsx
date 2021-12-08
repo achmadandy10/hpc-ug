@@ -1,6 +1,6 @@
 import { NavbarLink, NavbarLinkContainer, NavbarLinkSubitem, NavbarLinkSubitemBorderSlider, NavbarLinkSubitemContainer, NavbarLinkSubitemDescription, NavbarLinkSubitemImg, NavbarLinkSubitemLeft, NavbarLinkSubitemRight, NavbarLinkSubitemTitle, NavbarLinkText, NavbarLinkVerticalPipe, NavbarLogo, NavbarLogoContainer, NavbarTopContainer, NavbarTopLeft, NavbarTopHamburgerBottom, NavbarTopHamburgerContainer, NavbarTopHamburgerMiddle, NavbarTopHamburgerTop, NavbarTopRight, NavbarContainer, NavbarTitle, NavbarMenu, NavbarMenuLink, NavbarMenuContainer } from "./Navbar.elements"
 import Logo from '../../images/logo.png'
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { ButtonLink } from "../button/Button";
 
 export const NavbarTop = () => {
@@ -129,8 +129,20 @@ export const NavbarTop = () => {
 }
 
 const Navbar = () => {
+    const [scroll, setScroll]= useState(false)
+
+    const changeScroll = () => {
+        if (window.scrollY >= 80) {
+            setScroll(true)
+        } else {
+            setScroll(false)
+        }
+    }
+
+    window.addEventListener('scroll', changeScroll)
+
     return (
-        <NavbarContainer>
+        <NavbarContainer className={ scroll ? "scroll" : "" }>
             <NavbarTitle to="/">HPC Gunadarma</NavbarTitle>
 
             <NavbarMenuContainer>

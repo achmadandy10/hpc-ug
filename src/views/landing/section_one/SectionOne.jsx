@@ -21,8 +21,8 @@ const SectionOne = () => {
                 </SectionOneDescription>
                 
                 <SectionOneButtonContainer>
-                    <ButtonLink to="/masuk">Masuk</ButtonLink>
-                    <ButtonLink to="/daftar">Daftar</ButtonLink>
+                    <ButtonLink to="/masuk" width={ 150 }>Masuk</ButtonLink>
+                    <ButtonLink to="/daftar" btnType="border" width={ 150 }>Daftar</ButtonLink>
                 </SectionOneButtonContainer>
                 
                 <SectionOneTitleFeature>Fitur - Fitur</SectionOneTitleFeature>
