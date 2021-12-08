@@ -1,9 +1,12 @@
+import withReveal from 'react-reveal/withReveal'
+import Fade from 'react-reveal/Fade'
 import styled from "styled-components";
 
 export const SectionTwoContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10px 80px;
+    overflow: hidden;
 
     @media only Screen and (max-width: 560px) {
         padding-left: 20px;
@@ -11,16 +14,16 @@ export const SectionTwoContainer = styled.div`
     }
 `
 
-export const SectionTwoInfoContainer = styled.div`
+export const SectionTwoInfoContainer = withReveal(styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 100px 0;
+    margin-bottom: 100px;
     @media only Screen and (max-width: 560px) {
-        padding: 50px 0;
+        margin-bottom: 50px;
     }
-`
+`, <Fade bottom/>)
 
 export const SectionTwoInfoTitle = styled.h2`
     font-size: var(--h1-font-size);
@@ -52,12 +55,12 @@ export const SectionTwoFeatureContainer = styled.div`
     }
 `
 
-export const SectionTwoLeft = styled.div`
+export const SectionTwoLeft = withReveal(styled.div`
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-`
+`, <Fade top/>)
 
 export const SectionTwoLeftLabel = styled.span`
     color: var(--first-color);
@@ -105,22 +108,19 @@ export const SectionTwoRight = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2px;
-    align-items: center;
-    justify-content: center;
 `
 
-export const SectionTwoRightData = styled.div`
+export const SectionTwoRightData = withReveal(styled.div`
     background-color: #F9F9F9F9;
     padding: 0 20px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-
     @media only Screen and (max-width: 768px) {
         height: 100px;
     }
-`
+`, <Fade top/>)
 
 export const SectionTwoRightDataImg = styled.img`
     width: 200px;

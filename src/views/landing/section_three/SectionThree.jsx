@@ -1,14 +1,39 @@
 import { SectionThreeContainer, SectionThreeData, SectionThreeDataContainer, SectionThreeDataDescription, SectionThreeDataTitle, SectionThreeImg, SectionThreeLabel, SectionThreeLeft, SectionThreeRight, SectionThreeTitle } from "./SectionThree.elements"
 import Chart from '../../../images/chart.svg' 
+import { useEffect, useState } from "react"
 
 const SectionThree = () => {
+    const [show, setShow] = useState({
+        left: false,
+        right: false,
+    })
+
+    
+    useEffect(() => {
+        const showElement = () => {
+            if (window.scrollY >= 350) {
+                setShow({ 
+                    left: true, 
+                    right: true 
+                })
+            } else {
+                setShow({ 
+                    left: false, 
+                    right: false, 
+                })
+            }
+        }
+        window.addEventListener('scroll', showElement)
+        showElement()
+    }, [])
+
     return (
         <SectionThreeContainer>
-            <SectionThreeLeft>
+            <SectionThreeLeft when={ show.left }>
                 <SectionThreeImg src={ Chart }/>
             </SectionThreeLeft>
         
-            <SectionThreeRight>
+            <SectionThreeRight when={ show.right }>
                 <SectionThreeLabel>Label</SectionThreeLabel>
                 <SectionThreeTitle>Biaya komputasi yang lebih rendah, tanpa komitmen</SectionThreeTitle>
 

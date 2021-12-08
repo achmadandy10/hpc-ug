@@ -9,6 +9,7 @@ export const SectionOneContainer = styled.div`
     justify-content: center;
     padding: 10px 80px;
     gap: 20px;
+    margin-bottom: 100px;
 
     @media only Screen and (max-width: 768px) {
         flex-direction: column;

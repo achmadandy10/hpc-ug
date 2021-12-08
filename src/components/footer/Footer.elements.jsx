@@ -53,3 +53,13 @@ export const FooterSocial = styled.div`
     gap: 20px;
     color: var(--title-color);
 `
+
+export const CopyRightContainer = styled.div`
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    padding: 20px;
+`

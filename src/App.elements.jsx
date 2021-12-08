@@ -100,7 +100,7 @@ export const AppStyle = createGlobalStyle`
         font-size: var(--normal-font-size);
         background-color: var(--body-color);
         color: var(--text-color);
-        transition: all .3s linear;
+        /* transition: all .3s linear; */
     }
 
     h1, h2, h3, h4 {

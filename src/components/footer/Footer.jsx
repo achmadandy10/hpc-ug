@@ -1,5 +1,13 @@
-import { FooterContainer, FooterCopyRight, FooterInfo, FooterLink, FooterSocial } from "./Footer.elements"
+import { CopyRightContainer, FooterContainer, FooterCopyRight, FooterInfo, FooterLink, FooterSocial } from "./Footer.elements"
 import { FaFacebook, FaTwitter, FaGithub } from 'react-icons/fa'
+
+export const CopyRight = () => {
+    return (
+        <CopyRightContainer>
+            &copy; 2021 Universitas Gunadarma
+        </CopyRightContainer>
+    )
+}
 
 const Footer = () => {
     return (

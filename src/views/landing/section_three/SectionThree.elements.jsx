@@ -1,3 +1,5 @@
+import withReveal from 'react-reveal/withReveal'
+import Fade from 'react-reveal/Fade'
 import styled from "styled-components";
 
 export const SectionThreeContainer = styled.div`
@@ -8,6 +10,7 @@ export const SectionThreeContainer = styled.div`
     align-items: center;
     padding: 10px 80px;
     margin-top: 100px;
+    overflow: hidden;
 
     @media only Screen and (max-width: 768px) {
         padding-left: 20px;
@@ -18,23 +21,23 @@ export const SectionThreeContainer = styled.div`
     }
 `
 
-export const SectionThreeLeft = styled.div`
+export const SectionThreeLeft = withReveal(styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-`
+`, <Fade left/>)
 
 export const SectionThreeImg = styled.img`
     width: 100%;
     height: 100%;
 `
 
-export const SectionThreeRight = styled.div`
+export const SectionThreeRight = withReveal(styled.div`
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-`
+`, <Fade right/>)
 
 export const SectionThreeLabel = styled.span`
     color: var(--first-color);

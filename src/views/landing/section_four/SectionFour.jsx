@@ -1,10 +1,35 @@
 import { SectionFourContainer, SectionFourData, SectionFourDataContainer, SectionFourDataDescription, SectionFourDataTitle, SectionFourImg, SectionFourLabel, SectionFourLeft, SectionFourRight, SectionFourTitle } from "./SectionFour.elements"
 import Flow from '../../../images/flow.svg'
+import { useEffect, useState } from "react"
 
 const SectionFour = () => {
+    const [show, setShow] = useState({
+        left: false,
+        right: false,
+    })
+
+    
+    useEffect(() => {
+        const showElement = () => {
+            if (window.scrollY >= 450) {
+                setShow({ 
+                    left: true, 
+                    right: true 
+                })
+            } else {
+                setShow({ 
+                    left: false, 
+                    right: false, 
+                })
+            }
+        }
+        window.addEventListener('scroll', showElement)
+        showElement()
+    }, [])
+
     return (
         <SectionFourContainer>
-            <SectionFourLeft>
+            <SectionFourLeft when={ show.left }>
                 <SectionFourLabel>Meningkatkan</SectionFourLabel>
                 <SectionFourTitle>Skala infrastruktur komputasi GPU yang mulus</SectionFourTitle>
 
@@ -24,7 +49,7 @@ const SectionFour = () => {
                 </SectionFourDataContainer>
             </SectionFourLeft>
 
-            <SectionFourRight>
+            <SectionFourRight when={ show.right }>
                 <SectionFourImg src={ Flow }/>
             </SectionFourRight>
         </SectionFourContainer>

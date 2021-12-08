@@ -1,3 +1,5 @@
+import withReveal from 'react-reveal/withReveal'
+import Fade from 'react-reveal/Fade'
 import styled from "styled-components";
 
 export const SectionFourContainer = styled.div`
@@ -9,6 +11,7 @@ export const SectionFourContainer = styled.div`
     padding: 10px 80px;
     margin-top: 100px;
     margin-bottom: 100px;
+    overflow: hidden;
     @media only Screen and (max-width: 768px) {
         padding-left: 20px;
         padding-right: 20px;
@@ -19,23 +22,23 @@ export const SectionFourContainer = styled.div`
     }
 `
 
-export const SectionFourRight = styled.div`
+export const SectionFourRight = withReveal(styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-`
+`, <Fade bottom/>)
 
 export const SectionFourImg = styled.img`
     width: 100%;
     height: 100%;
 `
 
-export const SectionFourLeft = styled.div`
+export const SectionFourLeft = withReveal(styled.div`
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-`
+`, <Fade bottom/>)
 
 export const SectionFourLabel = styled.span`
     color: var(--first-color);

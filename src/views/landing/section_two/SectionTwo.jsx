@@ -4,17 +4,52 @@ import Jupyter from '../../../images/jupyter-color-lockup.svg'
 import PyTorch from '../../../images/pytorch-color-lockup.svg'
 import Keras from '../../../images/keras-color-lockup.svg'
 import Ubuntu from '../../../images/ubuntu-color-lockup.svg'
+import { useEffect, useState } from "react"
 
 const SectionTwo = () => {
+    const [show, setShow] = useState({
+        info: false,
+        left: false,
+        right: false,
+    })
+
+    
+    useEffect(() => {
+        const showElement = () => {
+            if (window.scrollY >= 200) {
+                setShow({ info: true })
+            } else {
+                setShow({ 
+                    info: false,
+                })
+            }
+
+            if (window.scrollY >= 250) {
+                setShow({ 
+                    left: true, 
+                    right: true 
+                })
+            } else {
+                setShow({ 
+                    left: false, 
+                    right: false, 
+                })
+            }
+        }
+        window.addEventListener('scroll', showElement)
+        showElement()
+    }, [])
+
+
     return (
-        <SectionTwoContainer>
+        <SectionTwoContainer when={ show.info }>
             <SectionTwoInfoContainer>
                 <SectionTwoInfoTitle>Mendukung penelitian di setiap tahap</SectionTwoInfoTitle>
                 <SectionTwoInfoDescription>Mulai atau tingkatkan proyek Deep Learning Anda dengan Lambda Cloud. Mulai dengan cepat, hemat biaya komputasi, dan skalakan ke ratusan GPU dengan mudah.</SectionTwoInfoDescription>
             </SectionTwoInfoContainer>
 
             <SectionTwoFeatureContainer>
-                <SectionTwoLeft>
+                <SectionTwoLeft when={ show.left }>
                     <SectionTwoLeftLabel>Temukan Lebih Bayak</SectionTwoLeftLabel>
                     <SectionTwoLeftTitle>Mulai model pelatihan segera</SectionTwoLeftTitle>
                 
@@ -34,7 +69,7 @@ const SectionTwo = () => {
                     </SectionTwoLeftDataContainer>
                 </SectionTwoLeft>
 
-                <SectionTwoRight>
+                <SectionTwoRight when={ show.right }>
                     <SectionTwoRightData>
                         <SectionTwoRightDataImg src={ Tensor }/>
                     </SectionTwoRightData>
