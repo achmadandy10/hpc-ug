@@ -4,6 +4,11 @@ export const SectionTwoContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10px 80px;
+
+    @media only Screen and (max-width: 560px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 `
 
 export const SectionTwoInfoContainer = styled.div`
@@ -12,6 +17,9 @@ export const SectionTwoInfoContainer = styled.div`
     justify-content: center;
     flex-direction: column;
     padding: 100px 0;
+    @media only Screen and (max-width: 560px) {
+        padding: 50px 0;
+    }
 `
 
 export const SectionTwoInfoTitle = styled.h2`
@@ -27,12 +35,21 @@ export const SectionTwoInfoDescription = styled.p`
     text-align: center;
     margin-left: 200px;
     margin-right: 200px;
+
+    @media only Screen and (max-width: 768px) {
+        margin: 0;
+    }
 `
 
 export const SectionTwoFeatureContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
+
+    @media only Screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+    }
 `
 
 export const SectionTwoLeft = styled.div`
@@ -99,6 +116,10 @@ export const SectionTwoRightData = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media only Screen and (max-width: 768px) {
+        height: 100px;
+    }
 `
 
 export const SectionTwoRightDataImg = styled.img`

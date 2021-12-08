@@ -152,7 +152,7 @@ const Navbar = () => {
                     <NavbarMenuLink to="/">View 3</NavbarMenuLink>
                 </NavbarMenu>
 
-                <ButtonLink to="/">Daftar</ButtonLink>
+                <ButtonLink to="/daftar">Daftar</ButtonLink>
             </NavbarMenuContainer>
         </NavbarContainer>
     )

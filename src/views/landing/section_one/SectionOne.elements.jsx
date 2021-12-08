@@ -9,6 +9,12 @@ export const SectionOneContainer = styled.div`
     justify-content: center;
     padding: 10px 80px;
     gap: 20px;
+
+    @media only Screen and (max-width: 768px) {
+        flex-direction: column;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 `
 
 export const SectionOneContentLeft = styled.div`
@@ -39,6 +45,16 @@ export const SectionOneButtonContainer = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
+
+    @media only Screen and (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%; 
+
+        & a {
+            width: auto;
+        }
+    }
 `
 
 export const SectionOneTitleFeature = styled.h4`
@@ -46,6 +62,11 @@ export const SectionOneTitleFeature = styled.h4`
     font-weight: var(--font-semi-bold);
     text-transform: uppercase;
     color: var(--text-color);
+
+    @media only Screen and (max-width: 768px) {
+        display: flex;
+        margin: auto;
+    }
 `
 
 export const SectionOneImgFeatureContainer = styled.div`

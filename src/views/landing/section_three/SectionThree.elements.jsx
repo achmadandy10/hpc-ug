@@ -8,6 +8,14 @@ export const SectionThreeContainer = styled.div`
     align-items: center;
     padding: 10px 80px;
     margin-top: 100px;
+
+    @media only Screen and (max-width: 768px) {
+        padding-left: 20px;
+        padding-right: 20px;
+        display: flex;
+        flex-direction: column-reverse;
+        margin-top: 20px;
+    }
 `
 
 export const SectionThreeLeft = styled.div`

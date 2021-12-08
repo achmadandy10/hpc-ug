@@ -12,8 +12,7 @@ const SectionOne = () => {
             <SectionOneContentLeft>
                 <SectionOneTitle>
                     Pengembangan DGX 
-                    <br/>
-                    <SectionOneTitleColor>Universitas Gunadarma</SectionOneTitleColor>
+                    <SectionOneTitleColor> Universitas Gunadarma</SectionOneTitleColor>
                 </SectionOneTitle>
 
                 <SectionOneDescription>
