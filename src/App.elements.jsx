@@ -9,13 +9,14 @@ export const AppStyle = createGlobalStyle`
 
         /* Colors */
         --first-color: #5B3A89;
-        --first-color-second: #5B3A89;
-        --first-color-alt: #5B3A89;
-        --first-color-lighter: #5B3A89;
         --title-color: #393939;
         --text-color: #707070;
         --text-color-light: #A6A6A6;
         --body-color: #FFFFFF;
+        --info-color: #36ACC1;
+        --success-color: #52AF50;
+        --warning-color: #F9982D;
+        --danger-color: #F34636;
         --container-color: #FFF;
         --custom-color-1: rgb(112, 203, 126);
         --rgba-color-0-5: rgba(0, 0, 0, 0.5);
@@ -76,7 +77,6 @@ export const AppStyle = createGlobalStyle`
     /* Variable Dark Theme */
     body.dark-theme {
         /* Colors */
-        --first-color-second: #5B3A89;
         --title-color: #f1f3f2;
         --text-color: #c7d1cc;
         --body-color: #1d2521;

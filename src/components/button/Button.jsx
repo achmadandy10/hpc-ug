@@ -1,19 +1,17 @@
-import { ButtonLinkContainer } from "./Button.elements"
+import { ButtonLinkContainer, ButtonSubmitContainer } from "./Button.elements"
 
-export const ButtonLink = ({ children, to, height, width, btnType}) => {
+export const ButtonLink = ({ children, to, height, width, fullWidth, btnType}) => {
     return (
-        <>
-            <ButtonLinkContainer to={ to } height={ height } width={ width } type_button={ btnType }>
-                { children }
-            </ButtonLinkContainer>
-        </>
+        <ButtonLinkContainer to={ to } height={ height } width={ width } fullWidth={ fullWidth } type_button={ btnType }>
+            { children }
+        </ButtonLinkContainer>
     )
 }
 
-export const ButtonSubmit = () => {
+export const ButtonSubmit = ({ children, type, onClicked, height, fullWidth, width, btnType }) => {
     return (
-        <>
-            2fsafasfasfas
-        </>
+        <ButtonSubmitContainer type={ type } onClick={ onClicked } height={ height } fullWidth={ fullWidth } width={ width } type_button={ btnType }>
+            { children }
+        </ButtonSubmitContainer>
     )
 }
