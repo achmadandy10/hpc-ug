@@ -87,7 +87,7 @@ export const SectionTwoLeftDataDescription = styled.p`
 export const SectionTwoRight = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
+    gap: 2px;
     align-items: center;
     justify-content: center;
 `
