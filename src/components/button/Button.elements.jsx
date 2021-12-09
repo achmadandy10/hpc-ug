@@ -50,7 +50,7 @@ export const ButtonLinkContainer = styled(Link)`
     }}
 
     &:hover {
-        box-shadow: 1px 1px 10px rgba(152, 0, 172, 0.308)
+        box-shadow: ${({type_button}) => type_button === "transparent" ? "none;" : "1px 1px 10px rgba(152, 0, 172, 0.308);"}
     }
 `
 

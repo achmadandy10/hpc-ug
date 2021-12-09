@@ -45,19 +45,19 @@ export const TextFieldInput = styled.input`
     padding: 1.25rem;
     background: none;
     z-index: 1;
-
+    
     ${({type, icon}) => {
         if (type === "password" || icon) {
             return `
-                padding-right: 2.5rem !important;
+            padding-right: 2.5rem !important;
             `
         }
     }}
 
     ${({error}) => {
         if (error) {
-            return `
-                border-color: var(--danger-color) !important;
+        return `
+            border-color: var(--danger-color) !important;
             `
         }
     }}
