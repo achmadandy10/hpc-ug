@@ -67,6 +67,7 @@ const Register = () => {
                                 fullWidth
                                 height={ 50 }
                                 type="submit"
+                                loading={ true }
                             >
                                 Daftar
                             </ButtonSubmit>
