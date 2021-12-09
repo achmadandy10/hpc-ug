@@ -28,7 +28,7 @@ const Login = () => {
             <LoginContent>
                 <LoginTitle>Selamat Datang!</LoginTitle>
 
-                <LoginForm>
+                <LoginForm onSubmit={ formSubmit }>
                     <TextField
                         label="Alamat Email"
                         id="email"
