@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { AppStyle } from './App.elements';
+import LoadingPage from './components/loading/Loading';
 // import LandingLayout from './layouts/landing_layout/LandingLayout';
 // import Login from './views/auth/login/Login';
 // import Register from './views/auth/register/Register';
@@ -15,7 +16,7 @@ function App() {
       <AppStyle/>
       <Router>
         <Switch>
-          <Suspense fallback={ <div>Loading...</div> }>
+          <Suspense fallback={ <LoadingPage/> }>
             <Route exact path="/" component={ LandingLayout }/>
             
             <Route path="/masuk" component={ Login }/>

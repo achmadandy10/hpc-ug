@@ -15,7 +15,7 @@ const Register = () => {
         password: '',
         confirm_password: '',
         error_list: [],
-    })
+    });
 
     const inputChange = (name, value) => {
         setForm({ ...form, [name]: value })
@@ -84,7 +84,7 @@ const Register = () => {
                                 name="first_name"
                                 onChanged={ inputChange }
                                 required
-                                message={ form.error_list.first_name }
+                                error={ form.error_list.first_name }
                             />
                             <TextField
                                 label="Nama Lengkap"
@@ -92,7 +92,7 @@ const Register = () => {
                                 name="last_name"
                                 onChanged={ inputChange }
                                 required
-                                message={ form.error_list.last_name }
+                                error={ form.error_list.last_name }
                             />
                         </RegisterFieldName>
                         <TextField
