@@ -19,7 +19,7 @@ function App() {
             
             <Route path="/masuk" component={ Login }/>
             <Route path="/daftar" component={ Register }/>
-            <Route exact path="/user_internal" component={ UserLayout }/>
+            <Route exact path="/user/dasbor" component={ UserLayout }/>
           </Suspense>
         </Switch>
       </Router>

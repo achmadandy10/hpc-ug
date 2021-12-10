@@ -1,4 +1,7 @@
-import { UserLayoutContainer } from "./UserLayout.elements"
+import Sidebar from "../../components/sidebar/Sidebar"
+import Topbar from "../../components/topbar/Topbar"
+import Dashboard from "../../views/users/user_internal/dashboard/Dashboard"
+import { UserLayoutContainer, UserLayoutMain } from "./UserLayout.elements"
 
 // const Internal = () => {
 //     return (
@@ -19,7 +22,12 @@ import { UserLayoutContainer } from "./UserLayout.elements"
 const UserLayout = () => {
     return (
         <UserLayoutContainer>
-            test
+            <Topbar/>
+
+            <UserLayoutMain>
+                <Sidebar type="user internal"/>
+                <Dashboard/>
+            </UserLayoutMain>
         </UserLayoutContainer>
     )
 }
