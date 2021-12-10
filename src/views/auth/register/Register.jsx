@@ -79,7 +79,7 @@ const Register = () => {
                     <RegisterForm onSubmit={ formSubmit } method="POST">
                         <RegisterFieldName>
                             <TextField
-                                label="Nama Depan"
+                                label="Nama Depa"
                                 id="first_name"
                                 name="first_name"
                                 onChanged={ inputChange }

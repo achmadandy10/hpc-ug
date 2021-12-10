@@ -1,20 +1,20 @@
 import { UserLayoutContainer } from "./UserLayout.elements"
 
-const Internal = () => {
-    return (
-        <>
-            internal
-        </>
-    )
-}
+// const Internal = () => {
+//     return (
+//         <>
+//             internal
+//         </>
+//     )
+// }
 
-const External = () => {
-    return (
-        <>
-            external
-        </>
-    )
-}
+// const External = () => {
+//     return (
+//         <>
+//             external
+//         </>
+//     )
+// }
 
 const UserLayout = () => {
     return (
