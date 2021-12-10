@@ -2,13 +2,11 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { AppStyle } from './App.elements';
 import LoadingPage from './components/loading/Loading';
-// import LandingLayout from './layouts/landing_layout/LandingLayout';
-// import Login from './views/auth/login/Login';
-// import Register from './views/auth/register/Register';
+import UserLayout from './layouts/user_layout/UserLayout';
+
 const LandingLayout = lazy(() => import('./layouts/landing_layout/LandingLayout'))
 const Login = lazy(() => import('./views/auth/login/Login'))
 const Register = lazy(() => import('./views/auth/register/Register'))
-
 
 function App() {
   return (
@@ -21,6 +19,7 @@ function App() {
             
             <Route path="/masuk" component={ Login }/>
             <Route path="/daftar" component={ Register }/>
+            <Route exact path="/user_internal" component={ UserLayout }/>
           </Suspense>
         </Switch>
       </Router>

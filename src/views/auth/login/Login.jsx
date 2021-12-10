@@ -3,6 +3,7 @@ import { ButtonSubmit } from "../../../components/button/Button"
 import TextField from "../../../components/text_field/TextField"
 import { LoginButtonContainer, LoginButtonLink, LoginContainer, LoginContent, LoginForm, LoginImg, LoginTitle } from "./Login.elements"
 import Logo from '../../../images/logo.png'
+import { CopyRight } from "../../../components/footer/Footer"
 
 const Login = () => {
     const [loading, setLoading] = useState(false)
@@ -61,6 +62,7 @@ const Login = () => {
                     </LoginButtonContainer>
                 </LoginForm>
             </LoginContent>
+            <CopyRight/>
         </LoginContainer>
     )
 }
