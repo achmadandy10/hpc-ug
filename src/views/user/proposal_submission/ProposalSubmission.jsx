@@ -3,7 +3,7 @@ import { ButtonSubmit } from "../../../components/button/Button"
 import Card, { CardHeader } from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import { InputField } from "../../../components/text_field/TextField"
-import { ProposalSubmissionFormContainer } from "./ProposalSubmission.elements"
+import { ProposalSubmissionFormButton, ProposalSubmissionFormContainer } from "./ProposalSubmission.elements"
 
 const ProposalSubmission = () => {
     const [loading, setLoading] = useState(false)
@@ -46,6 +46,7 @@ const ProposalSubmission = () => {
                             name="phone_number"
                             onChanged={ inputChange }
                             type="text"
+                            placeholder="Masukkan Nomor Handphone"
                         />
                         <InputField
                             label="Bidang Penelitian"
@@ -53,6 +54,7 @@ const ProposalSubmission = () => {
                             name="research_field"
                             onChanged={ inputChange }
                             type="text"
+                            placeholder="Masukkan Bidang Penelitian"
                         />
                         <InputField
                             label="Deskripsi Singkat Penelitian"
@@ -60,6 +62,7 @@ const ProposalSubmission = () => {
                             name="short_description"
                             onChanged={ inputChange }
                             type="textarea"
+                            placeholder="Masukkan Deskripsi Singkat Penelitian"
                         />
                         <InputField
                             label="Deskripsi Data"
@@ -67,6 +70,7 @@ const ProposalSubmission = () => {
                             name="data_description"
                             onChanged={ inputChange }
                             type="textarea"
+                            placeholder="Masukkan Deskripsi Data"
                         />
                         <InputField
                             label="Menggunakan Data Bersama"
@@ -82,6 +86,7 @@ const ProposalSubmission = () => {
                             name="activity_plan"
                             onChanged={ inputChange }
                             type="textarea"
+                            placeholder="Masukkan Rencana Kegiatan"
                         />
                         <InputField
                             label="Rencana Output Penelitian"
@@ -89,6 +94,7 @@ const ProposalSubmission = () => {
                             name="output_plan"
                             onChanged={ inputChange }
                             type="textarea"
+                            placeholder="Masukkan Rencana Output Penelitian"
                         />
                         <InputField
                             label="Pengalaman Penelitian Sebelumnya"
@@ -96,6 +102,7 @@ const ProposalSubmission = () => {
                             name="previous_experience"
                             onChanged={ inputChange }
                             type="textarea"
+                            placeholder="Masukkan Pengalaman Penelitian Sebelumnya"
                         />
                         <InputField
                             label="Kebutuhan Fasilitas"
@@ -111,15 +118,17 @@ const ProposalSubmission = () => {
                             onChanged={ inputChange }
                             type="file"
                         />
-                        <ButtonSubmit
-                            fullWidth
-                            height={ 50 }
-                            type="submit"
-                            loading={ loading }
-                            onClicked={ formSubmit }
-                        >
-                            Kirim
-                        </ButtonSubmit>
+                        <ProposalSubmissionFormButton>
+                            <ButtonSubmit
+                                fullWidth
+                                height={ 50 }
+                                type="submit"
+                                loading={ loading }
+                                onClicked={ formSubmit }
+                            >
+                                Kirim
+                            </ButtonSubmit>
+                        </ProposalSubmissionFormButton>
                     </ProposalSubmissionFormContainer>
                 </Card>
             </PageLayout>

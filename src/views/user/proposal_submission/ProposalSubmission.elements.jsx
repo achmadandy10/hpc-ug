@@ -5,3 +5,7 @@ export const ProposalSubmissionFormContainer = styled.div`
     flex-direction: column;
     gap: 20px;
 `
+
+export const ProposalSubmissionFormButton = styled.div`
+    margin-top: 20px;
+`

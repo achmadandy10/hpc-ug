@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { InputFieldCheckbox, InputFieldContainer, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
 
-export const InputField = ({ label, type, id, name, value, readOnly, disabled, required, error, onChanged }) => {
+export const InputField = ({ label, type, id, name, value, readOnly, disabled, required, error, onChanged, placeholder }) => {
     let InputType = ''
 
     const fieldChange = (e) => {
@@ -46,6 +46,7 @@ export const InputField = ({ label, type, id, name, value, readOnly, disabled, r
                 onChange={ fieldChange }
                 readOnly={readOnly}
                 error={error}
+                placeholder={placeholder}
             />
         )
     } else if (type === "select") {
@@ -59,7 +60,7 @@ export const InputField = ({ label, type, id, name, value, readOnly, disabled, r
                 readOnly={readOnly}
                 error={error}
             >
-                <option>test</option>
+                <option selected disabled>-- Pilih --</option>
             </InputFieldSelect>
         )
     } else if (type === "file") {
@@ -133,6 +134,7 @@ export const InputField = ({ label, type, id, name, value, readOnly, disabled, r
                 error={error}
                 required={required}
                 readOnly={readOnly}
+                placeholder={placeholder}
             />
         )
     }
