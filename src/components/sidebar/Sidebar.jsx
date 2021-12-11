@@ -1,52 +1,40 @@
-import { FaBell, FaFileInvoice, FaSignOutAlt, FaTimes, FaUserCog } from "react-icons/fa"
+import { SidebarContainer, SidebarDashboard, SidebarList, SidebarListItem, SidebarLogout, SidebarMenu, SidebarMenuContainer, SidebarTitle } from "./Sidebar.elements"
 import { MdDashboard } from "react-icons/md"
-import { SidebarButtonClose, SidebarContainer, SidebarContent, SidebarLink, SidebarLogoutButton } from "./Sidebar.elements"
-
-const UserInternal = () => {
-    return (
-        <>
-            <SidebarLink activeClassName="active" to="/user/dasbor">
-                <MdDashboard/>
-                Dasbor
-            </SidebarLink>
-            <SidebarLink activeClassName="active" to="/user/pengajuan+usulan">
-                <FaFileInvoice/>
-                Pengajuan Usulan
-            </SidebarLink>
-            <SidebarLink activeClassName="active" to="/user/notifikasi">
-                <FaBell/>
-                Notifikasi
-            </SidebarLink>
-            <SidebarLink activeClassName="active" to="/user/profil">
-                <FaUserCog/>
-                Pengaturan
-            </SidebarLink>
-        </>
-    )
-}
+import { FaFileInvoice, FaSignOutAlt } from "react-icons/fa"
 
 const Sidebar = ({ type }) => {
     if (type === "user internal") {
         return (
             <SidebarContainer>
-                <SidebarButtonClose>
-                    <FaTimes/>
-                </SidebarButtonClose>
+                <div>
+                    <SidebarDashboard activeClassName="active" to="/user/dasbor">
+                        <MdDashboard/>
+                        Dasbor
+                    </SidebarDashboard>
 
-                <SidebarContent>
-                    <UserInternal/>
-                </SidebarContent>
-                
-                <SidebarLogoutButton>
+                    <SidebarMenuContainer>
+                        <SidebarMenu>
+                            <SidebarTitle>Pengajuan</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/user/pengajuan-usulan">
+                                    <FaFileInvoice/>
+                                    Pengajuan Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                    </SidebarMenuContainer>
+                </div>
+
+                <SidebarLogout>
                     <FaSignOutAlt/>
                     Keluar
-                </SidebarLogoutButton>
+                </SidebarLogout>
             </SidebarContainer>
         )
     } else {
         return (
             <>
-                Error: Please choose type sidebar.
+                Error credential.
             </>
         )
     }

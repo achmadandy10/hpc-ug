@@ -2,84 +2,96 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const SidebarContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    height: 83vh;
-`
-
-export const SidebarButtonClose = styled.button`
-    display: none;
-`
-
-export const SidebarContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-`
-
-export const SidebarLink = styled(NavLink)`
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    height: 40px;
+    padding: 20px 0 20px 20px;
     color: var(--title-color);
-    position: relative;
-    transition: all 300ms ease;
-    font-weight: 400;
-    padding: 25px 0;
-
-    &.active {
-        background-color: var(--container-color);
-        color: var(--first-color);
-        border-radius: 3px;
-        box-shadow: var(--bs-smooth);
-
-        &::before {
-            content: "";
-            width: 6px;
-            height: 100%;
-            position: absolute;
-            background-color: var(--first-color);
-            border-top-left-radius: 3px;
-        }
-    }
-
-    & svg {
-        transition: all 300ms ease;
-        font-size: var(--h2-font-size);
-        margin-left: 30px;
-    }
-
-    &:hover {
-        color: var(--first-color);
-
-        & svg {
-            margin-left: 20px;
-        }
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 `
 
-export const SidebarLogoutButton = styled.button`
-    background-color: var(--container-color);
-    padding: 20px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: var(--normal-font-size);
+export const SidebarMenuContainer = styled.div`
+    max-height: 65vh;
+    overflow-y: auto;
+`
+
+export const SidebarDashboard = styled(NavLink)`
+    padding: 10px 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
     color: var(--title-color);
-    transition: all 300ms ease;
-    box-shadow: var(--bs-smooth);
+    font-size: var(--normal-font-size);
+    border-radius: 3px;
+    margin-bottom: 10px;
 
     & svg {
-        font-size: var(--h2-font-size);
+        font-size: var(--h3-font-size);
     }
 
-    &:hover {
-        background-color: var(--first-color);
-        color: var(--container-color)
+    &:hover,
+    &.active {
+        background: var(--first-color);
+        color: var(--container-color);
+    }
+`
+
+export const SidebarMenu = styled.div`
+    margin-bottom: 10px;
+`
+
+export const SidebarTitle = styled.h3`
+    font-size: var(--normal-font-size);
+    color: var(--text-color);
+`
+
+export const SidebarList = styled.ul`
+    list-style: none;
+    padding: 5px 0;
+`
+
+export const SidebarListItem = styled(NavLink)`
+    cursor: pointer;
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 3px;
+    color: var(--title-color);
+    font-size: var(--normal-font-size);
+
+    & svg {
+        font-size: var(--h3-font-size);
+    }
+
+    &:hover,
+    &.active {
+        background: var(--first-color);
+        color: var(--container-color);
+    }
+`
+
+export const SidebarLogout = styled.button`
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--title-color);
+    font-size: var(--normal-font-size);
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+
+    & svg {
+        font-size: var(--h3-font-size);
+    }
+
+    &:hover,
+    &.active {
+        background: var(--first-color);
+        color: var(--container-color);
     }
 `

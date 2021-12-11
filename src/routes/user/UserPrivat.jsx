@@ -7,7 +7,7 @@ import Swal from "sweetalert2"
 import LoadingPage from "../../components/loading/Loading"
 import UserLayout from "../../layouts/user_layout/UserLayout"
 
-const InternalPrivateRoute = ({ ...res }) => {
+const UserPrivateRoute = ({ ...res }) => {
     const history = useHistory()
     const [credential, setCredential] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -33,7 +33,7 @@ const InternalPrivateRoute = ({ ...res }) => {
                 title: err.response.data.message,
             })
 
-            history.push("/login")
+            history.push("/masuk")
         }
         
         return Promise.reject(err)
@@ -41,7 +41,7 @@ const InternalPrivateRoute = ({ ...res }) => {
 
     axios.interceptors.response.use(function (response) {
         return response
-    }), function (err) {
+    }, function (err) {
         if (err.response.status === 403) {
             Swal.fire({
                 icon: "warning",
@@ -61,7 +61,7 @@ const InternalPrivateRoute = ({ ...res }) => {
 
             return Promise.reject(err)
         }
-    }
+    })
 
     if (loading) {
         return (
@@ -76,10 +76,10 @@ const InternalPrivateRoute = ({ ...res }) => {
                 credential ?
                     <UserLayout { ...props } />
                 :
-                    <Redirect to={ { pathname: "/login", state: {from: location} } } />
+                    <Redirect to={ { pathname: "/masuk", state: {from: location} } } />
             }}
         />
     )
 }
 
-export default InternalPrivateRoute
+export default UserPrivateRoute

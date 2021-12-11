@@ -1,50 +1,33 @@
-import { TopbarContainer, TopbarFeatureArea, TopbarFeatureContainer, TopbarFeautureMenu, TopbarFeautureMenuBadge, TopbarLogo, TopbarMenuButton, TopbarProfileContainer, TopbarProfileDropdownContainer, TopbarProfileDropdownItem, TopbarProfileDropdownItemLogout, TopbarProfileImg, TopbarProfileName, TopbarSearchContainer, TopbarSearchInput } from "./Topbar.elements"
+import { TopbarContainer, TopbarFeauture, TopbarIconBag, TopbarIconContainer, TopbarLeft, TopbarLogoContainer, TopbarLogoImg, TopbarLogoTitle, TopbarProfile, TopbarProfileImg, TopbarProfileName, TopbarRight, TopbarWrapper } from "./Topbar.elements"
 import Logo from "../../images/logo.png"
-import { FaBars, FaBell, FaChevronDown, FaSearch, FaSignOutAlt, FaUserCog } from "react-icons/fa"
-import { useRef } from "react"
+import { FaBell, FaChevronDown } from "react-icons/fa"
 
 const Topbar = () => {
-    const profileRef = useRef(false)
-
-    const profileToggle = () => {
-        profileRef.current.classList.toggle("active")
-    }
-
     return (
         <TopbarContainer>
-            <TopbarLogo src={ Logo }/>
+            <TopbarWrapper>
+                <TopbarLeft>
+                    <TopbarLogoContainer>
+                        <TopbarLogoImg src={ Logo }/>
+                        <TopbarLogoTitle>HPC UG</TopbarLogoTitle>
+                    </TopbarLogoContainer>
+                </TopbarLeft>
 
-            <TopbarSearchContainer>
-                <FaSearch/>
-                <TopbarSearchInput type="search" placeholder="Cari..."/>
-            </TopbarSearchContainer>
+                <TopbarRight>
+                    <TopbarFeauture>
+                        <TopbarIconContainer>
+                            <FaBell/>
+                            <TopbarIconBag>+9</TopbarIconBag>
+                        </TopbarIconContainer>
+                    </TopbarFeauture>
 
-            <TopbarFeatureArea>
-                <TopbarFeatureContainer>
-                    <TopbarFeautureMenu>
-                        <FaBell/>
-                        <TopbarFeautureMenuBadge>+9</TopbarFeautureMenuBadge>
-                    </TopbarFeautureMenu>
-                </TopbarFeatureContainer>
-                    
-                <TopbarProfileContainer>
-                    <TopbarProfileName>Achmad Andy</TopbarProfileName>
-                    <TopbarProfileImg src="https://ui-avatars.com/api/?name=User+Interface&background=0D8ABC&color=fff"/>
-                    <FaChevronDown onClick={ profileToggle }/>
-
-                    <TopbarProfileDropdownContainer ref={ profileRef }>
-                        <TopbarProfileDropdownItem to="/user/pengaturan">
-                            <FaUserCog/> Pengaturan
-                        </TopbarProfileDropdownItem>
-                        <TopbarProfileDropdownItemLogout>
-                            <FaSignOutAlt/> Keluar
-                        </TopbarProfileDropdownItemLogout>
-                    </TopbarProfileDropdownContainer>
-                </TopbarProfileContainer>
-                <TopbarMenuButton>
-                    <FaBars/>
-                </TopbarMenuButton>
-            </TopbarFeatureArea>
+                    <TopbarProfile>
+                        <TopbarProfileName>Achmad Andy</TopbarProfileName>
+                        <TopbarProfileImg src="https://ui-avatars.com/api/?name=Achmad+Andybackground=0D8ABC&color=fff"/>
+                        <FaChevronDown/>
+                    </TopbarProfile>
+                </TopbarRight>
+            </TopbarWrapper>
         </TopbarContainer>
     )
 }

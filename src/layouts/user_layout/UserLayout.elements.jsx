@@ -1,14 +1,23 @@
 import styled from "styled-components";
 
 export const UserLayoutContainer = styled.div`
-    min-height: 100vh;
-    background-color: #F2F2F2;
+    background-color: #FFFFFF;
 `
 
 export const UserLayoutMain = styled.main`
-    display: grid;
-    grid-template-columns: 16rem auto;
+    display: flex;
     gap: 20px;
-    width: 96%;
-    margin: 20px auto 40px;
+`
+
+export const UserLayoutSidebar = styled.div`
+    flex: 1;
+    height: calc(100vh - 70px);
+    background: #FFFFFF;
+    position: sticky;
+    top: 70px;
+`
+
+export const UserLayoutPage = styled.div`
+    flex: 4;
+    padding: 20px 20px 20px 0;
 `

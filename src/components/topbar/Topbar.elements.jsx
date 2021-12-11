@@ -1,186 +1,102 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const TopbarContainer = styled.div`
     width: 100%;
+    height: 70px;
     background: var(--container-color);
-    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10001;
+    box-shadow: var(--bs-smooth);
+`
+
+export const TopbarWrapper = styled.div`
+    height: 100%;
+    padding: 0 20px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    position: relative;
-    margin: 0 auto;
-    z-index: 1000;
 `
 
-export const TopbarLogo = styled.img`
-    width: 3rem;
-    height: 3rem;
-`
-
-export const TopbarSearchContainer = styled.div`
-    display: flex;
-    align-items: center;
-    background: #F2F2F2;
-    width: 32vw;
-    border-radius: 3px;
-    gap: 1rem;
-    color: var(--text-color);
-    padding: 10px 20px;
-    position: absolute;
-    left: 15%;
-    color: var(--title-color);
-`
-
-export const TopbarSearchInput = styled.input`
-    color: var(--title-color);
-    background: transparent;
-    outline: none;
-    border: none;
-    width: 100%;
-    font-size: var(--normal-font-size);
-
-    &::placeholder {
-        color: var(--text-color-light);
-    }
-`
-
-export const TopbarFeatureArea = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 4rem;
-`
-
-export const TopbarFeatureContainer = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 20px;
-`
-
-export const TopbarFeautureMenu = styled.div`
+export const TopbarLeft = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`
+
+export const TopbarLogoContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+`
+
+export const TopbarLogoImg = styled.img`
+    width: 50px;
+    height: 50px;
+`
+
+export const TopbarLogoTitle = styled.span`
+    font-size: var(--h3-font-size);
+    font-weight: var(--font-semi-bold);
+    color: var(--title-color);
+`
+
+export const TopbarRight = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+`
+
+export const TopbarFeauture = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+`
+
+export const TopbarIconContainer = styled.div`
     position: relative;
     font-size: var(--h3-font-size);
-    cursor: pointer;
-
-    &:hover {
-        color: var(--first-color);
-    }
+    color: var(--title-color);
 `
 
-export const TopbarFeautureMenuBadge = styled.div`
+export const TopbarIconBag = styled.span`
     position: absolute;
-    top: -12px;
+    top: -10px;
     right: -10px;
-    font-size: var(--smaller-font-size);
     background-color: var(--info-color);
-    width: 20px;
-    height: 20px;
+    color: #FFFFFF;
     border-radius: 50%;
-    color: var(--container-color);
+    width: 18px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 10px;
 `
 
-export const TopbarSeparator = styled.div`
-    border-left: 1px solid var(--title-color);
-    height: 30px;
-`
-
-export const TopbarProfileContainer = styled.div`
+export const TopbarProfile = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    position: relative;
 
     & svg {
+        font-size: var(--smaller-font-size);
+        color: var(--title-color);
         cursor: pointer;
     }
 `
 
+export const TopbarProfileName = styled.span`
+    font-size: var(--normal-font-size);
+    color: var(--title-color);
+`
+
 export const TopbarProfileImg = styled.img`
-    width: 3rem;
-    height: 3rem;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    display: block;
-    overflow: hidden;
-`
-
-export const TopbarProfileName = styled.h5`
-    font-size: var(--normal-font-size);
-    font-weight: 500;
-`
-
-export const TopbarProfileDropdownContainer = styled.div`
-    position: absolute;
-    top: 55px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    background-color: var(--container-color);
-    border-radius: 3px;
-    transition: .2s ease;
-    right: -10px;
-    box-shadow: var(--bs-smooth);
-    gap: 20px;
-    visibility: hidden;
-    opacity: 0;
-
-    &.active {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: -10px;
-        right: 10px;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-bottom: 10px solid var(--first-color);
-    }
-`
-
-export const TopbarProfileDropdownItem = styled(Link)`
-    font-size: var(--normal-font-size);
-    background: transparent;
-    color: var(--title-color);
-    gap: 10px;
-    display: flex;
-    align-items: center; 
-
-    & svg {
-        font-size: var(--h3-font-size);
-    }
-
-    &:hover {
-        color: var(--first-color);
-    }
-`
-
-export const TopbarProfileDropdownItemLogout = styled.button`
-    font-size: var(--normal-font-size);
-    background: transparent;
-    color: var(--title-color);
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    cursor: pointer; 
-
-    & svg {
-        font-size: var(--h3-font-size);
-    }
-
-    &:hover {
-        color: var(--first-color);
-    }
-`
-
-export const TopbarMenuButton = styled.button`
-    display: none;
 `
