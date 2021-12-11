@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { InputFieldCheckbox, InputFieldContainer, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
+import Select from "react-select"
 
-export const InputField = ({ label, type, id, name, value, readOnly, disabled, required, error, onChanged, placeholder }) => {
+export const InputField = ({ label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder }) => {
     let InputType = ''
 
     const fieldChange = (e) => {
@@ -62,7 +63,23 @@ export const InputField = ({ label, type, id, name, value, readOnly, disabled, r
                 defaultValue={""}
             >
                 <option value="" disabled>-- Pilih --</option>
+                {
+                    option.map((data, idx) => {
+                        return (
+                            <option key={idx} value={data.value}>{ data.label }</option>
+                        )
+                    })
+                }
             </InputFieldSelect>
+        )
+    } else if (type === "multi-select") {
+        InputType = (
+            <Select
+                closeMenuOnSelect={false}
+                isMulti
+                options={option}
+                placeholder={placeholder}
+            />
         )
     } else if (type === "file") {
         InputType = (
@@ -85,7 +102,7 @@ export const InputField = ({ label, type, id, name, value, readOnly, disabled, r
         )
     } else if (type === "radio") {
         let Radio = ''
-        Radio = value.map((value, idx) => {
+        Radio = option.map((value, idx) => {
             return (
                 <InputFieldRadioLabel key={idx} htmlFor={id+idx}>
                     <InputFieldRadioHidden 

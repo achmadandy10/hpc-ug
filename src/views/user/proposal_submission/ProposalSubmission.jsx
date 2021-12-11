@@ -20,7 +20,19 @@ const ProposalSubmission = () => {
         proposal_file: '',
     })
 
-    const radioValue = ["Iya", "Tidak"] 
+    const radioOption = ["Iya", "Tidak"] 
+    const selectOption = [
+        { value: "kebutuhan 1", label: "Kebutuhan 1" },
+        { value: "kebutuhan 2", label: "Kebutuhan 2" },
+        { value: "kebutuhan 3", label: "Kebutuhan 3" },
+        { value: "kebutuhan 4", label: "Kebutuhan 4" },
+        { value: "kebutuhan 5", label: "Kebutuhan 5" },
+        { value: "kebutuhan 6", label: "Kebutuhan 6" },
+        { value: "kebutuhan 7", label: "Kebutuhan 7" },
+        { value: "kebutuhan 8", label: "Kebutuhan 8" },
+        { value: "kebutuhan 9", label: "Kebutuhan 9" },
+        { value: "kebutuhan 10", label: "Kebutuhan 10" },
+    ]
 
     const inputChange = (name, value) => {
         setForm({ ...form, [name]: value })
@@ -77,7 +89,7 @@ const ProposalSubmission = () => {
                             name="shared_data"
                             onChanged={ inputChange }
                             type="radio"
-                            value={ radioValue }
+                            option={ radioOption }
                         />
                         <InputField
                             label="Rencana Kegiatan"
@@ -109,6 +121,8 @@ const ProposalSubmission = () => {
                             name="facility_needs"
                             onChanged={ inputChange }
                             type="select"
+                            option={ selectOption }
+                            placeholder={"Pilih Kebutuhan"}
                         />
                         <InputField
                             label="Unggah Proposal"

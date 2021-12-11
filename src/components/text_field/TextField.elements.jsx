@@ -102,6 +102,31 @@ export const InputFieldContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 20px;
+
+    & .css-b62m3t-container {
+        flex: 4;
+        position: relative;
+        left: -6px;
+    }
+    & .css-1s2u09g-control {
+        border-radius: 3px;
+        border-color: var(--text-color);
+    }
+
+    & .css-319lph-ValueContainer {
+        padding: 10px;
+    }
+    & .css-1okebmr-indicatorSeparator {
+        background-color: var(--text-color);
+    }
+    & .css-tlfecz-indicatorContainer {
+        color: var(--text-color);
+    }
+    & .css-1pahdxg-control:hover,
+    & .css-1pahdxg-control {
+        border-color: var(--title-color);
+        box-shadow: 0 0 1px var(--title-color);
+    }
 `
 
 export const InputFieldLabel = styled.label`
@@ -137,6 +162,8 @@ export const InputFieldFileContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
+    left: -6px;
 `
 
 export const InputFieldFileButton = styled.button`
