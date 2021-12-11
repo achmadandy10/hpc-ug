@@ -24,7 +24,6 @@ const ProposalSubmission = () => {
 
     const inputChange = (name, value) => {
         setForm({ ...form, [name]: value })
-        console.log(value);
     }
 
     const formSubmit = (e) => {

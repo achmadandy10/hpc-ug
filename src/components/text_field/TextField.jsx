@@ -59,8 +59,9 @@ export const InputField = ({ label, type, id, name, value, readOnly, disabled, r
                 onChange={ fieldChange }
                 readOnly={readOnly}
                 error={error}
+                defaultValue={""}
             >
-                <option selected disabled>-- Pilih --</option>
+                <option value="" disabled>-- Pilih --</option>
             </InputFieldSelect>
         )
     } else if (type === "file") {
