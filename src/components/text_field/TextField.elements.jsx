@@ -97,3 +97,115 @@ export const TextFieldContainer = styled.div`
         margin-bottom: 0;
     }
 `
+
+export const InputFieldContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 20px;
+`
+
+export const InputFieldLabel = styled.label`
+    flex: 2;
+    color: var(--title-color);
+    font-size: var(--normal-font-size);
+`
+
+export const InputFieldForm = styled.input`
+    font-size: var(--normal-font-size);
+    padding: 10px;
+    flex: 4;
+`
+
+export const InputFieldTextarea = styled.textarea`
+    font-size: var(--normal-font-size);
+    padding: 10px;
+    flex: 4;
+    resize: none;
+    width: 100%;
+    outline: none;
+    max-height: 250px;
+`
+
+export const InputFieldSelect = styled.select`
+    font-size: var(--normal-font-size);
+    padding: 10px;
+    flex: 4;
+`
+
+export const InputFieldFileContainer = styled.div`
+    flex: 4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`
+
+export const InputFieldFileButton = styled.button`
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 10px;
+    font-size: var(--normal-font-size);
+    background: var(--first-color);
+
+    &:hover {
+        box-shadow: 1px 1px 10px rgba(152, 0, 172, 0.308);
+    }
+`
+
+export const InputFieldFileText = styled.span`
+    font-size: var(--normal-font-size);
+    color: var(--title-color);
+`
+
+export const InputFieldRadioContainer = styled.div`
+    flex: 4;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+`
+
+export const InputFieldRadioLabel = styled.label`
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+`
+
+export const InputFieldRadio = styled.div`
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--title-color);
+    border-radius: 50%;
+    margin-right: 10px;
+    box-sizing: border-box;
+    padding: 2px;
+
+    &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        display: block;
+        background: var(--first-color);
+        border-radius: 50%;
+        transform: scale(0);
+        transition: all .3s ease;
+    }
+`
+
+export const InputFieldRadioHidden = styled.input`
+    display: none;
+
+    &:checked + ${InputFieldRadio}::after {
+        transform: scale(1);
+    }
+`
+
+export const InputFieldCheckbox = styled.input`
+    font-size: var(--normal-font-size);
+    padding: 10px;
+    flex: 4;
+`
