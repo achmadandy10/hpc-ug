@@ -6,7 +6,7 @@ export const TopbarContainer = styled.div`
     background: var(--container-color);
     position: sticky;
     top: 0;
-    z-index: 10001;
+    z-index: 1000;
     box-shadow: var(--bs-smooth);
 `
 

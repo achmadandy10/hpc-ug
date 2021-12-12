@@ -1,4 +1,4 @@
-import { ButtonLinkContainer, ButtonSubmitContainer } from "./Button.elements"
+import { ButtonIconLinkContainer, ButtonLinkContainer, ButtonSubmitContainer } from "./Button.elements"
 import Loader from "react-loader-spinner";
 
 export const ButtonLink = ({ children, to, height, width, fullWidth, btnType}) => {
@@ -24,5 +24,13 @@ export const ButtonSubmit = ({ children, type, onClicked, height, fullWidth, wid
                     children
             }
         </ButtonSubmitContainer>
+    )
+}
+
+export const ButtonIconLink = ({ children }) => {
+    return (
+        <ButtonIconLinkContainer>
+            { children }
+        </ButtonIconLinkContainer>
     )
 }

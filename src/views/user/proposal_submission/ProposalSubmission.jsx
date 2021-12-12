@@ -1,12 +1,23 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ButtonSubmit } from "../../../components/button/Button"
 import Card, { CardHeader } from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import { InputField } from "../../../components/text_field/TextField"
+import { Facility } from "../../../Dummy"
 import { ProposalSubmissionFormButton, ProposalSubmissionFormContainer } from "./ProposalSubmission.elements"
 
 const ProposalSubmission = () => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState({
+        getFacility: true,
+        storeForm: false,
+    })
+    const [facility, setFacility] = useState(null)
+
+    useEffect(() => {
+        setFacility(Facility.facility)
+        setLoading({ getFacility: false })
+    }, [])
+
     const [form, setForm] = useState({
         phone_number: '',
         research_field: '',
@@ -20,19 +31,7 @@ const ProposalSubmission = () => {
         proposal_file: '',
     })
 
-    const radioOption = ["Iya", "Tidak"] 
-    const selectOption = [
-        { value: "kebutuhan 1", label: "Kebutuhan 1" },
-        { value: "kebutuhan 2", label: "Kebutuhan 2" },
-        { value: "kebutuhan 3", label: "Kebutuhan 3" },
-        { value: "kebutuhan 4", label: "Kebutuhan 4" },
-        { value: "kebutuhan 5", label: "Kebutuhan 5" },
-        { value: "kebutuhan 6", label: "Kebutuhan 6" },
-        { value: "kebutuhan 7", label: "Kebutuhan 7" },
-        { value: "kebutuhan 8", label: "Kebutuhan 8" },
-        { value: "kebutuhan 9", label: "Kebutuhan 9" },
-        { value: "kebutuhan 10", label: "Kebutuhan 10" },
-    ]
+    const radioOption = ["Iya", "Tidak"]
 
     const inputChange = (name, value) => {
         setForm({ ...form, [name]: value })
@@ -40,7 +39,7 @@ const ProposalSubmission = () => {
 
     const formSubmit = (e) => {
         e.preventDefault()
-        setLoading(true)
+        setLoading({ storeForm: true })
     }
 
     return (
@@ -121,8 +120,9 @@ const ProposalSubmission = () => {
                             name="facility_needs"
                             onChanged={ inputChange }
                             type="select"
-                            option={ selectOption }
+                            option={ facility }
                             placeholder={"Pilih Kebutuhan"}
+                            isLoading={ loading.getFacility }
                         />
                         <InputField
                             label="Unggah Proposal"
@@ -136,7 +136,7 @@ const ProposalSubmission = () => {
                                 fullWidth
                                 height={ 50 }
                                 type="submit"
-                                loading={ loading }
+                                loading={ loading.storeForm }
                                 onClicked={ formSubmit }
                             >
                                 Kirim

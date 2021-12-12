@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { InputFieldCheckbox, InputFieldContainer, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
 import Select from "react-select"
 
-export const InputField = ({ label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder }) => {
+export const InputField = ({ label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
     let InputType = ''
 
     const fieldChange = (e) => {
@@ -62,13 +62,20 @@ export const InputField = ({ label, type, id, name, value, option, readOnly, dis
                 error={error}
                 defaultValue={""}
             >
-                <option value="" disabled>-- Pilih --</option>
                 {
-                    option.map((data, idx) => {
-                        return (
-                            <option key={idx} value={data.value}>{ data.label }</option>
-                        )
-                    })
+                    isLoading ?
+                        <option value="" disabled>Loading...</option>
+                    :
+                        <>
+                            <option value="" disabled>-- Pilih --</option>
+                            {
+                                option.map((data, idx) => {
+                                    return (
+                                        <option key={idx} value={data.value}>{ data.label }</option>
+                                    )
+                                })
+                            }
+                        </>
                 }
             </InputFieldSelect>
         )
@@ -79,6 +86,7 @@ export const InputField = ({ label, type, id, name, value, option, readOnly, dis
                 isMulti
                 options={option}
                 placeholder={placeholder}
+                isLoading={ isLoading }
             />
         )
     } else if (type === "file") {
