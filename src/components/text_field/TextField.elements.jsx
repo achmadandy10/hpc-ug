@@ -100,13 +100,32 @@ export const TextFieldContainer = styled.div`
 
 export const InputFieldContainer = styled.div`
     display: flex;
-    align-items: center;
-    gap: 20px;
+    gap: 10px;
+
+    ${({style_input}) => {
+        if (style_input === "flex") {
+            return `
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            `
+        } else {
+            return `
+                align-items: center;
+            `
+        }
+    }}
+
+    @media only Screen and (max-width: 500px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
     & .css-b62m3t-container {
         flex: 4;
         position: relative;
         left: -6px;
+        width: 100%;
     }
     & .css-1s2u09g-control {
         border-radius: 3px;
@@ -139,6 +158,7 @@ export const InputFieldForm = styled.input`
     font-size: var(--normal-font-size);
     padding: 10px;
     flex: 4;
+    width: 100%;
 `
 
 export const InputFieldTextarea = styled.textarea`
@@ -155,6 +175,7 @@ export const InputFieldSelect = styled.select`
     font-size: var(--normal-font-size);
     padding: 10px;
     flex: 4;
+    width: 100%;
 `
 
 export const InputFieldFileContainer = styled.div`

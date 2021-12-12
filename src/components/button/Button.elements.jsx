@@ -117,47 +117,34 @@ export const ButtonIconLinkContainer = styled(Link)`
     cursor: pointer;
     gap: 10px;
     font-size: var(--normal-font-size);
-    
-    ${({height}) => {
-        if (height) {
-            return `height: ${height}px;`
-        }
-    }}
 
-    ${({width}) => {
-        if (width) {
-            return `width: ${width}px;`
-        }
-    }}
-
-    ${({fullWidth}) => {
-        if (fullWidth) {
-            return `width: 100% !important;`
-        }
-    }}
-    
-    ${({type_button}) => {
-        if (type_button === "transparent") {
-            return `
-                background: transparent;
-                color: var(--first-color);
-            `
-        } else if (type_button === "border") {
-            return `
-                color: var(--first-color);
-                border: 1px solid var(--first-color);
-                background: transparent;
-            `
-        } else {
+    ${({color}) => {
+        if (color === "info") {
             return `
                 background: var(--info-color);
             `
+        } else if (color === "danger") {
+            return `
+                background: var(--danger-color);
+            `
+        } else if (color === "success") {
+            return `
+                background: var(--success-color);
+            `
+        } else if (color === "warning") {
+            return `
+                background: var(--warning-color);
+            `
+        } else if (color === "primary") {
+            return `
+                background: var(--first-color);
+            `
+        } else {
+            return `
+                background: var(--text-color-light);
+            `
         }
     }}
-
-    &:hover {
-        box-shadow: ${({type_button}) => type_button === "transparent" ? "none;" : "1px 1px 10px rgba(152, 0, 172, 0.308);"}
-    }
 `
 
 export const ButtonIconSubmitContainer = styled.button`
@@ -171,44 +158,31 @@ export const ButtonIconSubmitContainer = styled.button`
     gap: 10px;
     font-size: var(--normal-font-size);
     
-    ${({height}) => {
-        if (height) {
-            return `height: ${height}px;`
-        }
-    }}
-
-    ${({width}) => {
-        if (width) {
-            return `width: ${width}px;`
-        }
-    }}
-
-    ${({fullWidth}) => {
-        if (fullWidth) {
-            return `width: 100% !important;`
-        }
-    }}
-    
-    ${({type_button}) => {
-        if (type_button === "transparent") {
+    ${({color}) => {
+        if (color === "info") {
             return `
-                background: transparent;
-                color: var(--first-color);
+                background: var(--info-color);
             `
-        } else if (type_button === "border") {
+        } else if (color === "danger") {
             return `
-                color: var(--first-color);
-                border: 1px solid var(--first-color);
-                background: transparent;
+                background: var(--danger-color);
             `
-        } else {
+        } else if (color === "success") {
+            return `
+                background: var(--success-color);
+            `
+        } else if (color === "warning") {
+            return `
+                background: var(--warning-color);
+            `
+        } else if (color === "primary") {
             return `
                 background: var(--first-color);
             `
+        } else {
+            return `
+                background: var(--text-color-light);
+            `
         }
     }}
-
-    &:hover {
-        box-shadow: 1px 1px 10px rgba(152, 0, 172, 0.308)
-    }
 `

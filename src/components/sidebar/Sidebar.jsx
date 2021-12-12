@@ -1,6 +1,6 @@
 import { SidebarContainer, SidebarDashboard, SidebarList, SidebarListItem, SidebarLogout, SidebarMenu, SidebarMenuContainer, SidebarTitle } from "./Sidebar.elements"
 import { MdDashboard } from "react-icons/md"
-import { FaFileInvoice, FaSignOutAlt } from "react-icons/fa"
+import { FaFileInvoice, FaList, FaPenSquare, FaSignOutAlt, FaTags } from "react-icons/fa"
 import Swal from "sweetalert2"
 import { useHistory } from "react-router-dom"
 
@@ -22,9 +22,8 @@ const Sidebar = ({ type }) => {
                     icon:'success',
                     title: 'Sukses!',
                     text:'Kamu berhasil keluar.',
-                }).then((result) => {
-                    history.push('/masuk')
                 })
+                history.push('/masuk')
             }
         })
     }
@@ -45,6 +44,42 @@ const Sidebar = ({ type }) => {
                                 <SidebarListItem activeClassName="active" to="/user/pengajuan-usulan">
                                     <FaFileInvoice/>
                                     Pengajuan Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                    </SidebarMenuContainer>
+                </div>
+
+                <SidebarLogout onClick={ logoutSubmit }>
+                    <FaSignOutAlt/>
+                    Keluar
+                </SidebarLogout>
+            </SidebarContainer>
+        )
+    } else if(type === "admin") {
+        return (
+            <SidebarContainer>
+                <div>
+                    <SidebarDashboard activeClassName="active" to="/admin/dasbor">
+                        <MdDashboard/>
+                        Dasbor
+                    </SidebarDashboard>
+
+                    <SidebarMenuContainer>
+                        <SidebarMenu>
+                            <SidebarTitle>Konten</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/buat-konten">
+                                    <FaPenSquare/>
+                                    Buat Konten
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-konten">
+                                    <FaList/>
+                                    Daftar Konten
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-kategori">
+                                    <FaTags/>
+                                    Daftar Kategori
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>

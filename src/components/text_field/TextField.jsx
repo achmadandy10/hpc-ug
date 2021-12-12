@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { InputFieldCheckbox, InputFieldContainer, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
 import Select from "react-select"
+import { Editor } from '@tinymce/tinymce-react';
 
-export const InputField = ({ label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
+export const InputField = ({ styled, label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
     let InputType = ''
 
     const fieldChange = (e) => {
@@ -13,14 +14,25 @@ export const InputField = ({ label, type, id, name, value, option, readOnly, dis
         onChanged(fieldName, fieldValue)
     }
 
-    useEffect(() => {
-        const textarea = document.querySelector("textarea")
-        textarea.addEventListener("keyup", e => {
-            textarea.style.height = `auto`
-            let height = e.target.scrollHeight
-            textarea.style.height = `${height}px`
+    const mselectChange = (value) => {
+        const fieldName = name
+        const fieldValue = value.map((data) => {
+            return data.value
         })
-    }, [])
+
+        onChanged(fieldName, fieldValue)
+    }
+
+    useEffect(() => {
+        if (type === "textarea") {
+            const textarea = document.querySelector("textarea")
+            textarea.addEventListener("keyup", e => {
+                textarea.style.height = `auto`
+                let height = e.target.scrollHeight
+                textarea.style.height = `${height}px`
+            })
+        }
+    }, [type])
 
     const chooseFile = () => {
         const realFile = document.getElementById("real-file")
@@ -87,6 +99,7 @@ export const InputField = ({ label, type, id, name, value, option, readOnly, dis
                 options={option}
                 placeholder={placeholder}
                 isLoading={ isLoading }
+                onChange={ mselectChange }
             />
         )
     } else if (type === "file") {
@@ -164,9 +177,8 @@ export const InputField = ({ label, type, id, name, value, option, readOnly, dis
             />
         )
     }
-
     return (
-        <InputFieldContainer>
+        <InputFieldContainer style_input={ styled }>
             <InputFieldLabel htmlFor={id}>{ label }</InputFieldLabel>
             { InputType }
         </InputFieldContainer>
@@ -247,6 +259,66 @@ const TextField = ({ label, type, id, name, value, readOnly, disabled, required,
             </TextFieldContent>
             { error && <TextFieldError>{ error }</TextFieldError>}
         </TextFieldContainer>
+    )
+}
+
+export const TextEditor = ({ value, name, onChanged, message }) => {
+    return (
+        <Editor
+            apiKey='fnabl7d5djugpqwk8afwh93fbc0bfvuqjm81pm6ai3an5xmy'
+            initialValue={ value }
+            onEditorChange={ (value) => onChanged(name, value) }
+            init={{
+                height: 500,
+                selector: 'textarea#open-source-plugins',
+                imagetools_cors_hosts: ['picsum.photos'],
+                menubar: 'file edit view insert format tools table help',
+                plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                toolbar_sticky: true,
+                autosave_ask_before_unload: true,
+                autosave_interval: '30s',
+                autosave_prefix: '{path}{query}-{id}-',
+                autosave_restore_when_empty: false,
+                autosave_retention: '2m',
+                image_advtab: true,
+                image_caption: true,
+                quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+                noneditable_noneditable_class: 'mceNonEditable',
+                toolbar_mode: 'sliding',
+                contextmenu: 'link image imagetools table',
+                media_live_embeds: true,
+                image_title: true,
+                automatic_uploads: true,
+                images_reuse_filename: true,
+                // images_upload_handler: function (blobInfo, success, failure) {
+                //     var xhr, formData;
+                //     xhr = new XMLHttpRequest();
+                //     xhr.withCredentials = false;
+                //     xhr.open('POST', 'link-upload');
+                //     var token = '{{ csrf_token() }}';
+                //     xhr.setRequestHeader("X-CSRF-Token", token);
+                //     xhr.onload = function() {
+                //         var json;
+                //         if (xhr.status !== 200) {
+                //             failure('HTTP Error: ' + xhr.status);
+                //             return;
+                //         }
+                //         json = JSON.parse(xhr.responseText);
+        
+                //         if (!json || typeof json.location !== 'string') {
+                //             failure('Invalid JSON: ' + xhr.responseText);
+                //             return;
+                //         }
+                //         success(json.location);
+                //     };
+                //     formData = new FormData();
+                //     formData.append('file', blobInfo.blob(), blobInfo.filename());
+                //     xhr.send(formData);
+                // },
+            }}
+        />
     )
 }
 

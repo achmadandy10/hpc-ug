@@ -16,3 +16,8 @@ export const PageHeaderContainer = styled.div`
     justify-content: space-between;    
     margin-bottom: 20px;
 `
+
+export const PageHeaderFeature = styled.div`
+    display: flex;
+    gap: 10px;
+`

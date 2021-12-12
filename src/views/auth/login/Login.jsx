@@ -4,8 +4,10 @@ import TextField from "../../../components/text_field/TextField"
 import { LoginButtonContainer, LoginButtonLink, LoginContainer, LoginContent, LoginForm, LoginImg, LoginTitle } from "./Login.elements"
 import Logo from '../../../images/logo.png'
 import { CopyRight } from "../../../components/footer/Footer"
+import { useHistory } from "react-router-dom"
 
 const Login = () => {
+    const history = useHistory()
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
         email: '',
@@ -17,9 +19,15 @@ const Login = () => {
         setForm({ ...form, [name]: value })
     }
 
-    const formSubmit = (e) => {
-        e.preventDefault()
+    const formSubmit = () => {
         setLoading(true)
+        setTimeout(
+            function() {
+                history.push('/user/dasbor')
+            }
+            ,
+            3000
+        );
     }
 
     return (
@@ -29,7 +37,7 @@ const Login = () => {
             <LoginContent>
                 <LoginTitle>Selamat Datang!</LoginTitle>
 
-                <LoginForm onSubmit={ formSubmit }>
+                <LoginForm>
                     <TextField
                         label="Alamat Email"
                         id="email"
@@ -55,6 +63,7 @@ const Login = () => {
                             height={ 50 }
                             type="submit"
                             loading={ loading }
+                            onClicked={ formSubmit }
                         >
                             Masuk
                         </ButtonSubmit>

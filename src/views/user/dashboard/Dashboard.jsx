@@ -32,9 +32,38 @@ const Dashboard = () => {
             field: 'status',
             headerName: 'Status',
             width: 150,
+            valueGetter: (params) => {
+                let newStatus = ''
+                if (params.row.status === "approved") {
+                    newStatus = "Disetujui"
+                } else if (params.row.status === "rejected") {
+                    newStatus = "Ditolak"
+                } else if (params.row.status === "pending") {
+                    newStatus = "Tertunda"
+                } else if (params.row.status === "finished") {
+                    newStatus = "Selesai"
+                }
+
+                return newStatus
+            },
             renderCell: (params) => {
+                let newStatus = ''
+                if (params.row.status === "approved") {
+                    newStatus = "Disetujui"
+                } else if (params.row.status === "rejected") {
+                    newStatus = "Ditolak"
+                } else if (params.row.status === "pending") {
+                    newStatus = "Tertunda"
+                } else if (params.row.status === "finished") {
+                    newStatus = "Selesai"
+                }
+
                 return (
-                    <TableStatus status={ params.row.status }/>
+                    <>
+                        <TableStatus status={ params.row.status }>
+                            { newStatus }
+                        </TableStatus>
+                    </>
                 )
             },
         },
@@ -42,6 +71,10 @@ const Dashboard = () => {
             field: 'created_at',
             headerName: 'Tanggal Pengajuan',
             width: 150,
+            valueGetter: (params) => {
+                const created_at = dateFormat(params.row.created_at, 'dd mmmm yyyy')
+                return created_at
+            },
             renderCell: (params) => {
                 const created_at = dateFormat(params.row.created_at, 'dd mmmm yyyy')
                 return (
@@ -55,10 +88,11 @@ const Dashboard = () => {
             headerName: 'Aksi',
             width: 100,
             disableExport: true,
+            filterable: false,
             renderCell: (params) => {
                 return (
                     <TableAction>
-                        <ButtonIconLink>
+                        <ButtonIconLink to={ "/user/" + params.row.id } color="info">
                             <FaEye/>
                         </ButtonIconLink>
                     </TableAction>

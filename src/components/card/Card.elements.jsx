@@ -5,7 +5,6 @@ export const CardContainer = styled.div`
     box-shadow: var(--bs-smooth);
     padding: 20px;
     border-radius: 3px;
-
 `
 
 export const CardTitle = styled.h2`
@@ -26,6 +25,7 @@ export const CardInfoContainer = styled.div`
     align-items: center;
     justify-content: center;
     gap: 20px;
+    width: 100%;
 `
 
 export const CardInfoIconContainer = styled.div`

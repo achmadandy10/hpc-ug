@@ -1,5 +1,10 @@
 import styled from "styled-components"
 
+export const TableContainer = styled.div`
+    height: 430px;
+    width: 100%;
+`
+
 export const TableActionContainer = styled.div`
     display: flex;
     align-items: center;

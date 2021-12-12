@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
-export const UserLayoutContainer = styled.div`
+export const AdminLayoutContainer = styled.div`
     background-color: #FFFFFF;
 `
 
-export const UserLayoutMain = styled.main`
+export const AdminLayoutMain = styled.main`
     display: flex;
     gap: 20px;
 `
 
-export const UserLayoutSidebar = styled.div`
+export const AdminLayoutSidebar = styled.div`
     flex: 1;
     height: calc(100vh - 70px);
     background: #FFFFFF;
@@ -32,7 +32,7 @@ export const UserLayoutSidebar = styled.div`
     }
 `
 
-export const UserLayoutPage = styled.div`
+export const AdminLayoutPage = styled.div`
     flex: 4;
     padding: 20px 20px 20px 0;
 

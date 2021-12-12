@@ -5,8 +5,10 @@ import TextField from "../../../components/text_field/TextField"
 import { RegisterButtonContainer, RegisterButtonLink, RegisterContainer, RegisterContent, RegisterFieldName, RegisterForm, RegisterLeft, RegisterList, RegisterListContainer, RegisterListData, RegisterListDataContainer, RegisterListDescription, RegisterListIcon, RegisterListImg, RegisterListTitle, RegisterRight, RegisterTitle } from "./Register.elements"
 import Logo from '../../../images/logo.png'
 import { FaCheckCircle } from "react-icons/fa"
+import { useHistory } from "react-router-dom"
 
 const Register = () => {
+    const history = useHistory()
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
         first_name: '',
@@ -21,9 +23,15 @@ const Register = () => {
         setForm({ ...form, [name]: value })
     }
 
-    const formSubmit = (e) => {
-        e.preventDefault()
+    const formSubmit = () => {
         setLoading(true)
+        setTimeout(
+            function() {
+                history.push('/user/dasbor')
+            }
+            ,
+            3000
+        );
     }
 
     return (
@@ -76,7 +84,7 @@ const Register = () => {
                 <RegisterContent>
                     <RegisterTitle>Buat akun HPC anda</RegisterTitle>
                 
-                    <RegisterForm onSubmit={ formSubmit } method="POST">
+                    <RegisterForm>
                         <RegisterFieldName>
                             <TextField
                                 label="Nama Depan"
@@ -128,6 +136,7 @@ const Register = () => {
                                 height={ 50 }
                                 type="submit"
                                 loading={ loading }
+                                onClicked={ formSubmit }
                             >
                                 Daftar
                             </ButtonSubmit>

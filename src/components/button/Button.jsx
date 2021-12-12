@@ -27,9 +27,9 @@ export const ButtonSubmit = ({ children, type, onClicked, height, fullWidth, wid
     )
 }
 
-export const ButtonIconLink = ({ children }) => {
+export const ButtonIconLink = ({ children, to, color }) => {
     return (
-        <ButtonIconLinkContainer>
+        <ButtonIconLinkContainer to={ to } color={ color }>
             { children }
         </ButtonIconLinkContainer>
     )

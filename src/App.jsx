@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { AppStyle } from './App.elements';
 import LoadingPage from './components/loading/Loading';
+import AdminLayout from './layouts/admin_layout/AdminLayout';
 import UserLayout from './layouts/user_layout/UserLayout'
 // import UserPrivateRoute from './routes/user/UserPrivat';
 
@@ -32,7 +33,8 @@ function App() {
               <Route exact path="/" component={ LandingLayout }/>
               <Route path="/masuk" component={ Login }/>
               <Route path="/daftar" component={ Register }/>
-              <Route path="/user" name="user" render={(props) => <UserLayout {...props} />}/>
+              <Route path="/user" name="User" render={(props) => <UserLayout {...props} />}/>
+              <Route path="/admin" name="Admin" render={(props) => <AdminLayout {...props} />}/>
               {/* <UserPrivateRoute path="/user" name="User"/> */}
           </Switch>
         </Suspense>

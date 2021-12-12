@@ -42,3 +42,13 @@ export const ListProposal = {
         },
     ]
 }
+
+export const CategorySelect = {
+    category: [
+        { value: "category 1", label: "kategori 1" },
+        { value: "category 2", label: "kategori 2" },
+        { value: "category 3", label: "kategori 3" },
+        { value: "category 4", label: "kategori 4" },
+        { value: "category 5", label: "kategori 5" },
+    ]
+}

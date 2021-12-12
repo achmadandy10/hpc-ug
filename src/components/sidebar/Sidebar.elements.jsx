@@ -16,7 +16,7 @@ export const SidebarMenuContainer = styled.div`
 `
 
 export const SidebarDashboard = styled(NavLink)`
-    padding: 10px 5px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,14 +53,15 @@ export const SidebarList = styled.ul`
 
 export const SidebarListItem = styled(NavLink)`
     cursor: pointer;
-    padding: 10px 5px;
+    padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
     border-radius: 3px;
     color: var(--title-color);
     font-size: var(--normal-font-size);
+    margin-bottom: 5px;
 
     & svg {
         font-size: var(--h3-font-size);

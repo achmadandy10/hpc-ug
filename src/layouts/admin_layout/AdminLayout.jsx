@@ -1,47 +1,31 @@
 import Sidebar from "../../components/sidebar/Sidebar"
 import Topbar from "../../components/topbar/Topbar"
-import { UserLayoutContainer, UserLayoutMain, UserLayoutPage, UserLayoutSidebar } from "./UserLayout.elements"
+import { AdminLayoutContainer, AdminLayoutMain, AdminLayoutPage, AdminLayoutSidebar } from "./AdminLayout.elements"
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { UserRouter } from "../../routes/user/UserRouter"
+import { AdminRouter } from "../../routes/admin/AdminRouter"
 import { useEffect } from "react"
 
-// const Internal = () => {
-//     return (
-//         <>
-//             internal
-//         </>
-//     )
-// }
-
-// const External = () => {
-//     return (
-//         <>
-//             external
-//         </>
-//     )
-// }
-
-const UserLayout = () => {
+const AdminLayout = () => {
     useEffect(() => {
         const session = () => {
-            sessionStorage.setItem("role", "User")
+            sessionStorage.setItem("role", "Admin")
         }
 
         session()
     }, [])
     return (
-        <UserLayoutContainer>
+        <AdminLayoutContainer>
             <Topbar/>
 
-            <UserLayoutMain>
-                <UserLayoutSidebar id="sidebar">
-                    <Sidebar type="user internal"/>
-                </UserLayoutSidebar>
+            <AdminLayoutMain>
+                <AdminLayoutSidebar id="sidebar">
+                    <Sidebar type="admin"/>
+                </AdminLayoutSidebar>
 
-                <UserLayoutPage>
+                <AdminLayoutPage>
                     <Switch>
                         {
-                            UserRouter.map((route, idx ) => {
+                            AdminRouter.map((route, idx ) => {
                                 return (
                                     route.component && (
                                         <Route
@@ -57,12 +41,12 @@ const UserLayout = () => {
                                 )
                             })
                         }
-                        <Redirect from="/user" to="/user/dasbor"/>
+                        <Redirect from="/admin" to="/admin/dasbor"/>
                     </Switch>
-                </UserLayoutPage>
-            </UserLayoutMain>
-        </UserLayoutContainer>
+                </AdminLayoutPage>
+            </AdminLayoutMain>
+        </AdminLayoutContainer>
     )
 }
 
-export default UserLayout
+export default AdminLayout

@@ -1,10 +1,12 @@
-import { PageContainer, PageHeaderContainer, PageTitle } from "./PageLayout.elements"
+import { PageContainer, PageHeaderContainer, PageHeaderFeature, PageTitle } from "./PageLayout.elements"
 
 export const PageHeader = ({ title, children }) => {
     return (
         <PageHeaderContainer>
             <PageTitle>{ title }</PageTitle>
-            { children }
+            <PageHeaderFeature>
+                { children }
+            </PageHeaderFeature>
         </PageHeaderContainer>
     )
 }

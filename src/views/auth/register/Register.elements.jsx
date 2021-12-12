@@ -94,7 +94,7 @@ export const RegisterTitle = styled.h2`
     color: var(--title-color);
 `
 
-export const RegisterForm = styled.form`
+export const RegisterForm = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
