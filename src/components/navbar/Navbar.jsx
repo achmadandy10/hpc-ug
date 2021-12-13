@@ -2,6 +2,7 @@ import { NavbarLogo, NavbarLogoContainer, NavbarHamburgerBottom, NavbarHamburger
 import Logo from '../../images/logo.png'
 import { useRef, useState } from "react"
 import { ButtonLink } from "../button/Button";
+import { FaChevronDown } from "react-icons/fa"
 
 const Navbar = () => {
     const toggleMenu = useRef(null);
@@ -40,7 +41,7 @@ const Navbar = () => {
                 <NavbarMenu ref={ menu }>
                     <NavbarMenuLink to="/">Berita</NavbarMenuLink>
                     <NavbarMenuLink>
-                        Tentang
+                        Tentang <FaChevronDown/>
                         <NavbarSubmenuLinkContainer>
                             <NavbarSubmenuLink to="/tentang/hpc">
                                 HPC
@@ -54,7 +55,7 @@ const Navbar = () => {
                         </NavbarSubmenuLinkContainer>
                     </NavbarMenuLink>
                     <NavbarMenuLink>
-                        Produk
+                        Produk <FaChevronDown/>
                         <NavbarSubmenuLinkContainer>
                             <NavbarSubmenuLink to="/produk/prototyping">
                                 Prototyping

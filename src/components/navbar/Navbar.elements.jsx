@@ -162,6 +162,9 @@ export const NavbarMenuLink = styled(Link)`
     height: 50px;
     line-height: 50px;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
     @media only Screen and (max-width: 768px) {
         height: 40px;
@@ -176,22 +179,24 @@ export const NavbarMenuLink = styled(Link)`
 
 export const NavbarSubmenuLinkContainer = styled.div`
     position: absolute;
+    top: 50px;
     display: flex;
     flex-direction: column;
     background-color: #FFF;
     border: 1px solid var(--title-color);
-    padding: 5px 20px;
     border-radius: 3px;
     transition: .3s;
     visibility: hidden;
     transform: scale(0);
-    width: auto;
 `
 
 export const NavbarSubmenuLink = styled(Link)`
     color: var(--title-color);
+    line-height: normal;
+    padding: 10px;
 
     &:hover {
-        color: var(--first-color);
+        color: var(--container-color);
+        background-color: var(--first-color);
     }
 `
