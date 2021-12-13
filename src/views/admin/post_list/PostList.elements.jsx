@@ -63,7 +63,7 @@ export const PostListContentCategoryContainer = styled.div`
     gap: 10px;
 `
 
-export const PostListContentCategory = styled(Link)`
+export const PostListContentCategory = styled.div`
     border: 1px solid var(--title-color);
     padding: 3px 12px;
     border-radius: 3px;

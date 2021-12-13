@@ -34,21 +34,27 @@ const SectionThree = () => {
             </SectionThreeLeft>
         
             <SectionThreeRight when={ show.right }>
-                <SectionThreeLabel>Label</SectionThreeLabel>
-                <SectionThreeTitle>Biaya komputasi yang lebih rendah, tanpa komitmen</SectionThreeTitle>
+                <SectionThreeLabel>Keungulan</SectionThreeLabel>
+                <SectionThreeTitle>Biaya komputasi yang lebih rendah</SectionThreeTitle>
 
                 <SectionThreeDataContainer>
                     <SectionThreeData>
-                        <SectionThreeDataTitle>Hemat hingga 50% untuk biaya komputasi</SectionThreeDataTitle>
-                        <SectionThreeDataDescription>Dengan membangun infrastruktur komputasi dalam skala besar untuk persyaratan unik peneliti pembelajaran mendalam, Lambda dapat memberikan penghematan yang signifikan.</SectionThreeDataDescription>
+                        <SectionThreeDataTitle>Hemat 100% untuk partner Universitas Gunadarma</SectionThreeDataTitle>
+                        <SectionThreeDataDescription>
+                            Dengan menggunakan fasilita UG-AI-Coe peneliti dapat menekan biaya yang dikeluarkan untuk pembelian resource, sehingga dana bisa digunakan untuk kebutuhan lain .
+                        </SectionThreeDataDescription>
                     </SectionThreeData>
                     <SectionThreeData>
-                        <SectionThreeDataTitle>Kurangi TCO awan</SectionThreeDataTitle>
-                        <SectionThreeDataDescription>Manfaatkan fleksibilitas penggunaan komputasi awan tanpa membayar mahal dalam harga sesuai permintaan saat beban kerja meningkat pesat.</SectionThreeDataDescription>
+                        <SectionThreeDataTitle>Penggunaan Flexibel</SectionThreeDataTitle>
+                        <SectionThreeDataDescription>
+                            Pengguna dapat menggunakan fasilitas untuk Prototyping, training maupun inference.
+                        </SectionThreeDataDescription>
                     </SectionThreeData>
                     <SectionThreeData>
-                        <SectionThreeDataTitle>Tidak ada komitmen multi-tahun</SectionThreeDataTitle>
-                        <SectionThreeDataDescription>Kami memberikan harga sesuai permintaan pada atau di bawah harga komitmen satu tahun biasa — Anda mendapat manfaat dari biaya yang lebih rendah tanpa mengunci jenis instans tertentu.</SectionThreeDataDescription>
+                        <SectionThreeDataTitle>NVIDIA DGX-A100</SectionThreeDataTitle>
+                        <SectionThreeDataDescription>
+                            Penggunaan Mesin tercepat NVIDIA saat ini, DGX-A100 memberikan garansi performa yang meyakinkan untuk kebutuhan AI, HPC dan Visualisasi.
+                        </SectionThreeDataDescription>
                     </SectionThreeData>
                 </SectionThreeDataContainer>
             </SectionThreeRight>

@@ -9,7 +9,7 @@ export const SectionOneContainer = styled.div`
     justify-content: center;
     padding: 10px 80px;
     gap: 20px;
-    margin-bottom: 100px;
+    height: 90vh;
 
     @media only Screen and (max-width: 768px) {
         flex-direction: column;
@@ -46,6 +46,7 @@ export const SectionOneButtonContainer = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
+    margin-top: 20px;
 
     @media only Screen and (max-width: 768px) {
         flex-direction: column;
@@ -56,37 +57,6 @@ export const SectionOneButtonContainer = styled.div`
             width: auto;
         }
     }
-`
-
-export const SectionOneTitleFeature = styled.h4`
-    font-size: var(--h3-font-size);
-    font-weight: var(--font-semi-bold);
-    text-transform: uppercase;
-    color: var(--text-color);
-
-    @media only Screen and (max-width: 768px) {
-        display: flex;
-        margin: auto;
-    }
-`
-
-export const SectionOneImgFeatureContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 20px;
-`
-
-export const SectionOneImgFeatureContent = styled.div`
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
-export const SectionOneImgFeature = styled.img`
-    width: 100%;
-    height: 100%;
 `
 
 export const SectionOneContentRight = styled.div`

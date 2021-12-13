@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import Card from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import { SearchField } from "../../../components/text_field/TextField"
 import { ListPost } from "../../../Dummy"
 import { PostListContainer, PostListContent, PostListContentBody, PostListContentCategory, PostListContentCategoryContainer, PostListContentContainer, PostListContentImg, PostListContentLeft, PostListContentRight, PostListContentTitle } from "./PostList.elements"
 const PostList = () => {
+    const history = useHistory()
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
     const [search, setSearch] = useState([])
@@ -26,7 +28,7 @@ const PostList = () => {
     } else {
         contentElement = data.map((value, index) => {
             return (
-                <PostListContent key={ index } to={ value.slug }>
+                <PostListContent key={ index } to={ "/admin/konten?slug=" + value.slug }>
                     <PostListContentLeft>
                         <PostListContentImg src={ value.thumbnail }/>
                     </PostListContentLeft>
@@ -38,7 +40,7 @@ const PostList = () => {
                             {
                                 value.category.map((value, index) => {
                                     return (
-                                        <PostListContentCategory to={ value } key={ index }>
+                                        <PostListContentCategory onClick={() => history.push("/admin/konten?kategori=" + value)} key={ index }>
                                             { value }
                                         </PostListContentCategory>
                                     )

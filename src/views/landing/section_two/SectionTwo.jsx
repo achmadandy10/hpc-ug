@@ -45,26 +45,28 @@ const SectionTwo = () => {
         <SectionTwoContainer when={ show.info }>
             <SectionTwoInfoContainer>
                 <SectionTwoInfoTitle>Mendukung penelitian di setiap tahap</SectionTwoInfoTitle>
-                <SectionTwoInfoDescription>Mulai atau tingkatkan proyek Deep Learning Anda dengan Lambda Cloud. Mulai dengan cepat, hemat biaya komputasi, dan skalakan ke ratusan GPU dengan mudah.</SectionTwoInfoDescription>
+                <SectionTwoInfoDescription>
+                    Mulai membangun Kecerdasan Buatan sejak tahap prototyping sampai dengan training dan inference
+                </SectionTwoInfoDescription>
             </SectionTwoInfoContainer>
 
             <SectionTwoFeatureContainer>
                 <SectionTwoLeft when={ show.left }>
-                    <SectionTwoLeftLabel>Temukan Lebih Bayak</SectionTwoLeftLabel>
-                    <SectionTwoLeftTitle>Mulai model pelatihan segera</SectionTwoLeftTitle>
+                    <SectionTwoLeftLabel>Fasilitas</SectionTwoLeftLabel>
+                    <SectionTwoLeftTitle>Memulai Model Pelatihan Segera</SectionTwoLeftTitle>
                 
                     <SectionTwoLeftDataContainer>
                         <SectionTwoLeftData>
-                            <SectionTwoLeftDataTitle>Kerangka kerja utama sudah diinstal sebelumnya</SectionTwoLeftDataTitle>
-                            <SectionTwoLeftDataDescription>Setiap VM telah diinstal sebelumnya dengan versi terbaru Lambda Stack — yang mencakup kerangka kerja pembelajaran mendalam utama dan driver CUDA®.</SectionTwoLeftDataDescription>
+                            <SectionTwoLeftDataTitle>Pre-installed Environtment</SectionTwoLeftDataTitle>
+                            <SectionTwoLeftDataDescription>Setiap environment telah di install sebelum setelah usulan dari pengusul diterima oleh tim approval.</SectionTwoLeftDataDescription>
                         </SectionTwoLeftData>
                         <SectionTwoLeftData>
-                            <SectionTwoLeftDataTitle>Buku catatan Jupyter</SectionTwoLeftDataTitle>
-                            <SectionTwoLeftDataDescription>Dalam hitungan detik, akses lingkungan pengembangan Notebook Jupyter khusus untuk setiap mesin langsung dari dasbor cloud.</SectionTwoLeftDataDescription>
+                            <SectionTwoLeftDataTitle>Juputerlab</SectionTwoLeftDataTitle>
+                            <SectionTwoLeftDataDescription>Setiap Environment yang diusulkan akan memiliki Jupyterlab khusus untuk pengusul dengan resource yang bisa ditentukan sebelumnya.</SectionTwoLeftDataDescription>
                         </SectionTwoLeftData>
                         <SectionTwoLeftData>
-                            <SectionTwoLeftDataTitle>Akses SSH langsung</SectionTwoLeftDataTitle>
-                            <SectionTwoLeftDataDescription>Untuk akses langsung, sambungkan melalui Terminal Web di dasbor atau gunakan SSH langsung dengan salah satu kunci SSH yang Anda sediakan.</SectionTwoLeftDataDescription>
+                            <SectionTwoLeftDataTitle>ClearML</SectionTwoLeftDataTitle>
+                            <SectionTwoLeftDataDescription>Sebuah envoronment AI Production yang digunakan untuk menjalankan training, model dan hasil program kecerdasan buatan.</SectionTwoLeftDataDescription>
                         </SectionTwoLeftData>
                     </SectionTwoLeftDataContainer>
                 </SectionTwoLeft>

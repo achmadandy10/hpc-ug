@@ -1,30 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const NavbarTopContainer = styled.div`
-    position: relative;
-    top: 0;
-    z-index: 4000;
-    background-color: rgba(255, 255, 255, 0.7);
-    display: flex;
-    justify-content: space-between;
-    padding: 0 2% 0 2%;
-    backdrop-filter: saturate(180%) blur(20px);
-    width: 100%;
-
-    @media only Screen and (max-width: 767px) {
-        padding: 0px 15px 0 15px;
-        top: 0;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #D6D6D6;
-        background-color: #FFFFFF;
-        z-index: 3000;
-        display: flex;
-    }
-`
-
-export const NavbarTopHamburgerContainer = styled.div`
+export const NavbarHamburgerContainer = styled.div`
     cursor: pointer;
     width: 30px;
     height: 48px;
@@ -40,7 +17,7 @@ export const NavbarTopHamburgerContainer = styled.div`
     }
 `
 
-export const NavbarTopHamburgerTop = styled.div`
+export const NavbarHamburgerTop = styled.div`
     margin-bottom: 6px;
     position: relative;
     height: 4px;
@@ -57,7 +34,7 @@ export const NavbarTopHamburgerTop = styled.div`
     }
 `
 
-export const NavbarTopHamburgerMiddle = styled.div`
+export const NavbarHamburgerMiddle = styled.div`
     position: relative;
     height: 4px;
     border-radius: 4px;
@@ -71,7 +48,7 @@ export const NavbarTopHamburgerMiddle = styled.div`
     }
 `
 
-export const NavbarTopHamburgerBottom = styled.div`
+export const NavbarHamburgerBottom = styled.div`
     margin-top: 6px;
     position: relative;
     height: 4px;
@@ -88,29 +65,6 @@ export const NavbarTopHamburgerBottom = styled.div`
     }
 `
 
-export const NavbarTopLeft = styled.div`
-    display: flex;
-    align-items: center;
-    background: transparent;
-
-    @media only Screen and (max-width: 767px) {
-        position: absolute;
-        top: 48px;
-        width: 100%;
-        left: -100%;
-        background: #FFFFFF;
-        flex-direction: column;
-        border: 1px solid #D6D6D6;
-        overflow: hidden;
-        transition: .3s;
-        
-        &.show {
-            display: flex;
-            left: 0;
-        }
-    }
-`
-
 export const NavbarLogoContainer = styled(Link)`
     display: flex;
     align-items: center;
@@ -118,172 +72,16 @@ export const NavbarLogoContainer = styled(Link)`
     gap: 10px;
     font-weight: var(--font-semi-bold);
     padding-right: 16px;
-    
+    font-size: var(--h3-font-size);
+    color: var(--first-color);
+
     @media only Screen and (max-width: 767px) {
         font-size: 0;
     }
 `
 
 export const NavbarLogo = styled.img`
-    height: 40px;
-`
-
-export const NavbarLinkVerticalPipe = styled.span`
-    visibility: hidden;
-    height: 10px;
-    width: 3px;
-    background: var(--first-color);
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    
-    @media only Screen and (max-width: 767px) {
-        display: none;    
-    }
-`
-
-export const NavbarLinkSubitemContainer = styled.div`
-    background-color: #FFFFFF;
-    width: 450px;
-    top: 55px;
-    margin-left: -225px;
-    left: 50%;
-    visibility: hidden;
-    position: absolute;
-    z-index: var(--z-modal);
-    border: 1px solid #D6D6D6;
-
-    @media only Screen and (max-width: 767px) {
-        position: relative;
-        top: 0;
-        height: 0;
-    }
-`
-
-export const NavbarLinkSubitemBorderSlider = styled.div`
-    background-color: var(--first-color);
-    position: relative;
-    z-index: var(--z-modal);
-    height: 2px;
-    margin: -1px auto 0 auto;
-    margin-top: -1px;
-    width: 0;
-    transition: 0.3s;
-`
-
-export const NavbarLinkText = styled.span`
-    line-height: 55px;
-    height: 55px;
-    display: inline-block;
-    padding-top: 3px;
-`
-
-export const NavbarLinkContainer = styled.div`
-    background: transparent;
-    vertical-align: top;
-    padding: 0 1.2vw 0 1.2vw;
-    display: flex;
-    position: relative;
-
-    @media only Screen and (max-width: 767px) {
-        flex-direction: column;
-        transition: .1s ease-in-out;
-        width: 100%;
-    }
-
-    &:hover ${ NavbarLinkVerticalPipe } {
-        visibility: visible;
-    }
-
-    &:hover ${ NavbarLinkSubitemContainer } {
-        visibility: visible;
-
-        @media only Screen and (max-width: 767px) {
-            height: 100%;
-        }
-    }
-    
-    &:hover ${ NavbarLinkSubitemBorderSlider } {
-        width: 50%;
-        
-        @media only Screen and (max-width: 767px) {
-            width: 100%;
-        }
-    }
-`
-
-export const NavbarLink = styled(Link)`
-    text-align: center;
-    color: var(--title-color);
-    font-size: var(--small-font-size);
-    display: block;
-`
-
-export const NavbarLinkSubitemTitle = styled.span`
-    line-height: 1em;
-    display: block;
-    font-size: 16px;
-    margin-bottom: 6px;
-    color: var(--title-color);
-    font-weight: normal;
-`
-
-export const NavbarLinkSubitem = styled(Link)`
-    display: flex;
-    align-items: flex-start;
-    padding: 16px 32px;
-    justify-content: space-between;
-
-    &:first-of-type {
-        margin-top: 16px;
-        
-        @media only Screen and (max-width: 768px) {
-            margin-top: 0;
-        }
-    }
-
-    &:hover {
-        background: #F9F9F9F9;
-    }
-
-    &:hover ${ NavbarLinkSubitemTitle } {
-        color: var(--first-color);
-    }
-`
-
-export const NavbarLinkSubitemLeft = styled.span`
-    width: 75px;
-    display: inline-block;
-    flex-shrink: 0;
-    flex-grow: 0;
-    text-align: center;
-`
-
-export const NavbarLinkSubitemImg = styled.img`
-    max-width: 75px;
-    max-height: 60px;
-`
-
-export const NavbarLinkSubitemRight = styled.span`
-    padding-left: 24px;
-`
-
-export const NavbarLinkSubitemDescription = styled.span`
-    display: block;
-    line-height: 1.6em;
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--text-color);
-`
-
-export const NavbarTopRight = styled.div`
-    display: flex;
-    align-items: center;
-    background: transparent;
-
-    @media only Screen and (max-width: 767px) {
-        display: none;
-    }
+    height: 50px;
 `
 
 export const NavbarMenu = styled.div`
@@ -320,7 +118,6 @@ export const NavbarContainer = styled.div`
     justify-content: space-between;
     background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: saturate(180%) blur(20px);
-    margin-bottom: 32px;
     padding: 11px 2% 11px 2%;
 
     &.scroll {
@@ -364,9 +161,37 @@ export const NavbarMenuLink = styled(Link)`
     color: var(--title-color);
     height: 50px;
     line-height: 50px;
+    position: relative;
 
     @media only Screen and (max-width: 768px) {
         height: 40px;
         line-height: 40px;
+    }
+
+    &:hover div {
+        visibility: visible;
+        transform: scale(1);
+    }
+`
+
+export const NavbarSubmenuLinkContainer = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    border: 1px solid var(--title-color);
+    padding: 5px 20px;
+    border-radius: 3px;
+    transition: .3s;
+    visibility: hidden;
+    transform: scale(0);
+    width: auto;
+`
+
+export const NavbarSubmenuLink = styled(Link)`
+    color: var(--title-color);
+
+    &:hover {
+        color: var(--first-color);
     }
 `

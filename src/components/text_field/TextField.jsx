@@ -3,7 +3,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { InputFieldCheckbox, InputFieldContainer, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
 import Select from "react-select"
 import { Editor } from '@tinymce/tinymce-react';
-import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import { TextField as TextFieldMui } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
@@ -278,7 +277,7 @@ export const TextEditor = ({ value, name, onChanged, message }) => {
                 selector: 'textarea#open-source-plugins',
                 imagetools_cors_hosts: ['picsum.photos'],
                 menubar: 'file edit view insert format tools table help',
-                plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+                plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons',
                 toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                 toolbar_sticky: true,
@@ -381,11 +380,5 @@ export const SearchField = ({data, onChanged}) => {
         />
     )
 }
-
-SearchField.propTypes = {
-    clearSearch: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
-};
 
 export default TextField

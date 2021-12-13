@@ -31,20 +31,26 @@ const SectionFour = () => {
         <SectionFourContainer>
             <SectionFourLeft when={ show.left }>
                 <SectionFourLabel>Meningkatkan</SectionFourLabel>
-                <SectionFourTitle>Skala infrastruktur komputasi GPU yang mulus</SectionFourTitle>
+                <SectionFourTitle>Skala infrastruktur komputasi GPU dan CPU</SectionFourTitle>
 
                 <SectionFourDataContainer>
                     <SectionFourData>
-                        <SectionFourDataTitle>Multi-node distributed training</SectionFourDataTitle>
-                        <SectionFourDataDescription>Instans mendukung bandwidth antar-node hingga 10 Gbps untuk mengaktifkan pelatihan terdistribusi dengan Horovod atau kerangka kerja lain.</SectionFourDataDescription>
+                        <SectionFourDataTitle>Optimasi GPU</SectionFourDataTitle>
+                        <SectionFourDataDescription>
+                            Menggunkanan DGX-A100 Core berbasiskan NVIDIA Ampere yang memang dikhusukan untuk kebutuhan kecerdasan buatan sehingga code lebih cepat dieksekusi daripada pada GPU Biasa
+                        </SectionFourDataDescription>
                     </SectionFourData>
                     <SectionFourData>
-                        <SectionFourDataTitle>Optimalisasi hiper-parameter</SectionFourDataTitle>
-                        <SectionFourDataDescription>Kurangi waktu pengoptimalan model dengan menskalakan GPU dalam jumlah besar pada satu atau beberapa instans.</SectionFourDataDescription>
+                        <SectionFourDataTitle>Optimasi CPU</SectionFourDataTitle>
+                        <SectionFourDataDescription>
+                            Dengan kemampuan CPU AMD proses HPC dapat dieksekusi lbh cepat dimesin DGX ketimbang personal computer maupun di server.
+                        </SectionFourDataDescription>
                     </SectionFourData>
                     <SectionFourData>
-                        <SectionFourDataTitle>Tumbuh tim peneliti</SectionFourDataTitle>
-                        <SectionFourDataDescription>Tambahan sumber daya komputasi yang kelebihan atau kekurangan daya dengan instans khusus untuk anggota tim baru.</SectionFourDataDescription>
+                        <SectionFourDataTitle>Pegembangan Peneliti</SectionFourDataTitle>
+                        <SectionFourDataDescription>
+                            Dengan menggunakan fasilitas UG-AI-Coe Peneliti dapat berbagi informasi terhadap penelitiannya, sehingga memungkinkan kolaborasi antar peneliti
+                        </SectionFourDataDescription>
                     </SectionFourData>
                 </SectionFourDataContainer>
             </SectionFourLeft>
