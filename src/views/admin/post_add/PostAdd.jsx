@@ -54,6 +54,7 @@ const PostAdd = () => {
                             onChanged={ inputChange }
                             type="multi-select"
                             styled="flex"
+                            placeholder="Pilih Kategori"
                             option={ CategorySelect.category }
                         />
                     </PostAddContentRight>

@@ -3,6 +3,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { InputFieldCheckbox, InputFieldContainer, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
 import Select from "react-select"
 import { Editor } from '@tinymce/tinymce-react';
+import PropTypes from 'prop-types';
+import IconButton from '@mui/material/IconButton';
+import { TextField as TextFieldMui } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 
 export const InputField = ({ styled, label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
     let InputType = ''
@@ -321,5 +326,66 @@ export const TextEditor = ({ value, name, onChanged, message }) => {
         />
     )
 }
+
+function escapeRegExp(value) {
+    return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
+export const SearchField = ({data, onChanged}) => {
+    const [searchText, setSearchText] = useState('');
+    const requestSearch = (value) => {
+        setSearchText(value)
+        const searchRegex = new RegExp(escapeRegExp(value), 'i');
+        const filteredRows = data.filter((row) => {
+            return Object.keys(row).some((field) => {
+                return searchRegex.test(row[field].toString());
+            });
+        });
+        onChanged(filteredRows)
+    };
+    
+    return (
+        <TextFieldMui
+            variant="standard"
+            value={searchText}
+            onChange={(e) => requestSearch(e.target.value)}
+            placeholder="Cari…"
+            InputProps={{
+                startAdornment: <SearchIcon fontSize="small" />,
+                endAdornment: (
+                    <IconButton
+                        title="Clear"
+                        aria-label="Clear"
+                        size="small"
+                        style={{ visibility: searchText ? 'visible' : 'hidden' }}
+                        onClick={() => requestSearch('')}
+                    >
+                    <ClearIcon fontSize="small" />
+                    </IconButton>
+                ),
+            }}
+            sx={{
+            width: {
+                xs: 1,
+                sm: 'auto',
+            },
+            m: (theme) => theme.spacing(1, 0.5, 1.5),
+            '& .MuiSvgIcon-root': {
+                mr: 0.5,
+            },
+            '& .MuiInput-underline:before': {
+                borderBottom: 1,
+                borderColor: 'divider',
+            },
+            }}
+        />
+    )
+}
+
+SearchField.propTypes = {
+    clearSearch: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+};
 
 export default TextField

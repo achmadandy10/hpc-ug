@@ -52,3 +52,32 @@ export const CategorySelect = {
         { value: "category 5", label: "kategori 5" },
     ]
 }
+
+export const ListPost = {
+    post: [
+        {
+            id: 1,
+            title: "Judul 1",
+            slug: "judul-1",
+            thumbnail: "https://www.seekpng.com/png/detail/96-966849_learning-vector-artificial-intelligence-artificial-intelligence-brain-png.png",
+            category: ["category 1", "category 2"],
+            body: "ini isi konten 1"
+        },
+        {
+            id: 2,
+            title: "Judul 2",
+            slug: "judul-2",
+            thumbnail: "https://www.seekpng.com/png/detail/96-966849_learning-vector-artificial-intelligence-artificial-intelligence-brain-png.png",
+            category: ["category 1", "category 2"],
+            body: "ini isi konten 2"
+        },
+        {
+            id: 3,
+            title: "Judul 3",
+            slug: "judul-3",
+            thumbnail: "https://www.seekpng.com/png/detail/96-966849_learning-vector-artificial-intelligence-artificial-intelligence-brain-png.png",
+            category: ["category 1", "category 2"],
+            body: "ini isi konten 3"
+        },
+    ]
+}
