@@ -83,6 +83,15 @@ const Sidebar = ({ type }) => {
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarTitle>Persetujuan</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-usulan">
+                                    <FaFileInvoice/>
+                                    Daftar Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
                     </SidebarMenuContainer>
                 </div>
 

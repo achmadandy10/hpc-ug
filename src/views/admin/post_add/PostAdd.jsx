@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { MdSend, MdSendAndArchive } from "react-icons/md"
+import { ButtonSubmit } from "../../../components/button/Button"
 import Card from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import { InputField, TextEditor } from "../../../components/text_field/TextField"
@@ -20,7 +22,16 @@ const PostAdd = () => {
 
     return (
         <PageLayout>
-            <PageHeader title="Buat Konten"/>
+            <PageHeader title="Buat Konten">
+                <ButtonSubmit color="primary">
+                    <MdSend/>
+                    Publikasikan
+                </ButtonSubmit>
+                <ButtonSubmit color="warning">
+                    <MdSendAndArchive/>
+                    Draf
+                </ButtonSubmit>
+            </PageHeader>
 
             <Card>
                 <PostAddContent>

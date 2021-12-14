@@ -133,6 +133,7 @@ const ProposalSubmission = () => {
                         />
                         <ProposalSubmissionFormButton>
                             <ButtonSubmit
+                                color="primary"
                                 fullWidth
                                 height={ 50 }
                                 type="submit"

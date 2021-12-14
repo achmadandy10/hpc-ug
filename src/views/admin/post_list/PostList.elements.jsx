@@ -2,11 +2,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const PostListContainer = styled.div`
-        
+    margin-bottom: 20px;
 `
 
 export const PostListContentContainer = styled.div`
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -15,49 +14,66 @@ export const PostListContentContainer = styled.div`
 export const PostListContent = styled(Link)`
     display: flex;
     gap: 20px;
+    padding: 20px;
     border: 1px solid var(--title-color);
     border-radius: 3px;
-    padding: 20px;
-    height: 100%;
+    color: var(--title-color);
 
     &:hover {
-        border-color: transparent;
         box-shadow: var(--bs-smooth);
+        border-color: transparent;
     }
 `
 
-export const PostListContentLeft = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
 export const PostListContentImg = styled.img`
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
+    border: 1px solid var(--title-color);
     border-radius: 3px;
     object-fit: cover;
 `
 
-export const PostListContentRight = styled.div`
+export const PostListContentDetail = styled.div`
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
+    width: 100%;
+`
+
+export const PostListContentDetailTop = styled.div`
+    display: flex;
+    align-items: center;
     justify-content: space-between;
 `
 
-export const PostListContentTitle = styled.h2`
+export const PostListContentDetailTitle = styled.div`
+    font-size: var(--h2-font-size);
+`
+
+export const PostListContentDetailFeature = styled.div`
     font-size: var(--h3-font-size);
-    color: var(--title-color);
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 `
 
-export const PostListContentBody = styled.p`
-    font-size: var(--small-font-size);
-    color: var(--text-color);
-    font-weight: 400;
+export const PostListContentDetailBottom = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 20px;
 `
 
-export const PostListContentCategoryContainer = styled.div`
+export const PostListContentDetailDate = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    & svg {
+        font-size: 5px;
+    }
+`
+
+export const PostListContentDetailCategory = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
@@ -65,13 +81,12 @@ export const PostListContentCategoryContainer = styled.div`
 
 export const PostListContentCategory = styled.div`
     border: 1px solid var(--title-color);
-    padding: 3px 12px;
+    font-size: var(--smaller-font-size);
+    padding: 7px 14px;
     border-radius: 3px;
-    color: var(--title-color);
 
     &:hover {
-        border-color: transparent;
         background-color: var(--first-color);
-        color: #FFF;
+        color: var(--container-color);
     }
 `

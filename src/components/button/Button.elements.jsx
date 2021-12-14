@@ -95,16 +95,48 @@ export const ButtonSubmitContainer = styled.button`
                 border: 1px solid var(--first-color);
                 background: transparent;
             `
-        } else {
+        }
+    }}
+
+    ${({color}) => {
+        if (color === "primary") {
             return `
                 background: var(--first-color);
+                &:hover {
+                    box-shadow: 1px 1px 10px rgba(152, 0, 172, 0.308);
+                }
+            `
+        } else if (color === "warning") {
+            return `
+                background: var(--warning-color);
+                &:hover {
+                    box-shadow: 1px 1px 10px rgba(161, 172, 0, 0.308);
+                }
+            `
+        } else if (color === "danger") {
+            return `
+                background: var(--danger-color);
+                &:hover {
+                    box-shadow: 1px 1px 10px rgba(172, 0, 0, 0.308);
+                }
+            `
+        } else if (color === "success") {
+            return `
+                background: var(--success-color);
+                &:hover {
+                    box-shadow: 1px 1px 10px rgba(40, 172, 0, 0.308);
+                }
+            `
+        } else {
+            return `
+                background: var(--text-color-light);
+                &:hover {
+                    box-shadow: 1px 1px 10px rgba(86, 84, 87, 0.308);
+                }
             `
         }
     }}
 
-    &:hover {
-        box-shadow: 1px 1px 10px rgba(152, 0, 172, 0.308)
-    }
 `
 
 export const ButtonIconLinkContainer = styled(Link)`

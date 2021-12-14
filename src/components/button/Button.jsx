@@ -1,4 +1,4 @@
-import { ButtonIconLinkContainer, ButtonLinkContainer, ButtonSubmitContainer } from "./Button.elements"
+import { ButtonIconLinkContainer, ButtonIconSubmitContainer, ButtonLinkContainer, ButtonSubmitContainer } from "./Button.elements"
 import Loader from "react-loader-spinner";
 
 export const ButtonLink = ({ children, to, height, width, fullWidth, btnType}) => {
@@ -9,9 +9,9 @@ export const ButtonLink = ({ children, to, height, width, fullWidth, btnType}) =
     )
 }
 
-export const ButtonSubmit = ({ children, type, onClicked, height, fullWidth, width, btnType, loading }) => {
+export const ButtonSubmit = ({ color, children, type, onClicked, height, fullWidth, width, btnType, loading }) => {
     return (
-        <ButtonSubmitContainer type={ type } onClick={ onClicked } height={ height } fullWidth={ fullWidth } width={ width } type_button={ btnType }>
+        <ButtonSubmitContainer color={ color } type={ type } onClick={ onClicked } height={ height } fullWidth={ fullWidth } width={ width } type_button={ btnType }>
             { 
                 loading ? 
                     <Loader
@@ -32,5 +32,13 @@ export const ButtonIconLink = ({ children, to, color }) => {
         <ButtonIconLinkContainer to={ to } color={ color }>
             { children }
         </ButtonIconLinkContainer>
+    )
+}
+
+export const ButtonIconSubmit = ({ children, onClicked, color }) => {
+    return (
+        <ButtonIconSubmitContainer onClick={ onClicked } color={ color }>
+            { children }
+        </ButtonIconSubmitContainer>
     )
 }
