@@ -132,6 +132,7 @@ const Register = () => {
                         />
                         <RegisterButtonContainer>
                             <ButtonSubmit
+                                color="primary"
                                 fullWidth
                                 height={ 50 }
                                 type="submit"

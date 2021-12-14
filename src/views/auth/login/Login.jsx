@@ -59,6 +59,7 @@ const Login = () => {
 
                     <LoginButtonContainer>
                         <ButtonSubmit
+                            color="primary"
                             fullWidth
                             height={ 50 }
                             type="submit"
