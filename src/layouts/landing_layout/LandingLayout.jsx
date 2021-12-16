@@ -1,7 +1,7 @@
 import { Redirect, Route, Switch } from "react-router-dom"
 import Footer from "../../components/footer/Footer"
 import Navbar from "../../components/navbar/Navbar"
-import ThemeChange from "../../components/theme_change/ThemeChange"
+// import ThemeChange from "../../components/theme_change/ThemeChange"
 import { LandingRouter } from "../../routes/landing/LandingRouter"
 
 const LandingLayout = () => {
@@ -28,7 +28,7 @@ const LandingLayout = () => {
                 }
                 <Redirect from="/" to="/"/>
             </Switch>
-            <ThemeChange/>
+            {/* <ThemeChange/> */}
             <Footer/>
         </>
     )

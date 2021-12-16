@@ -4,7 +4,7 @@ import { AdminLayoutContainer, AdminLayoutMain, AdminLayoutPage, AdminLayoutSide
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { AdminRouter } from "../../routes/admin/AdminRouter"
 import { useEffect } from "react"
-import ThemeChange from "../../components/theme_change/ThemeChange"
+// import ThemeChange from "../../components/theme_change/ThemeChange"
 
 const AdminLayout = () => {
     useEffect(() => {
@@ -46,7 +46,7 @@ const AdminLayout = () => {
                     </Switch>
                 </AdminLayoutPage>
             </AdminLayoutMain>
-            <ThemeChange/>
+            {/* <ThemeChange/> */}
         </AdminLayoutContainer>
     )
 }
