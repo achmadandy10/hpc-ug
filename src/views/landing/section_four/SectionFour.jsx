@@ -1,5 +1,6 @@
 import { SectionFourContainer, SectionFourData, SectionFourDataContainer, SectionFourDataDescription, SectionFourDataTitle, SectionFourImg, SectionFourLabel, SectionFourLeft, SectionFourRight, SectionFourTitle } from "./SectionFour.elements"
 import Flow from '../../../images/flow.svg'
+import FlowBlue from '../../../images/flow-blue.svg'
 import { useEffect, useState } from "react"
 
 const SectionFour = () => {
@@ -56,7 +57,7 @@ const SectionFour = () => {
             </SectionFourLeft>
 
             <SectionFourRight when={ show.right }>
-                <SectionFourImg src={ Flow }/>
+                <SectionFourImg src={ sessionStorage.getItem('theme') === 'blue-theme' ? FlowBlue : Flow }/>
             </SectionFourRight>
         </SectionFourContainer>
     )

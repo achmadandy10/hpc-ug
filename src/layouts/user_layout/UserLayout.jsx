@@ -4,6 +4,7 @@ import { UserLayoutContainer, UserLayoutMain, UserLayoutPage, UserLayoutSidebar 
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { UserRouter } from "../../routes/user/UserRouter"
 import { useEffect } from "react"
+import ThemeChange from "../../components/theme_change/ThemeChange"
 
 // const Internal = () => {
 //     return (
@@ -61,6 +62,7 @@ const UserLayout = () => {
                     </Switch>
                 </UserLayoutPage>
             </UserLayoutMain>
+            <ThemeChange/>
         </UserLayoutContainer>
     )
 }

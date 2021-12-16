@@ -20,6 +20,7 @@ export const AppStyle = createGlobalStyle`
         --container-color: #FFF;
         --custom-color-1: rgb(112, 203, 126);
         --rgba-color-0-5: rgba(0, 0, 0, 0.5);
+        --bs-first: 1px 1px 10px rgba(152, 0, 172, 0.308);
 
         /* Font and Typography */
         --body-font: 'Poppins', sans-serif;
@@ -84,6 +85,12 @@ export const AppStyle = createGlobalStyle`
         --rgba-color-0-5: rgba(105, 105, 105, 0.5);
     }
 
+    body.blue-theme {
+        /* Colors */
+        --first-color: #215C91;
+        --bs-first: 1px 1px 10px rgba(33,92,145, 0.308);
+    }
+
     /* Base */
     * {
         box-sizing: border-box;
@@ -100,7 +107,7 @@ export const AppStyle = createGlobalStyle`
         font-size: var(--normal-font-size);
         background-color: var(--body-color);
         color: var(--text-color);
-        /* transition: all .3s linear; */
+        transition: all .3s linear;
     }
 
     h1, h2, h3, h4 {

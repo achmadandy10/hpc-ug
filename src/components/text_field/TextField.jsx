@@ -29,14 +29,15 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
 
     useEffect(() => {
         if (type === "textarea") {
-            const textarea = document.querySelector("textarea")
+            const textarea = document.getElementById(id)
+
             textarea.addEventListener("keyup", e => {
                 textarea.style.height = `auto`
                 let height = e.target.scrollHeight
                 textarea.style.height = `${height}px`
             })
         }
-    }, [type])
+    }, [type, id])
 
     const chooseFile = () => {
         const realFile = document.getElementById("real-file")
