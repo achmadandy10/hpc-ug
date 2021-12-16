@@ -1,9 +1,9 @@
 import { SectionTwoContainer, SectionTwoFeatureContainer, SectionTwoInfoContainer, SectionTwoInfoDescription, SectionTwoInfoTitle, SectionTwoLeft, SectionTwoLeftData, SectionTwoLeftDataContainer, SectionTwoLeftDataDescription, SectionTwoLeftDataTitle, SectionTwoLeftLabel, SectionTwoLeftTitle, SectionTwoRight, SectionTwoRightData, SectionTwoRightDataImg } from "./SectionTwo.elements"
-import Tensor from '../../../images/tf-color-lockup.svg'
-import Jupyter from '../../../images/jupyter-color-lockup.svg'
-import PyTorch from '../../../images/pytorch-color-lockup.svg'
-import Keras from '../../../images/keras-color-lockup.svg'
-import Ubuntu from '../../../images/ubuntu-color-lockup.svg'
+import Tensor from '../../../../images/tf-color-lockup.svg'
+import Jupyter from '../../../../images/jupyter-color-lockup.svg'
+import PyTorch from '../../../../images/pytorch-color-lockup.svg'
+import Keras from '../../../../images/keras-color-lockup.svg'
+import Ubuntu from '../../../../images/ubuntu-color-lockup.svg'
 import { useEffect, useState } from "react"
 
 const SectionTwo = () => {

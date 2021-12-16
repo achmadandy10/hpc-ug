@@ -1,6 +1,6 @@
 import { SectionThreeContainer, SectionThreeData, SectionThreeDataContainer, SectionThreeDataDescription, SectionThreeDataTitle, SectionThreeImg, SectionThreeLabel, SectionThreeLeft, SectionThreeRight, SectionThreeTitle } from "./SectionThree.elements"
-import Chart from '../../../images/chart.svg' 
-import ChartBlue from '../../../images/chart-blue.svg' 
+import Chart from '../../../../images/chart.svg' 
+import ChartBlue from '../../../../images/chart-blue.svg' 
 import { useEffect, useState } from "react"
 
 const SectionThree = () => {

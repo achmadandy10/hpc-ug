@@ -1,6 +1,6 @@
 import { SectionFourContainer, SectionFourData, SectionFourDataContainer, SectionFourDataDescription, SectionFourDataTitle, SectionFourImg, SectionFourLabel, SectionFourLeft, SectionFourRight, SectionFourTitle } from "./SectionFour.elements"
-import Flow from '../../../images/flow.svg'
-import FlowBlue from '../../../images/flow-blue.svg'
+import Flow from '../../../../images/flow.svg'
+import FlowBlue from '../../../../images/flow-blue.svg'
 import { useEffect, useState } from "react"
 
 const SectionFour = () => {
