@@ -39,7 +39,7 @@ const Navbar = () => {
 
             <NavbarMenuContainer>
                 <NavbarMenu ref={ menu }>
-                    <NavbarMenuLink to="/">Berita</NavbarMenuLink>
+                    <NavbarMenuLink to="/berita">Berita</NavbarMenuLink>
                     <NavbarMenuLink to="/tentang">
                         Tentang <FaChevronDown/>
                         <NavbarSubmenuLinkContainer>
