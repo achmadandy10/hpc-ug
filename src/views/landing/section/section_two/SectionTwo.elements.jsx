@@ -77,7 +77,6 @@ export const SectionTwoLeftTitle = styled.h2`
 
 export const SectionTwoLeftDataContainer = styled.div`
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 20px;

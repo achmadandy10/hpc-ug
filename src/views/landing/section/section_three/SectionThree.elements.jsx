@@ -54,7 +54,6 @@ export const SectionThreeTitle = styled.h2`
 
 export const SectionThreeDataContainer = styled.div`
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 20px;
