@@ -30,11 +30,12 @@ function App() {
       <Router>
         <Suspense fallback={ <LoadingPage/> }>
           <Switch>
-              <Route exact path="/" component={ LandingLayout }/>
               <Route path="/masuk" component={ Login }/>
               <Route path="/daftar" component={ Register }/>
+
               <Route path="/user" name="User" render={(props) => <UserLayout {...props} />}/>
               <Route path="/admin" name="Admin" render={(props) => <AdminLayout {...props} />}/>
+              <Route path="/" name="Landing" render={(props) => <LandingLayout {...props} />}/>
               {/* <UserPrivateRoute path="/user" name="User"/> */}
           </Switch>
         </Suspense>

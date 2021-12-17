@@ -40,7 +40,7 @@ const Navbar = () => {
             <NavbarMenuContainer>
                 <NavbarMenu ref={ menu }>
                     <NavbarMenuLink to="/">Berita</NavbarMenuLink>
-                    <NavbarMenuLink>
+                    <NavbarMenuLink to="/tentang">
                         Tentang <FaChevronDown/>
                         <NavbarSubmenuLinkContainer>
                             <NavbarSubmenuLink to="/tentang/hpc">
@@ -54,7 +54,7 @@ const Navbar = () => {
                             </NavbarSubmenuLink>
                         </NavbarSubmenuLinkContainer>
                     </NavbarMenuLink>
-                    <NavbarMenuLink>
+                    <NavbarMenuLink to="/produk">
                         Produk <FaChevronDown/>
                         <NavbarSubmenuLinkContainer>
                             <NavbarSubmenuLink to="/produk/prototyping">
