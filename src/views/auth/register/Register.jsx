@@ -6,6 +6,8 @@ import { RegisterButtonContainer, RegisterButtonLink, RegisterContainer, Registe
 import Logo from '../../../images/logo.png'
 import { FaCheckCircle } from "react-icons/fa"
 import { useHistory } from "react-router-dom"
+import axios from "axios"
+import Swal from "sweetalert2"
 
 const Register = () => {
     const history = useHistory()
@@ -15,7 +17,7 @@ const Register = () => {
         last_name: '',
         email: '',
         password: '',
-        confirm_password: '',
+        password_confirmation: '',
         error_list: [],
     });
 
@@ -25,14 +27,71 @@ const Register = () => {
 
     const formSubmit = () => {
         setLoading(true)
-        setTimeout(
-            function() {
-                history.push('/user/dasbor')
-            }
-            ,
-            3000
-        );
+        
+        const data = {
+            first_name: form.first_name,
+            last_name: form.last_name,
+            email: form.email,
+            password: form.password,
+            password_confirmation: form.password_confirmation,
+        }
+
+        axios.get(`/sanctum/csrf-cookie`).then(() => {
+            axios.post('/api/register', data).then((res) => {
+                if (res.data.meta.code === 200) {
+                    var role = ''
+                    if (res.data.data.user.role === 1) {
+                        role = 'Content'
+                    } else if (res.data.data.user.role === 2) {
+                        role = 'Proposal'
+                    } else if (res.data.data.user.role === 3) {
+                        role = 'Super'
+                    } else if (res.data.data.user.role === 4) {
+                        role = 'Internal'
+                    } else if (res.data.data.user.role === 5) {
+                        role = 'External'
+                    }
+                    
+                    localStorage.setItem('token', res.data.data.access_token);
+                    localStorage.setItem('role', role);
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                      
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Anda berhasil masuk'
+                    })
+
+                    if (res.data.data.user.role === "Admin Content" || res.data.data.user.role === "Admin Proposal Submission" || res.data.data.user.role === "Admin Super") {
+                        history.push('/admin')
+                    } else {
+                        history.push('/user')
+                    }
+                } else {
+                    setForm({ ...form, error_list: res.data.data.validation_errors })
+                }
+                setLoading(false)
+            })
+        })
     }
+
+    axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
+        if (err.response.status === 500) {
+            history.push('/500')
+        }
+        
+        return Promise.reject(err)
+    })
 
     return (
         <RegisterContainer>
@@ -91,7 +150,6 @@ const Register = () => {
                                 id="first_name"
                                 name="first_name"
                                 onChanged={ inputChange }
-                                required
                                 error={ form.error_list.first_name }
                             />
                             <TextField
@@ -99,7 +157,6 @@ const Register = () => {
                                 id="last_name"
                                 name="last_name"
                                 onChanged={ inputChange }
-                                required
                                 error={ form.error_list.last_name }
                             />
                         </RegisterFieldName>
@@ -109,7 +166,6 @@ const Register = () => {
                             name="email"
                             type="email"
                             onChanged={ inputChange }
-                            required
                             error={ form.error_list.email }
                         />
                         <TextField
@@ -118,22 +174,20 @@ const Register = () => {
                             name="password"
                             type="password"
                             onChanged={ inputChange }
-                            required
                             error={ form.error_list.password }
                         />
                         <TextField
                             label="Konfirmasi Kata Sandi"
-                            id="confirm_password"
-                            name="confirm_password"
+                            id="password_confirmation"
+                            name="password_confirmation"
                             type="password"
                             onChanged={ inputChange }
-                            required
-                            error={ form.error_list.confirm_password }
+                            error={ form.error_list.password_confirmation }
                         />
                         <RegisterButtonContainer>
                             <ButtonSubmit
                                 color="primary"
-                                fullWidth
+                                fullwidth
                                 height={ 50 }
                                 type="submit"
                                 loading={ loading }

@@ -134,7 +134,7 @@ const ProposalSubmission = () => {
                         <ProposalSubmissionFormButton>
                             <ButtonSubmit
                                 color="primary"
-                                fullWidth
+                                fullwidth
                                 height={ 50 }
                                 type="submit"
                                 loading={ loading.storeForm }

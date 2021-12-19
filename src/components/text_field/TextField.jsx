@@ -262,7 +262,12 @@ const TextField = ({ label, type, id, name, value, readOnly, disabled, required,
                 { IconField }
                 <TextFieldLabel error={ error }>{ label ? label : "Label" }</TextFieldLabel>
             </TextFieldContent>
-            { error && <TextFieldError>{ error }</TextFieldError>}
+            { 
+                error ? 
+                    <TextFieldError>{ error }</TextFieldError>
+                :
+                    ""
+            }
         </TextFieldContainer>
     )
 }

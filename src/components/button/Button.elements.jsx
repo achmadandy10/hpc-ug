@@ -24,8 +24,8 @@ export const ButtonLinkContainer = styled(Link)`
         }
     }}
 
-    ${({fullWidth}) => {
-        if (fullWidth) {
+    ${({fullwidth}) => {
+        if (fullwidth) {
             return `width: 100% !important;`
         }
     }}
@@ -77,8 +77,8 @@ export const ButtonSubmitContainer = styled.button`
         }
     }}
 
-    ${({fullWidth}) => {
-        if (fullWidth) {
+    ${({fullwidth}) => {
+        if (fullwidth) {
             return `width: 100% !important;`
         }
     }}

@@ -8,11 +8,11 @@ import { useEffect } from "react"
 
 const AdminLayout = () => {
     useEffect(() => {
-        const session = () => {
-            sessionStorage.setItem("role", "Admin")
+        const role = () => {
+            localStorage.setItem("role", "Admin")
         }
 
-        session()
+        role()
     }, [])
     return (
         <AdminLayoutContainer>

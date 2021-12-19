@@ -13,10 +13,9 @@ const UserPrivateRoute = ({ ...res }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.get("/api/user_internal")
-        .then( res => {
+        axios.get("/api/check_user").then( res => {
             if (res.data.meta.code === 200) {
-                setCredential(true)                
+                setCredential(true)
             }
             setLoading(false)
         })
@@ -28,6 +27,9 @@ const UserPrivateRoute = ({ ...res }) => {
 
     axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
         if (err.response.status === 401) {
+            localStorage.removeItem('token')
+            localStorage.removeItem('role')
+
             Swal.fire({
                 icon: "warning",
                 title: err.response.data.message,

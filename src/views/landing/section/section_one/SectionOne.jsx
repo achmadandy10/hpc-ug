@@ -1,6 +1,5 @@
 import { SectionOneButtonContainer, SectionOneContainer, SectionOneContentLeft, SectionOneContentRight, SectionOneDescription, SectionOneImg, SectionOneTitle, SectionOneTitleColor } from "./SectionOne.elements"
 import Tect from '../../../../images/tect.svg'
-import TectBlue from '../../../../images/tect-blue.svg'
 import { ButtonLink } from "../../../../components/button/Button"
 import Fade from 'react-reveal/Fade'
 
@@ -28,7 +27,7 @@ const SectionOne = () => {
 
             <Fade right>
                 <SectionOneContentRight>
-                    <SectionOneImg src={ sessionStorage.getItem('theme') === 'blue-theme' ? TectBlue : Tect }/>
+                    <SectionOneImg src={ Tect }/>
                 </SectionOneContentRight>
             </Fade>
         </SectionOneContainer>

@@ -24,11 +24,11 @@ import { useEffect } from "react"
 
 const UserLayout = () => {
     useEffect(() => {
-        const session = () => {
-            sessionStorage.setItem("role", "User")
+        const role = () => {
+            localStorage.setItem("role", "User")
         }
 
-        session()
+        role()
     }, [])
     return (
         <UserLayoutContainer>

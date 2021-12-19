@@ -1,6 +1,5 @@
 import { SectionThreeContainer, SectionThreeData, SectionThreeDataContainer, SectionThreeDataDescription, SectionThreeDataTitle, SectionThreeImg, SectionThreeLabel, SectionThreeLeft, SectionThreeRight, SectionThreeTitle } from "./SectionThree.elements"
 import Chart from '../../../../images/chart.svg' 
-import ChartBlue from '../../../../images/chart-blue.svg' 
 import { useEffect, useState } from "react"
 
 const SectionThree = () => {
@@ -31,7 +30,7 @@ const SectionThree = () => {
     return (
         <SectionThreeContainer>
             <SectionThreeLeft when={ show.left }>
-                <SectionThreeImg src={ sessionStorage.getItem('theme') === 'blue-theme' ? ChartBlue : Chart }/>
+                <SectionThreeImg src={ Chart }/>
             </SectionThreeLeft>
         
             <SectionThreeRight when={ show.right }>

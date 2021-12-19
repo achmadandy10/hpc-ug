@@ -64,11 +64,11 @@ const Topbar = () => {
     }
 
     var profileLink = ''
-    const session = sessionStorage.getItem("role")
+    const role = localStorage.getItem("role")
 
-    if (session === "Admin") {
+    if (role === "Admin") {
         profileLink = "/admin/profil"
-    } else if (session === "User") {
+    } else if (role === "User") {
         profileLink = "/user/profil"
     }
 

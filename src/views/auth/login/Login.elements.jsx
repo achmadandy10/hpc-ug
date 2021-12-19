@@ -33,6 +33,17 @@ export const LoginTitle = styled.h2`
     color: var(--title-color);
 `
 
+export const LoginError = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #ffb8b1;
+    border-radius: 3px;
+    padding: 7px 14px;
+    color: var(--danger-color);
+`
+
 export const LoginForm = styled.div`
     display: flex;
     align-items: center;
