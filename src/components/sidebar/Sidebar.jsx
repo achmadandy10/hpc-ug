@@ -28,7 +28,7 @@ const Sidebar = ({ type }) => {
         })
     }
 
-    if (type === "user internal") {
+    if (type === "Internal") {
         return (
             <SidebarContainer>
                 <div>
@@ -56,7 +56,99 @@ const Sidebar = ({ type }) => {
                 </SidebarLogout>
             </SidebarContainer>
         )
-    } else if(type === "admin") {
+    } else if(type === "External") {
+        return (
+            <SidebarContainer>
+                <div>
+                    <SidebarDashboard activeClassName="active" to="/user/dasbor">
+                        <MdDashboard/>
+                        Dasbor
+                    </SidebarDashboard>
+
+                    <SidebarMenuContainer>
+                        <SidebarMenu>
+                            <SidebarTitle>Pengajuan</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/user/pengajuan-usulan">
+                                    <FaFileInvoice/>
+                                    Pengajuan Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                    </SidebarMenuContainer>
+                </div>
+
+                <SidebarLogout onClick={ logoutSubmit }>
+                    <FaSignOutAlt/>
+                    Keluar
+                </SidebarLogout>
+            </SidebarContainer>
+        )
+    } else if (type === "Content") {
+        return (
+            <SidebarContainer>
+                <div>
+                    <SidebarDashboard activeClassName="active" to="/admin/dasbor">
+                        <MdDashboard/>
+                        Dasbor
+                    </SidebarDashboard>
+
+                    <SidebarMenuContainer>
+                        <SidebarMenu>
+                            <SidebarTitle>Konten</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/buat-konten">
+                                    <FaPenSquare/>
+                                    Buat Konten
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-konten">
+                                    <FaList/>
+                                    Daftar Konten
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-kategori">
+                                    <FaTags/>
+                                    Daftar Kategori
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                    </SidebarMenuContainer>
+                </div>
+
+                <SidebarLogout onClick={ logoutSubmit }>
+                    <FaSignOutAlt/>
+                    Keluar
+                </SidebarLogout>
+            </SidebarContainer>
+        )
+    } else if (type === "Proposal") {
+        return (
+            <SidebarContainer>
+                <div>
+                    <SidebarDashboard activeClassName="active" to="/admin/dasbor">
+                        <MdDashboard/>
+                        Dasbor
+                    </SidebarDashboard>
+
+                    <SidebarMenuContainer>
+                        <SidebarMenu>
+                            <SidebarTitle>Persetujuan</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-usulan">
+                                    <FaFileInvoice/>
+                                    Daftar Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                    </SidebarMenuContainer>
+                </div>
+
+                <SidebarLogout onClick={ logoutSubmit }>
+                    <FaSignOutAlt/>
+                    Keluar
+                </SidebarLogout>
+            </SidebarContainer>
+        )
+    } else if(type === "Super") {
         return (
             <SidebarContainer>
                 <div>

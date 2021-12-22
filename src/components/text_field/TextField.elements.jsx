@@ -44,7 +44,7 @@ export const TextFieldInput = styled.input`
     outline: none;
     padding: 1.25rem;
     background: none;
-    z-index: 1;
+    z-index: 0;
     
     ${({type, icon}) => {
         if (type === "password" || icon) {
@@ -95,6 +95,38 @@ export const TextFieldContainer = styled.div`
 
     &:last-of-type {
         margin-bottom: 0;
+    }
+
+    & .css-1s2u09g-control {
+        border-radius: 3px;
+        border-color: ${({error}) => error ? 'var(--danger-color);' : 'var(--text-color);'};
+        
+        &:hover {
+            border-color: ${({error}) => error ? 'var(--danger-color);' : 'var(--text-color);'};
+        }
+    }
+    & .css-319lph-ValueContainer {
+        padding: 6px 1.25rem;
+    }
+    & .css-14el2xx-placeholder {
+        color: ${({error}) => error ? 'var(--danger-color);' : 'var(--text-color);'};
+    }
+    & .css-1okebmr-indicatorSeparator {
+        background-color: var(--text-color);
+    }
+    & .css-tlfecz-indicatorContainer {
+        color: var(--text-color);
+    }
+    & .css-1pahdxg-control:hover,
+    & .css-1pahdxg-control {
+        border: 2px solid var(--first-color);
+        box-shadow: none;
+
+        ${({error}) => {
+            if (error) {
+                return `border-color: var(--danger-color) !important;`
+            }
+        }}
     }
 `
 
@@ -148,6 +180,11 @@ export const InputFieldContainer = styled.div`
     }
 `
 
+export const InputFieldError = styled.span`
+    color: var(--danger-color);
+    font-size: var(--small-font-size);
+`
+
 export const InputFieldLabel = styled.label`
     flex: 2;
     color: var(--title-color);
@@ -157,14 +194,12 @@ export const InputFieldLabel = styled.label`
 export const InputFieldForm = styled.input`
     font-size: var(--normal-font-size);
     padding: 10px;
-    flex: 4;
     width: 100%;
 `
 
 export const InputFieldTextarea = styled.textarea`
     font-size: var(--normal-font-size);
     padding: 10px;
-    flex: 4;
     resize: none;
     width: 100%;
     outline: none;
@@ -174,12 +209,10 @@ export const InputFieldTextarea = styled.textarea`
 export const InputFieldSelect = styled.select`
     font-size: var(--normal-font-size);
     padding: 10px;
-    flex: 4;
     width: 100%;
 `
 
 export const InputFieldFileContainer = styled.div`
-    flex: 4;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -210,7 +243,6 @@ export const InputFieldFileText = styled.span`
 `
 
 export const InputFieldRadioContainer = styled.div`
-    flex: 4;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -255,5 +287,4 @@ export const InputFieldRadioHidden = styled.input`
 export const InputFieldCheckbox = styled.input`
     font-size: var(--normal-font-size);
     padding: 10px;
-    flex: 4;
 `

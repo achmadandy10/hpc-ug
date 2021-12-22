@@ -2,25 +2,26 @@ import Sidebar from "../../components/sidebar/Sidebar"
 import Topbar from "../../components/topbar/Topbar"
 import { AdminLayoutContainer, AdminLayoutMain, AdminLayoutPage, AdminLayoutSidebar } from "./AdminLayout.elements"
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { AdminRouter } from "../../routes/admin/AdminRouter"
-import { useEffect } from "react"
-// import ThemeChange from "../../components/theme_change/ThemeChange"
+import { AdminContentRouter, AdminProposalRouter, AdminSuperRouter } from "../../routes/admin/AdminRouter"
 
 const AdminLayout = () => {
-    useEffect(() => {
-        const role = () => {
-            localStorage.setItem("role", "Admin")
-        }
+    let AdminRouter = ''
+    const role = sessionStorage.getItem('role')
+    if (role === "Content") {
+        AdminRouter = AdminContentRouter
+    } else if (role === "Proposal") {
+        AdminRouter = AdminProposalRouter
+    } else if (role === "Super") {
+        AdminRouter = AdminSuperRouter
+    }
 
-        role()
-    }, [])
     return (
         <AdminLayoutContainer>
             <Topbar/>
 
             <AdminLayoutMain>
                 <AdminLayoutSidebar id="sidebar">
-                    <Sidebar type="admin"/>
+                    <Sidebar type={ role }/>
                 </AdminLayoutSidebar>
 
                 <AdminLayoutPage>
@@ -46,7 +47,6 @@ const AdminLayout = () => {
                     </Switch>
                 </AdminLayoutPage>
             </AdminLayoutMain>
-            {/* <ThemeChange/> */}
         </AdminLayoutContainer>
     )
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
-import { InputFieldCheckbox, InputFieldContainer, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
+import { InputFieldCheckbox, InputFieldContainer, InputFieldError, InputFieldFileButton, InputFieldFileContainer, InputFieldFileText, InputFieldForm, InputFieldLabel, InputFieldRadio, InputFieldRadioContainer, InputFieldRadioHidden, InputFieldRadioLabel, InputFieldSelect, InputFieldTextarea, TextFieldContainer, TextFieldContent, TextFieldError, TextFieldIcon, TextFieldInput, TextFieldLabel } from "./TextField.elements"
 import Select from "react-select"
 import { Editor } from '@tinymce/tinymce-react';
 import IconButton from '@mui/material/IconButton';
@@ -15,6 +15,13 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
         const fieldName = e.target.name
         const fieldValue = e.target.value
 
+        onChanged(fieldName, fieldValue)
+    }
+
+    const fieldImageChange = (e) => {
+        const fieldName = e.target.name
+        const fieldValue = e.target.files[0]
+        
         onChanged(fieldName, fieldValue)
     }
 
@@ -65,6 +72,7 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
                 readOnly={readOnly}
                 error={error}
                 placeholder={placeholder}
+                value={ value }
             />
         )
     } else if (type === "select") {
@@ -78,6 +86,7 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
                 readOnly={readOnly}
                 error={error}
                 defaultValue={""}
+                value={ value }
             >
                 {
                     isLoading ?
@@ -105,6 +114,7 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
                 placeholder={placeholder}
                 isLoading={ isLoading }
                 onChange={ mselectChange }
+                value={ value }
             />
         )
     } else if (type === "file") {
@@ -116,14 +126,14 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
                     hidden="hidden"
                     name={name}
                     disabled={disabled}
-                    value={value}
-                    onChange={fieldChange}
+                    onChange={fieldImageChange}
                     error={error}
                     required={required}
                     readOnly={readOnly}
                 />
                 <InputFieldFileButton onClick={ chooseFile }>Pilih File</InputFieldFileButton>
                 <InputFieldFileText id="file-name">Belum memilih file.</InputFieldFileText>
+                <br/>
             </InputFieldFileContainer>
         )
     } else if (type === "radio") {
@@ -185,7 +195,10 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
     return (
         <InputFieldContainer style_input={ styled }>
             <InputFieldLabel htmlFor={id}>{ label }</InputFieldLabel>
-            { InputType }
+            <div style={{flex: "4"}}>
+                { InputType }
+                { error && <InputFieldError>{ error }</InputFieldError>}
+            </div>
         </InputFieldContainer>
     )
 }
@@ -384,6 +397,49 @@ export const SearchField = ({data, onChanged}) => {
             },
             }}
         />
+    )
+}
+
+export const SelectField = ({ error, placeholder, isDisabled, isLoading, isClearable, isRtl, isSearchable, name, value, onChanged, onInputChanged, option }) => {
+    const selectChange = (value) => {
+        const fieldName = name
+        const fieldValue = value
+
+        console.log(value)
+
+        onChanged(fieldName, fieldValue)
+    }
+
+    const inputChange = (value) => {
+        const fieldValue = value
+        
+        onInputChanged(fieldValue)
+    }
+
+    return (
+        <TextFieldContainer error={ error }>
+            <Select
+                className="basic-single"
+                classNamePrefix="select"
+                value={ value }
+                isDisabled={ isDisabled }
+                isLoading={ isLoading }
+                isClearable={ isClearable }
+                isRtl={ isRtl }
+                isSearchable={ isSearchable }
+                name={ name }
+                options={ option }
+                placeholder={ placeholder }
+                onChange={ selectChange }
+                onInputChange={ inputChange }
+            /> 
+            { 
+                error ? 
+                    <TextFieldError>{ error }</TextFieldError>
+                :
+                    ""
+            }
+        </TextFieldContainer>
     )
 }
 

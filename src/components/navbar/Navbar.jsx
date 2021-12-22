@@ -1,5 +1,7 @@
 import { NavbarLogo, NavbarLogoContainer, NavbarHamburgerBottom, NavbarHamburgerContainer, NavbarHamburgerMiddle, NavbarHamburgerTop, NavbarContainer, NavbarMenu, NavbarMenuLink, NavbarMenuContainer, NavbarSubmenuLinkContainer, NavbarSubmenuLink } from "./Navbar.elements"
-import Logo from '../../images/logo.png'
+import UG from '../../images/logo.png'
+import Kedaireka from '../../images/kedaireka.svg'
+import Kemendikbud from '../../images/kemendikbud.png'
 import { useRef, useState } from "react"
 import { ButtonLink } from "../button/Button";
 import { FaChevronDown } from "react-icons/fa"
@@ -33,8 +35,9 @@ const Navbar = () => {
     return (
         <NavbarContainer className={ scroll ? "scroll" : "" }>
             <NavbarLogoContainer to="/">
-                <NavbarLogo src={ Logo }/>
-                HPC Gunadarma
+                <NavbarLogo src={ UG }/>
+                <NavbarLogo src={ Kemendikbud }/>
+                <NavbarLogo src={ Kedaireka }/>
             </NavbarLogoContainer>
 
             <NavbarMenuContainer>

@@ -25,52 +25,14 @@ export const RegisterListContainer = styled.div`
     display: flex;
     height: 100%;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     flex-direction: column;
     gap: 50px;
 `
 
 export const RegisterListImg = styled.img`
-    width: 100px;
-    height: 100px;
-`
-
-export const RegisterList = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 100%;
-    gap: 40px;
-    padding: 0 50px;
-`
-
-export const RegisterListDataContainer = styled.div`
-    display: flex;
-    gap: 10px;
-`
-
-export const RegisterListIcon = styled.span`
-    color: #FFFFFF;
-    line-height: var(--normal-font-size);
-    font-size: var(--normal-font-size);
-`
-
-export const RegisterListData = styled.div`
-    display: flex;
-    flex-direction: column;
-`
-
-export const RegisterListTitle = styled.span`
-    color: #FFFFFF;
-    line-height: var(--normal-font-size);
-    font-size: var(--normal-font-size);
-    font-weight: 500;
-`
-
-export const RegisterListDescription = styled.span`
-    color: #F9F9F9F9;
-    font-weight: 300;
-    font-size: var(--small-font-size);
+    width: 250px;
+    height: 250px;
 `
 
 export const RegisterRight = styled.div`

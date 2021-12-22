@@ -7,6 +7,7 @@ import { CopyRight } from "../../../components/footer/Footer"
 import { useHistory } from "react-router-dom"
 import axios from 'axios'
 import Swal from "sweetalert2"
+import AuthCheck from "../../../services/AuthCheck"
 
 const Login = () => {
     const history = useHistory()
@@ -20,6 +21,8 @@ const Login = () => {
     const inputChange = (name, value) => {
         setForm({ ...form, [name]: value })
     }
+
+    AuthCheck()
 
     const formSubmit = () => {
         setLoading(true)
@@ -45,8 +48,8 @@ const Login = () => {
                         role = 'External'
                     }
 
-                    localStorage.setItem('token', res.data.data.access_token);
-                    localStorage.setItem('role', role);
+                    sessionStorage.setItem('token', res.data.data.access_token);
+                    sessionStorage.setItem('role', role);
 
                     const Toast = Swal.mixin({
                         toast: true,
@@ -65,7 +68,7 @@ const Login = () => {
                         title: 'Anda berhasil masuk'
                     })
 
-                    if (res.data.data.user.role === "Admin Content" || res.data.data.user.role === "Admin Proposal Submission" || res.data.data.user.role === "Admin Super") {
+                    if (res.data.data.user.role === 1 || res.data.data.user.role === 2 || res.data.data.user.role === 3) {
                         history.push('/admin')
                     } else {
                         history.push('/user')

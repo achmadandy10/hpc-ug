@@ -8,78 +8,74 @@ import LoadingPage from "../../components/loading/Loading"
 import UserLayout from "../../layouts/user_layout/UserLayout"
 
 const UserPrivateRoute = ({ ...res }) => {
-    const history = useHistory()
-    const [credential, setCredential] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [authState, setAuth] = useState(false)
+    const [loadingState, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.get("/api/check_user").then( res => {
+        axios.get('/api/check_user').then( res => {
             if (res.data.meta.code === 200) {
-                setCredential(true)
+                setAuth(true)                
             }
             setLoading(false)
         })
 
         return () => {
-            setCredential(false)
+            setAuth(false)
         }
     }, [])
 
+    const history = useHistory();
+
     axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
         if (err.response.status === 401) {
-            localStorage.removeItem('token')
-            localStorage.removeItem('role')
-
-            Swal.fire({
-                icon: "warning",
-                title: err.response.data.message,
-            })
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('role')
 
             history.push("/masuk")
         }
-        
+
         return Promise.reject(err)
     })
 
     axios.interceptors.response.use(function (response) {
-        return response
-    }, function (err) {
-        if (err.response.status === 403) {
+        return response;    
+    }, function (error) {
+        if ( error.response.status === 403 ) {
             Swal.fire({
-                icon: "warning",
-                title: "Forbidden",
-                text: err.response.data.message,
+                icon: 'warning',
+                title: "Forbedden",
+                text: error.response.data.message,
             })
 
             history.push("/403")
-        } else if (err.response.status === 404) {
+        } else if (error.response.status === 404 ) {
             Swal.fire({
-                icon: "warning",
+                icon: 'warning',
                 title: "404 Error",
-                text: err.response.data.message,
             })
-            
-            history.push("/404")
 
-            return Promise.reject(err)
+            history.push("/404")
         }
+
+        return Promise.reject(error)
     })
 
-    if (loading) {
+    if (loadingState) {
         return (
             <LoadingPage />
         )
     }
 
     return (
-        <Route
+        <Route 
             { ...res }
-            render={ ({ props, location }) => {
-                credential ?
-                    <UserLayout { ...props } />
+
+            render={ ({ props, location }) => 
+                authState ?
+                    ( <UserLayout { ...props }/> )
                 :
-                    <Redirect to={ { pathname: "/masuk", state: {from: location} } } />
-            }}
+                    ( <Redirect to={ {pathname: "/masuk", state: {from: location}} }/> )
+            }
         />
     )
 }

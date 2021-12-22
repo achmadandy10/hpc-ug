@@ -3,9 +3,8 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { AppStyle } from './App.elements';
 import LoadingPage from './components/loading/Loading';
-import AdminLayout from './layouts/admin_layout/AdminLayout';
-// import UserLayout from './layouts/user_layout/UserLayout'
-import UserPrivateRoute from './routes/user/UserPrivat';
+import AdminPrivateRoute from './routes/admin/AdminPrivate';
+import UserPrivateRoute from './routes/user/UserPrivate';
 require('dotenv').config()
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -14,7 +13,7 @@ axios.defaults.headers.post['Accept'] = 'appilaction/json';
 axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(function (config) {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   config.headers.Authorization = token ? `Bearer ${token}` : '';
   return config;
 });
@@ -34,9 +33,8 @@ function App() {
               <Route path="/masuk" component={ Login }/>
               <Route path="/daftar" component={ Register }/>
 
-              {/* <Route path="/user" name="User" render={(props) => <UserLayout {...props} />}/> */}
               <UserPrivateRoute path="/user" name="User"/>
-              <Route path="/admin" name="Admin" render={(props) => <AdminLayout {...props} />}/>
+              <AdminPrivateRoute path="/admin" name="Admin"/>
               <Route path="/" name="Landing" render={(props) => <LandingLayout {...props} />}/>
           </Switch>
         </Suspense>

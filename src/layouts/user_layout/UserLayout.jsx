@@ -2,41 +2,24 @@ import Sidebar from "../../components/sidebar/Sidebar"
 import Topbar from "../../components/topbar/Topbar"
 import { UserLayoutContainer, UserLayoutMain, UserLayoutPage, UserLayoutSidebar } from "./UserLayout.elements"
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { UserRouter } from "../../routes/user/UserRouter"
-import { useEffect } from "react"
-// import ThemeChange from "../../components/theme_change/ThemeChange"
-
-// const Internal = () => {
-//     return (
-//         <>
-//             internal
-//         </>
-//     )
-// }
-
-// const External = () => {
-//     return (
-//         <>
-//             external
-//         </>
-//     )
-// }
+import { UserInternalRouter, UserExternalRouter } from "../../routes/user/UserRouter"
 
 const UserLayout = () => {
-    useEffect(() => {
-        const role = () => {
-            localStorage.setItem("role", "User")
-        }
+    let UserRouter = ''
+    const role = sessionStorage.getItem('role')
+    if (role === "Internal") {
+        UserRouter = UserInternalRouter
+    } else if (role === "External") {
+        UserRouter = UserExternalRouter
+    }
 
-        role()
-    }, [])
     return (
         <UserLayoutContainer>
             <Topbar/>
 
             <UserLayoutMain>
                 <UserLayoutSidebar id="sidebar">
-                    <Sidebar type="user internal"/>
+                    <Sidebar type={ role }/>
                 </UserLayoutSidebar>
 
                 <UserLayoutPage>
@@ -62,7 +45,6 @@ const UserLayout = () => {
                     </Switch>
                 </UserLayoutPage>
             </UserLayoutMain>
-            {/* <ThemeChange/> */}
         </UserLayoutContainer>
     )
 }
