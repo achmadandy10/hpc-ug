@@ -127,6 +127,13 @@ export const ButtonSubmitContainer = styled.button`
                     box-shadow: 1px 1px 10px rgba(40, 172, 0, 0.308);
                 }
             `
+        }  else if (color === "info") {
+            return `
+                background: var(--info-color);
+                &:hover {
+                    box-shadow: 1px 1px 10px rgba(0, 161, 172, 0.308);
+                }
+            `
         } else {
             return `
                 background: var(--text-color-light);
@@ -171,6 +178,10 @@ export const ButtonIconLinkContainer = styled(Link)`
             return `
                 background: var(--first-color);
             `
+        } else if (color === "info") {
+            return `
+                background: var(--info-color);
+            `
         } else {
             return `
                 background: var(--text-color-light);
@@ -210,6 +221,10 @@ export const ButtonIconSubmitContainer = styled.button`
         } else if (color === "primary") {
             return `
                 background: var(--first-color);
+            `
+        }  else if (color === "info") {
+            return `
+                background: var(--info-color);
             `
         } else {
             return `

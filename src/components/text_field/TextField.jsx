@@ -8,7 +8,14 @@ import { TextField as TextFieldMui } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 
-export const InputField = ({ styled, label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
+export const inputFileClear = () => {
+    const inputFile = document.querySelectorAll('input[type=file]')
+    const fileName = document.getElementsByClassName('file-name')
+    Array.from(inputFile, x => x.value = '')
+    Array.from(fileName, y => y.innerHTML = 'Belum memilih file.')
+}
+
+export const InputField = ({ initialValue, defaultValue, styled, label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
     let InputType = ''
 
     const fieldChange = (e) => {
@@ -47,8 +54,8 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
     }, [type, id])
 
     const chooseFile = () => {
-        const realFile = document.getElementById("real-file")
-        const fileName = document.getElementById("file-name")        
+        const realFile = document.getElementById(id)
+        const fileName = document.getElementById(id + "-file-name")        
         
         realFile.click()
         
@@ -114,7 +121,9 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
                 placeholder={placeholder}
                 isLoading={ isLoading }
                 onChange={ mselectChange }
+                defaultValue={ defaultValue }
                 value={ value }
+                initialValue={ initialValue }
             />
         )
     } else if (type === "file") {
@@ -122,7 +131,7 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
             <InputFieldFileContainer>
                 <input 
                     type="file" 
-                    id="real-file" 
+                    id={id}
                     hidden="hidden"
                     name={name}
                     disabled={disabled}
@@ -132,7 +141,7 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
                     readOnly={readOnly}
                 />
                 <InputFieldFileButton onClick={ chooseFile }>Pilih File</InputFieldFileButton>
-                <InputFieldFileText id="file-name">Belum memilih file.</InputFieldFileText>
+                <InputFieldFileText className="file-name" id={id + "-file-name"}>Belum memilih file.</InputFieldFileText>
                 <br/>
             </InputFieldFileContainer>
         )
@@ -143,7 +152,7 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
                 <InputFieldRadioLabel key={idx} htmlFor={id+idx}>
                     <InputFieldRadioHidden 
                         type="radio"
-                        id={id+idx} 
+                        id={id+idx}
                         name={name}
                         disabled={disabled}
                         value={value}
@@ -195,7 +204,12 @@ export const InputField = ({ styled, label, type, id, name, value, option, readO
     return (
         <InputFieldContainer style_input={ styled }>
             <InputFieldLabel htmlFor={id}>{ label }</InputFieldLabel>
-            <div style={{flex: "4"}}>
+            <div 
+                style={{
+                    flex: "4",
+                    width: "100%"
+                }}
+            >
                 { InputType }
                 { error && <InputFieldError>{ error }</InputFieldError>}
             </div>
@@ -270,10 +284,9 @@ const TextField = ({ label, type, id, name, value, readOnly, disabled, required,
                             icon={ icon }
                             onChange={ fieldChange }
                         />
-
                 }
                 { IconField }
-                <TextFieldLabel error={ error }>{ label ? label : "Label" }</TextFieldLabel>
+                <TextFieldLabel htmlFor={id} error={ error }>{ label ? label : "Label" }</TextFieldLabel>
             </TextFieldContent>
             { 
                 error ? 
@@ -285,63 +298,82 @@ const TextField = ({ label, type, id, name, value, readOnly, disabled, required,
     )
 }
 
-export const TextEditor = ({ value, name, onChanged, message }) => {
+export const TextEditor = ({ value, name, onChanged, error }) => {
     return (
-        <Editor
-            apiKey='fnabl7d5djugpqwk8afwh93fbc0bfvuqjm81pm6ai3an5xmy'
-            initialValue={ value }
-            onEditorChange={ (value) => onChanged(name, value) }
-            init={{
-                height: 500,
-                selector: 'textarea#open-source-plugins',
-                imagetools_cors_hosts: ['picsum.photos'],
-                menubar: 'file edit view insert format tools table help',
-                plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons',
-                toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                toolbar_sticky: true,
-                autosave_ask_before_unload: true,
-                autosave_interval: '30s',
-                autosave_prefix: '{path}{query}-{id}-',
-                autosave_restore_when_empty: false,
-                autosave_retention: '2m',
-                image_advtab: true,
-                image_caption: true,
-                quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
-                noneditable_noneditable_class: 'mceNonEditable',
-                toolbar_mode: 'sliding',
-                contextmenu: 'link image table',
-                media_live_embeds: true,
-                image_title: true,
-                automatic_uploads: true,
-                images_reuse_filename: true,
-                // images_upload_handler: function (blobInfo, success, failure) {
-                //     var xhr, formData;
-                //     xhr = new XMLHttpRequest();
-                //     xhr.withCredentials = false;
-                //     xhr.open('POST', 'link-upload');
-                //     var token = '{{ csrf_token() }}';
-                //     xhr.setRequestHeader("X-CSRF-Token", token);
-                //     xhr.onload = function() {
-                //         var json;
-                //         if (xhr.status !== 200) {
-                //             failure('HTTP Error: ' + xhr.status);
-                //             return;
-                //         }
-                //         json = JSON.parse(xhr.responseText);
-        
-                //         if (!json || typeof json.location !== 'string') {
-                //             failure('Invalid JSON: ' + xhr.responseText);
-                //             return;
-                //         }
-                //         success(json.location);
-                //     };
-                //     formData = new FormData();
-                //     formData.append('file', blobInfo.blob(), blobInfo.filename());
-                //     xhr.send(formData);
-                // },
-            }}
-        />
+        <>
+            <Editor
+                apiKey='fnabl7d5djugpqwk8afwh93fbc0bfvuqjm81pm6ai3an5xmy'
+                value={ value }
+                // initialValue={ value }
+                onEditorChange={ (value) => onChanged(name, value) }
+                init={{
+                    height: 500,
+                    selector: 'textarea#open-source-plugins',
+                    imagetools_cors_hosts: ['picsum.photos'],
+                    menubar: 'file edit view insert format tools table help',
+                    plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons',
+                    toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                    toolbar_sticky: true,
+                    autosave_ask_before_unload: true,
+                    autosave_interval: '30s',
+                    autosave_prefix: '{path}{query}-{id}-',
+                    autosave_restore_when_empty: false,
+                    autosave_retention: '2m',
+                    image_advtab: true,
+                    image_caption: true,
+                    quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+                    noneditable_noneditable_class: 'mceNonEditable',
+                    toolbar_mode: 'sliding',
+                    contextmenu: 'link image table',
+                    media_live_embeds: true,
+                    image_title: true,
+                    automatic_uploads: true,
+                    images_reuse_filename: true,
+                    images_upload_handler: function (blobInfo, success, failure) {
+                        var xhr, formData;
+                        xhr = new XMLHttpRequest();
+                        xhr.withCredentials = true;
+                        
+                        var url = ''
+                        if (sessionStorage.getItem('role') === "Content") {
+                            url = '/api/admin-content/post/upload-image'
+                        } else if (sessionStorage.getItem('role') === "Super") {
+                            url = '/api/admin-super/post/upload-image'
+                        }
+
+                        xhr.open('POST', process.env.REACT_APP_API_URL + url);
+                        // var token = '{{ csrf_token() }}';
+                        // xhr.setRequestHeader("X-CSRF-Token", token);
+                        var auth = sessionStorage.getItem('token');
+                        xhr.setRequestHeader('Authorization', auth ? `Bearer ${auth}` : '' );
+                        xhr.onload = function() {
+                            var json;
+                            if (xhr.status !== 200) {
+                                failure('HTTP Error: ' + xhr.status);
+                                return;
+                            }
+                            json = JSON.parse(xhr.responseText);
+            
+                            if (!json || typeof json.location !== 'string') {
+                                failure('Invalid JSON: ' + xhr.responseText);
+                                return;
+                            }
+                            success(json.location);
+                        };
+                        formData = new FormData();
+                        formData.append('file', blobInfo.blob(), blobInfo.filename());
+                        xhr.send(formData);
+                    },
+                }}
+            />
+            { 
+                error ? 
+                    <TextFieldError>{ error }</TextFieldError>
+                :
+                    ""
+            }
+        </>
     )
 }
 

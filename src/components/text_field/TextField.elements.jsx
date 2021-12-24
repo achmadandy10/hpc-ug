@@ -156,7 +156,6 @@ export const InputFieldContainer = styled.div`
     & .css-b62m3t-container {
         flex: 4;
         position: relative;
-        left: -6px;
         width: 100%;
     }
     & .css-1s2u09g-control {
@@ -217,7 +216,6 @@ export const InputFieldFileContainer = styled.div`
     align-items: center;
     gap: 10px;
     position: relative;
-    left: -6px;
 `
 
 export const InputFieldFileButton = styled.button`

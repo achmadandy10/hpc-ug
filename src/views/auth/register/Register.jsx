@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { ButtonSubmit } from "../../../components/button/Button"
 import { CopyRight } from "../../../components/footer/Footer"
-import TextField, { SelectField } from "../../../components/text_field/TextField"
+import TextField from "../../../components/text_field/TextField"
 import { RegisterButtonContainer, RegisterButtonLink, RegisterContainer, RegisterContent, RegisterFieldName, RegisterForm, RegisterLeft, RegisterListContainer, RegisterListImg, RegisterRight, RegisterTitle } from "./Register.elements"
 import Logo from '../../../images/logo.png'
 import { useHistory } from "react-router-dom"
@@ -12,8 +12,6 @@ import AuthCheck from "../../../services/AuthCheck"
 const Register = () => {
     const history = useHistory()
     const [store, setStore] = useState(false)
-    const [get, setGet] = useState(false)
-    const [college, setCollege] = useState([])
     const [form, setForm] = useState({
         first_name: '',
         last_name: '',
@@ -28,24 +26,6 @@ const Register = () => {
         setForm({ ...form, [name]: value })
     }
 
-    const searchChange = (value) => {
-        setGet(true)
-        fetch('https://api-frontend.kemdikbud.go.id/hit/' + value)
-            .then((res) => res.json())
-            .then((data) => {
-                data.pt.map((v) => {
-                    var arr = v.text.split(', ')
-                    var nama_pt = arr[0].replace('Nama PT: ', '')
-                    var kode_pt = arr[1].replace('NPSN: ', '')
-                    var clean_kode_pt = parseInt(kode_pt.replace(' ', ''))
-                    const data = [{ value: clean_kode_pt, label: nama_pt }]
-                    return setCollege(data)
-                })
-                setGet(false)
-            })
-            .catch((error) => console.log("Error: " + error))
-    }
-
     AuthCheck()
 
     const formSubmit = () => {
@@ -54,6 +34,7 @@ const Register = () => {
         const data = {
             first_name: form.first_name,
             last_name: form.last_name,
+            college: form.college,
             email: form.email,
             password: form.password,
             password_confirmation: form.password_confirmation,
@@ -144,14 +125,13 @@ const Register = () => {
                                 error={ form.error_list.last_name }
                             />
                         </RegisterFieldName>
-                        <SelectField
+                        <TextField
+                            label="Instansi"
+                            id="college"
                             name="college"
-                            placeholder="Cari Institusi..."
-                            option={ college }
+                            type="text"
                             onChanged={ inputChange }
-                            onInputChanged={ searchChange }
                             error={ form.error_list.college }
-                            isLoading={ get }
                         />
                         <TextField
                             label="Alamat Email"

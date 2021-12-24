@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const PostListContainer = styled.div`
@@ -11,7 +10,7 @@ export const PostListContentContainer = styled.div`
     gap: 20px;
 `
 
-export const PostListContent = styled(Link)`
+export const PostListContent = styled.div`
     display: flex;
     gap: 20px;
     padding: 20px;

@@ -43,6 +43,8 @@ export const CategoryListDetail = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 10px;
 `
 
 export const CategoryListLabel = styled.h2`

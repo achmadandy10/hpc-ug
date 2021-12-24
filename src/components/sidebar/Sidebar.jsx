@@ -101,11 +101,11 @@ const Sidebar = ({ type }) => {
                                     <FaPenSquare/>
                                     Buat Konten
                                 </SidebarListItem>
-                                <SidebarListItem activeClassName="active" to="/admin/daftar-konten">
+                                <SidebarListItem activeClassName="active" to="/admin/konten">
                                     <FaList/>
                                     Daftar Konten
                                 </SidebarListItem>
-                                <SidebarListItem activeClassName="active" to="/admin/daftar-kategori">
+                                <SidebarListItem activeClassName="active" to="/admin/kategori">
                                     <FaTags/>
                                     Daftar Kategori
                                 </SidebarListItem>
@@ -133,7 +133,7 @@ const Sidebar = ({ type }) => {
                         <SidebarMenu>
                             <SidebarTitle>Persetujuan</SidebarTitle>
                             <SidebarList>
-                                <SidebarListItem activeClassName="active" to="/admin/daftar-usulan">
+                                <SidebarListItem activeClassName="active" to="/admin/usulan">
                                     <FaFileInvoice/>
                                     Daftar Usulan
                                 </SidebarListItem>
@@ -165,11 +165,11 @@ const Sidebar = ({ type }) => {
                                     <FaPenSquare/>
                                     Buat Konten
                                 </SidebarListItem>
-                                <SidebarListItem activeClassName="active" to="/admin/daftar-konten">
+                                <SidebarListItem activeClassName="active" to="/admin/konten">
                                     <FaList/>
                                     Daftar Konten
                                 </SidebarListItem>
-                                <SidebarListItem activeClassName="active" to="/admin/daftar-kategori">
+                                <SidebarListItem activeClassName="active" to="/admin/kategori">
                                     <FaTags/>
                                     Daftar Kategori
                                 </SidebarListItem>
@@ -178,7 +178,7 @@ const Sidebar = ({ type }) => {
                         <SidebarMenu>
                             <SidebarTitle>Persetujuan</SidebarTitle>
                             <SidebarList>
-                                <SidebarListItem activeClassName="active" to="/admin/daftar-usulan">
+                                <SidebarListItem activeClassName="active" to="/admin/usulan">
                                     <FaFileInvoice/>
                                     Daftar Usulan
                                 </SidebarListItem>

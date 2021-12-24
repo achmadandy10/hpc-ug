@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa"
-import { ButtonIconLink, ButtonIconSubmit, ButtonSubmit } from "../../../components/button/Button"
+import { ButtonIconSubmit, ButtonSubmit } from "../../../components/button/Button"
 import Card from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import Popup from "../../../components/popup/Popup"
-import { InputField, SearchField } from "../../../components/text_field/TextField"
+import { InputField, inputFileClear, SearchField } from "../../../components/text_field/TextField"
 import { CategoryListContainer, CategoryListContent, CategoryListDetail, CategoryListImg, CategoryListLabel, CategoryListPopup, CategoryListSearch, CategoryListSubmit } from "./CategoryList.elements"
 import axios from "axios"
 import Swal from "sweetalert2"
@@ -15,7 +15,14 @@ const CategoryList = () => {
     const [data, setData] = useState([])
     const [search, setSearch] = useState([])
     const [popup, setPopup] = useState(false)
+    const [edit, setEdit] = useState(false)
     const [form, setForm] = useState({
+        label: '',
+        thumbnail: '',
+        error_list: [],
+    })
+    const [form_edit, setFormEdit] = useState({
+        id: '',
         label: '',
         thumbnail: '',
         error_list: [],
@@ -25,12 +32,23 @@ const CategoryList = () => {
         setForm({ ...form, [name]: value })
     }
 
+    const editChange = (name, value) => {
+        setFormEdit({ ...form_edit, [name]: value })
+    }
+
     const searchInput = (value) => {
         setData(value)
     }
 
     async function GetCategory() {
-        const res = await axios.get('/api/admin-content/category/show-all')
+        var url = ''
+        if (sessionStorage.getItem('role') === "Content") {
+            url = 'admin-content'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
+        const res = await axios.get('/api/' + url +'/category/show-all')
 
         if (res.data.meta.code === 200) {
             setData(res.data.data.category)
@@ -42,12 +60,20 @@ const CategoryList = () => {
                 error_list: '',
             })
         }
+        inputFileClear()
         setPopup(false)
     }
     
     useEffect(() => {
         const Category = () => {
-            axios.get('/api/admin-content/category/show-all').then(res => {
+            var url = ''
+            if (sessionStorage.getItem('role') === "Content") {
+                url = 'admin-content'
+            } else if (sessionStorage.getItem('role') === "Super") {
+                url = 'admin-super'
+            }
+
+            axios.get('/api/' + url + '/category/show-all').then(res => {
                 setData(res.data.data.category)
                 setSearch(res.data.data.category)
             })
@@ -55,6 +81,16 @@ const CategoryList = () => {
         }
         Category()
     }, [])
+
+    const popupEdit = (id, label) => {
+        setEdit(true)
+        setFormEdit({
+            ...form_edit,
+            id: id,
+            label: label,
+            error_list: '',
+        })
+    }
 
     const storeCategory = () => {
         setStore(true)
@@ -64,7 +100,14 @@ const CategoryList = () => {
         data.append('label', form.label)
         data.append('thumbnail', form.thumbnail)
 
-        axios.post('/api/admin-content/category/store', data).then(res => {
+        var url = ''
+        if (sessionStorage.getItem('role') === "Content") {
+            url = 'admin-content'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
+        axios.post('/api/' + url + '/category/store', data).then(res => {
             if (res.data.meta.code === 200) {
                 Swal.fire({
                     icon: "success",
@@ -79,6 +122,77 @@ const CategoryList = () => {
         })
     }
 
+    const editCategory = () => {
+        setStore(true)
+        
+        const data = new FormData()
+
+        data.append('label', form_edit.label)
+        data.append('thumbnail', form_edit.thumbnail)
+
+        var url = ''
+        if (sessionStorage.getItem('role') === "Content") {
+            url = 'admin-content'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
+        axios.post('/api/' + url + '/category/update/' + form_edit.id, data).then(res => {
+            if (res.data.meta.code === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sukses!",
+                    text: "Kategori berhasil diubah."
+                })
+                GetCategory()
+            } else {
+                setFormEdit({ ...form_edit, error_list: res.data.data.validation_errors })
+            }
+            setStore(false)
+        })
+    }
+
+    const deleteCategory = (id) => {
+        setStore(true)
+
+        var url = ''
+        if (sessionStorage.getItem('role') === "Content") {
+            url = 'admin-content'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+        Swal.fire({
+            icon: 'question',
+            title: 'Benar ingin menghapus kategori?',
+            text: 'Pilih "Hapus" jika Anda benar ingin menghapus kategori.',
+            showCancelButton: true,
+            confirmButtonColor: "#5B3A89",
+            cancelButtonColor: "#F34636",
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Hapus',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/api/' + url + '/category/delete/' + id, data).then(res => {
+                    if (res.data.meta.code === 200) {
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Kategori berhasil dihapus.',
+                        })
+                        GetCategory()
+                    } else {
+                        Swal.fire({
+                            icon: "danger",
+                            title: "Gagal!",
+                            text: "Kategori gagal dihapus."
+                        })
+                    }
+                    setStore(false)
+                })
+            }
+        })
+    }
+
     let contentElement = ''
 
     if (get) {
@@ -90,11 +204,23 @@ const CategoryList = () => {
                     <CategoryListImg src={ value.thumbnail }/>
                     <CategoryListDetail>
                         <CategoryListLabel>{ value.label }</CategoryListLabel>
-                        <div>
-                            <ButtonIconLink>
+                        <div 
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "10px",
+                            }}
+                        >
+                            <ButtonIconSubmit 
+                                color="info"
+                                onClicked={ () => popupEdit(value.id, value.label) }
+                            >
                                 <FaEdit/>
-                            </ButtonIconLink>
-                            <ButtonIconSubmit>
+                            </ButtonIconSubmit>
+                            <ButtonIconSubmit 
+                                color="danger"
+                                onClicked={ () => deleteCategory(value.id) }
+                            >
                                 <FaTrash/>
                             </ButtonIconSubmit>
                         </div>
@@ -109,7 +235,7 @@ const CategoryList = () => {
             <PageHeader title="Daftar Kategori">
                 <ButtonSubmit 
                     color="primary"
-                    onClicked={ () => setPopup(!popup) }
+                    onClicked={ () => setPopup(!popup)}
                 >
                     <FaPlus/>
                     Tambah Kategori
@@ -162,6 +288,42 @@ const CategoryList = () => {
 
                 <CategoryListContainer>
                     { contentElement }
+                    <Popup
+                        trigger={ edit } 
+                        setTrigger={ setEdit }
+                        title="Ubah Kategori"
+                    >
+                        <CategoryListPopup>
+                            <InputField
+                                label="Nama Kategori"
+                                id="label_edit"
+                                name="label"
+                                onChanged={ editChange }
+                                type="text"
+                                placeholder="Masukkan Nama Kategori"
+                                value={ form_edit.label }
+                                error={ form_edit.error_list.label }
+                            />
+                            <InputField
+                                label="Gambar Mini"
+                                id="thumbnail_edit"
+                                name="thumbnail"
+                                onChanged={ editChange }
+                                type="file"
+                                error={ form_edit.error_list.thumbnail }
+                            />
+
+                            <CategoryListSubmit>
+                                <ButtonSubmit
+                                    loading={ store }
+                                    color="primary"
+                                    onClicked={ editCategory }
+                                >
+                                    Ubah
+                                </ButtonSubmit>
+                            </CategoryListSubmit>
+                        </CategoryListPopup>
+                    </Popup>
                 </CategoryListContainer>
             </Card>
         </PageLayout>

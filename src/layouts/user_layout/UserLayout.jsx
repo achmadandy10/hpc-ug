@@ -2,17 +2,10 @@ import Sidebar from "../../components/sidebar/Sidebar"
 import Topbar from "../../components/topbar/Topbar"
 import { UserLayoutContainer, UserLayoutMain, UserLayoutPage, UserLayoutSidebar } from "./UserLayout.elements"
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { UserInternalRouter, UserExternalRouter } from "../../routes/user/UserRouter"
+import { UserRouter } from "../../routes/user/UserRouter"
 
 const UserLayout = () => {
-    let UserRouter = ''
     const role = sessionStorage.getItem('role')
-    if (role === "Internal") {
-        UserRouter = UserInternalRouter
-    } else if (role === "External") {
-        UserRouter = UserExternalRouter
-    }
-
     return (
         <UserLayoutContainer>
             <Topbar/>
