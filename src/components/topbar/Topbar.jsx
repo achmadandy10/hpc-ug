@@ -1,21 +1,26 @@
-import { TopbarContainer, 
-    // TopbarFeauture, 
-    // TopbarIconBag, 
-    // TopbarIconContainer, 
-    TopbarLeft, TopbarLogoContainer, TopbarLogoImg, TopbarLogoTitle, TopbarProfile, TopbarProfileDropdownContainer, TopbarProfileDropdownLink, TopbarProfileDropdownList, TopbarProfileDropdownLogout, TopbarProfileImg, TopbarProfileName, TopbarRight, TopbarToggle, TopbarWrapper } from "./Topbar.elements"
+import { TopbarContainer, TopbarLeft, TopbarLogoContainer, TopbarLogoImg, TopbarLogoTitle, TopbarProfile, TopbarProfileDropdownContainer, TopbarProfileDropdownLink, TopbarProfileDropdownList, TopbarProfileDropdownLogout, TopbarProfileImg, TopbarProfileName, TopbarRight, TopbarToggle, TopbarWrapper } from "./Topbar.elements"
 import Logo from "../../images/logo.png"
-import { 
-    FaBars,
-    // FaBell, 
-    FaChevronDown, 
-    // FaQuestionCircle, 
-    FaSignOutAlt, FaUser } from "react-icons/fa"
-import { useState } from "react"
+import { FaBars, FaChevronDown, FaSignOutAlt, FaUser } from "react-icons/fa"
+import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import Swal from "sweetalert2"
+import axios from "axios"
 
 const Topbar = () => {
     const [dropdown, setDropdown] = useState(null)
+    const [profile, setProfile] = useState([])
+
+    useEffect(() => {
+        const getProfile = () => {
+            axios.get('/api/profile').then(res => {
+                if (res.data.meta.code === 200) {
+                    setProfile(res.data.data.profile)
+                }
+            })
+        }
+
+        getProfile()
+    }, [])
 
     const toggleActive = (index) => {
         if (index === dropdown) {
@@ -46,12 +51,26 @@ const Topbar = () => {
             confirmButtonText: 'Keluar',
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    icon:'success',
-                    title: 'Sukses!',
-                    text:'Kamu berhasil keluar.',
+                axios.post('/api/logout').then(res => {
+                    if (res.data.meta.code === 200) {
+                        sessionStorage.removeItem('token')
+                        sessionStorage.removeItem('role')
+
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Kamu berhasil keluar.',
+                        })
+                        
+                        history.push('/masuk')
+                    } else {
+                        Swal.fire({
+                            icon:'danger',
+                            title: 'Gagal!',
+                            text:'Kamu gagal keluar.',
+                        })
+                    }
                 })
-                history.push('/masuk')
             } else {
                 setDropdown(null)
             }
@@ -66,9 +85,9 @@ const Topbar = () => {
     var profileLink = ''
     const role = sessionStorage.getItem("role")
 
-    if (role === "Admin") {
+    if (role === "Content" || role === "Proposal" || role === "Super") {
         profileLink = "/admin/profil"
-    } else if (role === "User") {
+    } else if (role === "Internal" || role === "External") {
         profileLink = "/user/profil"
     }
 
@@ -87,16 +106,9 @@ const Topbar = () => {
                 </TopbarLeft>
 
                 <TopbarRight>
-                    {/* <TopbarFeauture>
-                        <TopbarIconContainer>
-                            <FaBell/>
-                            <TopbarIconBag>+9</TopbarIconBag>
-                        </TopbarIconContainer>
-                    </TopbarFeauture> */}
-
                     <TopbarProfile>
-                        <TopbarProfileName>Achmad Andy</TopbarProfileName>
-                        <TopbarProfileImg src="https://ui-avatars.com/api/?name=Achmad+Andybackground=0D8ABC&color=fff"/>
+                        <TopbarProfileName>{ profile.first_name + " " + profile.last_name }</TopbarProfileName>
+                        <TopbarProfileImg src={ profile.avatar !== null ? profile.avatar : "https://ui-avatars.com/api/?name=" + profile.first_name + "+" + profile.last_name + "background=0D8ABC&color=fff" }/>
                         <FaChevronDown onClick={ () => toggleActive(1) }/>
                         <TopbarProfileDropdownContainer className={ toggleActiveClass(1) }>
                             <TopbarProfileDropdownList>
@@ -104,10 +116,6 @@ const Topbar = () => {
                                     <FaUser/>
                                     Profil
                                 </TopbarProfileDropdownLink>
-                                {/* <TopbarProfileDropdownLink to="/user/bantuan" onClick={() => setDropdown(null)}>
-                                    <FaQuestionCircle/>
-                                    Bantuan
-                                </TopbarProfileDropdownLink> */}
                                 <TopbarProfileDropdownLogout onClick={ logoutSubmit }>
                                     <FaSignOutAlt/>
                                     Keluar

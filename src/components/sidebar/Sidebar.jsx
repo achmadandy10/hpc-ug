@@ -3,6 +3,7 @@ import { MdDashboard } from "react-icons/md"
 import { FaFileInvoice, FaList, FaPenSquare, FaSignOutAlt, FaTags } from "react-icons/fa"
 import Swal from "sweetalert2"
 import { useHistory } from "react-router-dom"
+import axios from "axios"
 
 const Sidebar = ({ type }) => {
     const history = useHistory();
@@ -18,12 +19,26 @@ const Sidebar = ({ type }) => {
             confirmButtonText: 'Keluar',
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    icon:'success',
-                    title: 'Sukses!',
-                    text:'Kamu berhasil keluar.',
+                axios.post('/api/logout').then(res => {
+                    if (res.data.meta.code === 200) {
+                        sessionStorage.removeItem('token')
+                        sessionStorage.removeItem('role')
+
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Kamu berhasil keluar.',
+                        })
+                        
+                        history.push('/masuk')
+                    } else {
+                        Swal.fire({
+                            icon:'danger',
+                            title: 'Gagal!',
+                            text:'Kamu gagal keluar.',
+                        })
+                    }
                 })
-                history.push('/masuk')
             }
         })
     }
@@ -39,7 +54,7 @@ const Sidebar = ({ type }) => {
 
                     <SidebarMenuContainer>
                         <SidebarMenu>
-                            <SidebarTitle>Pengajuan</SidebarTitle>
+                            <SidebarTitle>Usulan</SidebarTitle>
                             <SidebarList>
                                 <SidebarListItem activeClassName="active" to="/user/pengajuan-usulan">
                                     <FaFileInvoice/>
@@ -67,7 +82,7 @@ const Sidebar = ({ type }) => {
 
                     <SidebarMenuContainer>
                         <SidebarMenu>
-                            <SidebarTitle>Pengajuan</SidebarTitle>
+                            <SidebarTitle>Usulan</SidebarTitle>
                             <SidebarList>
                                 <SidebarListItem activeClassName="active" to="/user/pengajuan-usulan">
                                     <FaFileInvoice/>
@@ -131,11 +146,20 @@ const Sidebar = ({ type }) => {
 
                     <SidebarMenuContainer>
                         <SidebarMenu>
-                            <SidebarTitle>Persetujuan</SidebarTitle>
+                            <SidebarTitle>Usulan</SidebarTitle>
                             <SidebarList>
                                 <SidebarListItem activeClassName="active" to="/admin/usulan">
                                     <FaFileInvoice/>
                                     Daftar Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarTitle>Fasilitas</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/fasilitas">
+                                    <FaFileInvoice/>
+                                    Daftar Fasilitas
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>
@@ -176,11 +200,20 @@ const Sidebar = ({ type }) => {
                             </SidebarList>
                         </SidebarMenu>
                         <SidebarMenu>
-                            <SidebarTitle>Persetujuan</SidebarTitle>
+                            <SidebarTitle>Usulan</SidebarTitle>
                             <SidebarList>
                                 <SidebarListItem activeClassName="active" to="/admin/usulan">
                                     <FaFileInvoice/>
                                     Daftar Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarTitle>Fasilitas</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/fasilitas">
+                                    <FaFileInvoice/>
+                                    Daftar Fasilitas
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>

@@ -58,7 +58,7 @@ const Navbar = () => {
                         </NavbarSubmenuLinkContainer>
                     </NavbarMenuLink>
                     <NavbarMenuLink to="/produk">
-                        Produk <FaChevronDown/>
+                        Layanan <FaChevronDown/>
                         <NavbarSubmenuLinkContainer>
                             <NavbarSubmenuLink to="/produk/prototyping">
                                 Prototyping
