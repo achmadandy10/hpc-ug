@@ -85,12 +85,6 @@ export const AppStyle = createGlobalStyle`
         --rgba-color-0-5: rgba(105, 105, 105, 0.5);
     }
 
-    body.blue-theme {
-        /* Colors */
-        --first-color: #215C91;
-        --bs-first: 1px 1px 10px rgba(33,92,145, 0.308);
-    }
-
     /* Base */
     * {
         box-sizing: border-box;

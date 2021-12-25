@@ -15,6 +15,7 @@ export const SectionOneContainer = styled.div`
         flex-direction: column;
         padding-left: 20px;
         padding-right: 20px;
+        height: 100%;
     }
 `
 

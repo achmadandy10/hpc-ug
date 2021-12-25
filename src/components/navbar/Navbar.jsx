@@ -1,4 +1,4 @@
-import { NavbarLogo, NavbarLogoContainer, NavbarHamburgerBottom, NavbarHamburgerContainer, NavbarHamburgerMiddle, NavbarHamburgerTop, NavbarContainer, NavbarMenu, NavbarMenuLink, NavbarMenuContainer, NavbarSubmenuLinkContainer, NavbarSubmenuLink } from "./Navbar.elements"
+import { NavbarLogo, NavbarLogoContainer, NavbarHamburgerBottom, NavbarHamburgerContainer, NavbarHamburgerMiddle, NavbarHamburgerTop, NavbarContainer, NavbarMenu, NavbarMenuList, NavbarMenuLink, NavbarMenuItem, NavbarSubMenuList, NavbarSubMenuItem, NavbarSubMenuLink } from "./Navbar.elements"
 import UG from '../../images/logo.png'
 import Kedaireka from '../../images/kedaireka.svg'
 import Kemendikbud from '../../images/kemendikbud.png'
@@ -40,51 +40,59 @@ const Navbar = () => {
                 <NavbarLogo src={ Kedaireka }/>
             </NavbarLogoContainer>
 
-            <NavbarMenuContainer>
-                <NavbarMenu ref={ menu }>
-                    <NavbarMenuLink to="/berita">Berita</NavbarMenuLink>
-                    <NavbarMenuLink to="/tentang">
-                        Tentang <FaChevronDown/>
-                        <NavbarSubmenuLinkContainer>
-                            <NavbarSubmenuLink to="/tentang/hpc">
-                                HPC
-                            </NavbarSubmenuLink>
-                            <NavbarSubmenuLink to="/tentang/dgx-a-100">
-                                DGX A-100
-                            </NavbarSubmenuLink>
-                            <NavbarSubmenuLink to="/tentang/syarat-penggunaan">
-                                Syarat Penggunaan
-                            </NavbarSubmenuLink>
-                        </NavbarSubmenuLinkContainer>
-                    </NavbarMenuLink>
-                    <NavbarMenuLink to="/produk">
-                        Layanan <FaChevronDown/>
-                        <NavbarSubmenuLinkContainer>
-                            <NavbarSubmenuLink to="/produk/prototyping">
-                                Prototyping
-                            </NavbarSubmenuLink>
-                            <NavbarSubmenuLink to="/produk/training">
-                                Training
-                            </NavbarSubmenuLink>
-                            <NavbarSubmenuLink to="/produk/database">
-                                Database
-                            </NavbarSubmenuLink>
-                            <NavbarSubmenuLink to="/produk/hpc">
-                                HPC
-                            </NavbarSubmenuLink>
-                        </NavbarSubmenuLinkContainer>
-                    </NavbarMenuLink>
-                    <NavbarMenuLink to="/kontak">Kontak</NavbarMenuLink>
-                    <ButtonLink to="/masuk">Masuk</ButtonLink>
-                </NavbarMenu>
+            <NavbarMenu ref={ menu }>
+                <NavbarMenuList>
+                    <NavbarMenuItem>
+                        <NavbarMenuLink to="/berita">Berita</NavbarMenuLink>
+                    </NavbarMenuItem>
+                    
+                    <NavbarMenuItem>
+                        <NavbarMenuLink to="/tentang">Tentang <FaChevronDown/></NavbarMenuLink>
+                        <NavbarSubMenuList>
+                            <NavbarSubMenuItem>
+                                <NavbarSubMenuLink to="/tentang/hpc">HPC</NavbarSubMenuLink>
+                            </NavbarSubMenuItem>
+                            <NavbarSubMenuItem>
+                                <NavbarSubMenuLink to="/tentang/dgx-a-100">DGX A-100</NavbarSubMenuLink>
+                            </NavbarSubMenuItem>
+                            <NavbarSubMenuItem>
+                                <NavbarSubMenuLink to="/tentang/syarat-dan-ketentuan">Syarat dan Ketentuan</NavbarSubMenuLink>
+                            </NavbarSubMenuItem>
+                        </NavbarSubMenuList>
+                    </NavbarMenuItem>
+                    
+                    <NavbarMenuItem>
+                        <NavbarMenuLink to="/layanan">Layanan <FaChevronDown/></NavbarMenuLink>
+                        <NavbarSubMenuList>
+                            <NavbarSubMenuItem>
+                                <NavbarSubMenuLink to="/layanan/prototyping">Prototyping</NavbarSubMenuLink>
+                            </NavbarSubMenuItem>
+                            <NavbarSubMenuItem>
+                                <NavbarSubMenuLink to="/layanan/training">Training</NavbarSubMenuLink>
+                            </NavbarSubMenuItem>
+                            <NavbarSubMenuItem>
+                                <NavbarSubMenuLink to="/layanan/database">Database</NavbarSubMenuLink>
+                            </NavbarSubMenuItem>
+                            <NavbarSubMenuItem>
+                                <NavbarSubMenuLink to="/layanan/hpc">HPC</NavbarSubMenuLink>
+                            </NavbarSubMenuItem>
+                        </NavbarSubMenuList>
+                    </NavbarMenuItem>
 
+                    <NavbarMenuItem>
+                        <NavbarMenuLink to="/kontak">Kontak</NavbarMenuLink>
+                    </NavbarMenuItem>
 
-                <NavbarHamburgerContainer ref={ toggleMenu } onClick={ toggleMenuClicked }>
-                    <NavbarHamburgerTop id="hamburger-bar-top"/>
-                    <NavbarHamburgerMiddle id="hamburger-bar-middle"/>
-                    <NavbarHamburgerBottom id="hamburger-bar-bottom"/>
-                </NavbarHamburgerContainer>
-            </NavbarMenuContainer>
+                    <NavbarMenuItem>
+                        <ButtonLink to="/masuk">Masuk</ButtonLink>
+                    </NavbarMenuItem>
+                </NavbarMenuList>
+            </NavbarMenu>
+            <NavbarHamburgerContainer ref={ toggleMenu } onClick={ toggleMenuClicked }>
+                <NavbarHamburgerTop id="hamburger-bar-top"/>
+                <NavbarHamburgerMiddle id="hamburger-bar-middle"/>
+                <NavbarHamburgerBottom id="hamburger-bar-bottom"/>
+            </NavbarHamburgerContainer>
         </NavbarContainer>
     )
 }
