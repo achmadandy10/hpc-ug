@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { PostPreviewContentDetailBody, PostPreviewContentDetailCategory, PostPreviewContentDetailCategoryLink, PostPreviewContentDetailDate, PostPreviewContentDetailThumbnail, PostPreviewContentDetailTitle } from "./PostPreview.elements";
 import dateFormat from "dateformat";
+import { LoadingElement } from "../../../components/loading/Loading";
 
 const PostPreview = () => {
     let query = useQuery();
@@ -38,7 +39,7 @@ const PostPreview = () => {
             <Card>
                 {
                     loading ?
-                        "loading..."
+                        <LoadingElement/>
                     :
                         <div
                             style={{
@@ -48,7 +49,7 @@ const PostPreview = () => {
                             }}
                         >
                             <div>
-                                <PostPreviewContentDetailTitle>{ post.title }</PostPreviewContentDetailTitle>
+                                <PostPreviewContentDetailTitle>{ post.title ? post.title : "Tanpa Judul" }</PostPreviewContentDetailTitle>
                                 <PostPreviewContentDetailDate>{ dateFormat(post.created_at, 'dd mmmm yyyy') }</PostPreviewContentDetailDate>
                             </div>
                             <PostPreviewContentDetailThumbnail src={ post.thumbnail }/>

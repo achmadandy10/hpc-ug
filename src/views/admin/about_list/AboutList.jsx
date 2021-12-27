@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Card from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import { SearchField } from "../../../components/text_field/TextField"
-import { PostListContainer, PostListContent, PostListContentCategory, PostListContentContainer, PostListContentDetail, PostListContentDetailBottom, PostListContentDetailCategory, PostListContentDetailDate, PostListContentDetailFeature, PostListContentDetailTitle, PostListContentDetailTop, PostListContentImg } from "./PostList.elements"
+import { AboutListContainer, AboutListContent, AboutListContentContainer, AboutListContentDetail, AboutListContentDetailBottom, AboutListContentDetailDate, AboutListContentDetailFeature, AboutListContentDetailTitle, AboutListContentDetailTop, AboutListContentImg } from "./AboutList.elements"
 import dateFormat from "dateformat"
 import { FaCircle, FaEdit, FaEye, FaTrash } from "react-icons/fa"
 import { MdSendAndArchive } from "react-icons/md"
@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom"
 import Swal from "sweetalert2"
 import { LoadingElement } from "../../../components/loading/Loading"
 
-const PostList = () => {
+const AboutList = () => {
     const history = useHistory()
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
@@ -23,7 +23,7 @@ const PostList = () => {
         setData(value)
     }
 
-    const GetPost = () => {
+    const GetAbout = () => {
         var url = ''
         if (sessionStorage.getItem('role') === "Content") {
             url = 'admin-content'
@@ -31,18 +31,18 @@ const PostList = () => {
             url = 'admin-super'
         }
 
-        axios.get('/api/' + url + '/post/show-all').then(res => {
-            setData(res.data.data.post)
-            setSearch(res.data.data.post)
+        axios.get('/api/' + url + '/content/show-all-about').then(res => {
+            setData(res.data.data.content)
+            setSearch(res.data.data.content)
             setLoading(false)
         })
     }
 
     useEffect(() => {
-        GetPost()
+        GetAbout()
     }, [])
 
-    const draftPost = (id, slug) => {
+    const draftAbout = (id, slug) => {
         var url = ''
         if (sessionStorage.getItem('role') === "Content") {
             url = 'admin-content'
@@ -52,8 +52,8 @@ const PostList = () => {
 
         Swal.fire({
             icon: 'question',
-            title: 'Benar ingin draf konten?',
-            text: 'Pilih "Draf" jika Anda benar ingin draf konten.',
+            title: 'Benar ingin draf tentang?',
+            text: 'Pilih "Draf" jika Anda benar ingin draf tentang.',
             showCancelButton: true,
             confirmButtonColor: "#5B3A89",
             cancelButtonColor: "#F34636",
@@ -61,19 +61,19 @@ const PostList = () => {
             confirmButtonText: 'Draf',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/post/draft/' + id + '/' + slug, data).then(res => {
+                axios.post('/api/' + url + '/content/draft/' + id + '/' + slug, data).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
                             title: 'Sukses!',
-                            text:'Konten berhasil didraf.',
+                            text:'Tentang berhasil didraf.',
                         })
-                        GetPost()
+                        GetAbout()
                     } else {
                         Swal.fire({
                             icon: "danger",
                             title: "Gagal!",
-                            text: "Konten gagal didraf."
+                            text: "Tentang gagal didraf."
                         })
                     }
                 })
@@ -81,7 +81,7 @@ const PostList = () => {
         })
     }
 
-    const deletePost = (id, slug) => {
+    const deleteAbout = (id, slug) => {
         var url = ''
         if (sessionStorage.getItem('role') === "Content") {
             url = 'admin-content'
@@ -91,8 +91,8 @@ const PostList = () => {
 
         Swal.fire({
             icon: 'question',
-            title: 'Benar ingin menghapus konten?',
-            text: 'Pilih "Hapus" jika Anda benar ingin menghapus konten.',
+            title: 'Benar ingin menghapus tentang?',
+            text: 'Pilih "Hapus" jika Anda benar ingin menghapus tentang.',
             showCancelButton: true,
             confirmButtonColor: "#5B3A89",
             cancelButtonColor: "#F34636",
@@ -100,19 +100,19 @@ const PostList = () => {
             confirmButtonText: 'Hapus',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/post/delete/' + id + '/' + slug, data).then(res => {
+                axios.post('/api/' + url + '/content/delete/' + id + '/' + slug, data).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
                             title: 'Sukses!',
-                            text:'Konten berhasil dihapus.',
+                            text:'Tentang berhasil dihapus.',
                         })
-                        GetPost()
+                        GetAbout()
                     } else {
                         Swal.fire({
                             icon: "danger",
                             title: "Gagal!",
-                            text: "Konten gagal dihapus."
+                            text: "Tentang gagal dihapus."
                         })
                     }
                 })
@@ -129,101 +129,87 @@ const PostList = () => {
             let date = ''
 
             if (value.status === "Draft") {
-                const datePost = dateFormat(value.updated_at, "dd mmmm") 
+                const dateAbout = dateFormat(value.updated_at, "dd mmmm") 
                 date = (
                     <>
                         <span style={{ color: "var(--warning-color)" }}>
                             Draf
                         </span>
                         <FaCircle/>
-                        {datePost}
+                        {dateAbout}
                     </>
                 )
             } else {
-                const datePost = dateFormat(value.created_at, "dd mmm")
+                const dateAbout = dateFormat(value.created_at, "dd mmm")
                 date = (
                     <>
                         Dipublikasikan 
                         <FaCircle/>
-                        {datePost}
+                        {dateAbout}
                     </>
                 )
             }
             return (
-                <PostListContent key={ index }>
-                    <PostListContentImg src={ value.thumbnail }/>
-                    <PostListContentDetail>
-                        <PostListContentDetailTop>
-                            <PostListContentDetailTitle>{ value.title === null ? "Tanpa Judul" : value.title  }</PostListContentDetailTitle>
-                            <PostListContentDetailFeature>
+                <AboutListContent key={ index }>
+                    <AboutListContentImg src={ value.thumbnail }/>
+                    <AboutListContentDetail>
+                        <AboutListContentDetailTop>
+                            <AboutListContentDetailTitle>{ value.title === null ? "Tanpa Judul" : value.title  }</AboutListContentDetailTitle>
+                            <AboutListContentDetailFeature>
                                 <>
                                     {
                                         value.status === "Draft" ?
                                             ""
                                         :
                                             <Tooltip title="Kembali ke draf">
-                                                <IconButton onClick={ () => draftPost(value.id, value.slug) }>
+                                                <IconButton onClick={ () => draftAbout(value.id, value.slug) }>
                                                     <MdSendAndArchive/>
                                                 </IconButton>
                                             </Tooltip>
                                     }
-                                    <Tooltip title="Hapus konten ini">
-                                        <IconButton onClick={ () => deletePost(value.id, value.slug) }>
+                                    <Tooltip title="Hapus tentang ini">
+                                        <IconButton onClick={ () => deleteAbout(value.id, value.slug) }>
                                             <FaTrash/>
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title="Ubah">
-                                        <IconButton  onClick={ () => history.push("/admin/konten/ubah?id=" + value.id + "&slug=" + value.slug) }>
+                                        <IconButton  onClick={ () => history.push("/admin/tentang/ubah?id=" + value.id + "&slug=" + value.slug) }>
                                             <FaEdit/>
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title="Pratinjau">
-                                        <IconButton  onClick={ () => history.push("/admin/konten/pratinjau?id=" + value.id + "&slug=" + value.slug) }>
+                                        <IconButton  onClick={ () => history.push("/admin/tentang/pratinjau?id=" + value.id + "&slug=" + value.slug) }>
                                             <FaEye/>
                                         </IconButton>
                                     </Tooltip>
                                 </>
-                            </PostListContentDetailFeature>
-                        </PostListContentDetailTop>
-                        <PostListContentDetailBottom>
-                            <PostListContentDetailDate>{ date }</PostListContentDetailDate>
-                            <PostListContentDetailCategory>
-                                {
-                                    value.categories !== [] ?
-                                        value.categories.map((v, idx) => {
-                                            return (
-                                                <PostListContentCategory key={ idx }>
-                                                    { v.label }
-                                                </PostListContentCategory>
-                                            )
-                                        })
-                                    :
-                                        ""
-                                }
-                            </PostListContentDetailCategory>
-                        </PostListContentDetailBottom>
-                    </PostListContentDetail>
-                </PostListContent>
+                            </AboutListContentDetailFeature>
+                        </AboutListContentDetailTop>
+                        <AboutListContentDetailBottom>
+                            <AboutListContentDetailDate>{ date }</AboutListContentDetailDate>
+                        </AboutListContentDetailBottom>
+                    </AboutListContentDetail>
+                </AboutListContent>
             )
         })
     }
 
     return (
         <PageLayout>
-            <PageHeader title="Daftar Konten"/>
+            <PageHeader title="Daftar Tentang"/>
             <Card>
-                <PostListContainer>
+                <AboutListContainer>
                     <SearchField
                         data={ search }
                         onChanged={ searchInput }
                     />
-                </PostListContainer>
-                <PostListContentContainer>
+                </AboutListContainer>
+                <AboutListContentContainer>
                     { contentElement }
-                </PostListContentContainer>
+                </AboutListContentContainer>
             </Card>
         </PageLayout>
     )
 }
 
-export default PostList
+export default AboutList

@@ -3,6 +3,7 @@ import { ListPost } from "../../../Dummy"
 import { NewsContainer, NewsContent, NewsDetail, NewsDetailBody, NewsDetailButtonRead, NewsDetailData, NewsDetailDate, NewsDetailImg, NewsDetailTitle, NewsHeader } from "./News.elements"
 import dateFormat from "dateformat"
 import { FaChevronRight } from "react-icons/fa"
+import { LoadingElement } from "../../../components/loading/Loading"
 
 const News = () => {
     const [loading, setLoading] = useState(true)
@@ -20,7 +21,7 @@ const News = () => {
     let contentElement = ''
 
     if (loading) {
-        contentElement = 'Loading...'
+        contentElement = <LoadingElement/>
     } else {
         contentElement = content.map((value, index) => {
             return (

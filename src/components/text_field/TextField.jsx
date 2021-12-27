@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { TextField as TextFieldMui } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
+import { ButtonSubmit } from "../button/Button";
 
 export const inputFileClear = () => {
     const inputFile = document.querySelectorAll('input[type=file]')
@@ -15,7 +16,7 @@ export const inputFileClear = () => {
     Array.from(fileName, y => y.innerHTML = 'Belum memilih file.')
 }
 
-export const InputField = ({ initialValue, defaultValue, styled, label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
+export const InputField = ({ onClicked, initialValue, defaultValue, styled, label, type, id, name, value, option, readOnly, disabled, required, error, onChanged, placeholder, isLoading }) => {
     let InputType = ''
 
     const fieldChange = (e) => {
@@ -92,8 +93,8 @@ export const InputField = ({ initialValue, defaultValue, styled, label, type, id
                 onChange={ fieldChange }
                 readOnly={readOnly}
                 error={error}
-                defaultValue={""}
                 value={ value }
+                defaultValue={ value }
             >
                 {
                     isLoading ?
@@ -104,7 +105,7 @@ export const InputField = ({ initialValue, defaultValue, styled, label, type, id
                             {
                                 option.map((data, idx) => {
                                     return (
-                                        <option key={idx} value={data.value}>{ data.label }</option>
+                                        <option key={idx} value={data.value} selected={ data.value === value }>{ data.label }</option>
                                     )
                                 })
                             }
@@ -147,22 +148,23 @@ export const InputField = ({ initialValue, defaultValue, styled, label, type, id
         )
     } else if (type === "radio") {
         let Radio = ''
-        Radio = option.map((value, idx) => {
+        Radio = option.map((option, idx) => {
             return (
                 <InputFieldRadioLabel key={idx} htmlFor={id+idx}>
-                    <InputFieldRadioHidden 
+                    <InputFieldRadioHidden
                         type="radio"
                         id={id+idx}
                         name={name}
                         disabled={disabled}
-                        value={value}
+                        value={option.value}
+                        checked={ option.value === value }
                         onChange={fieldChange}
                         error={error}
                         required={required}
                         readOnly={readOnly}
                     />
                     <InputFieldRadio/>
-                    {value}
+                    {option.label}
                 </InputFieldRadioLabel>
             )
         })
@@ -184,6 +186,12 @@ export const InputField = ({ initialValue, defaultValue, styled, label, type, id
                 required={required}
                 readOnly={readOnly}
             />
+        )
+    } else if (type === "see-file") {
+        InputType = (
+            <ButtonSubmit color="primary" onClicked={ onClicked }>
+                Lihat
+            </ButtonSubmit>
         )
     } else {
         InputType = (
@@ -337,9 +345,9 @@ export const TextEditor = ({ value, name, onChanged, error }) => {
                         
                         var url = ''
                         if (sessionStorage.getItem('role') === "Content") {
-                            url = '/api/admin-content/post/upload-image'
+                            url = '/api/admin-content/upload-image'
                         } else if (sessionStorage.getItem('role') === "Super") {
-                            url = '/api/admin-super/post/upload-image'
+                            url = '/api/admin-super/upload-image'
                         }
 
                         xhr.open('POST', process.env.REACT_APP_API_URL + url);

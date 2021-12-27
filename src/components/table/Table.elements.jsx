@@ -21,22 +21,22 @@ export const TableStatusContainer = styled.label`
     height: 30px;
     width: 100px;
     ${({ status }) => {
-        if (status === "approved") {
+        if (status === "Approved") {
             return `
                 color: var(--success-color);
                 background: #c3ffc2;
             `
-        } else if (status === "rejected") {
+        } else if (status === "Rejected") {
             return `
                 color: var(--danger-color);
                 background: #ffb8b1;
             `
-        } else if (status === "pending") {
+        } else if (status === "Pending") {
             return `
                 color: var(--warning-color);
                 background: #ffdbb5;
             `
-        } else if (status === "finished") {
+        } else if (status === "Finished") {
             return `
                 color: var(--first-color);
                 background: #d3b4ff;

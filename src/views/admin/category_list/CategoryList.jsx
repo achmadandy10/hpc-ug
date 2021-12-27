@@ -8,6 +8,7 @@ import { InputField, inputFileClear, SearchField } from "../../../components/tex
 import { CategoryListContainer, CategoryListContent, CategoryListDetail, CategoryListImg, CategoryListLabel, CategoryListPopup, CategoryListSearch, CategoryListSubmit } from "./CategoryList.elements"
 import axios from "axios"
 import Swal from "sweetalert2"
+import { LoadingElement } from "../../../components/loading/Loading"
 
 const CategoryList = () => {
     const [store, setStore] = useState(false)
@@ -172,7 +173,7 @@ const CategoryList = () => {
             confirmButtonText: 'Hapus',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/category/delete/' + id, data).then(res => {
+                axios.post('/api/' + url + '/category/delete/' + id).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
@@ -196,7 +197,7 @@ const CategoryList = () => {
     let contentElement = ''
 
     if (get) {
-        contentElement = "loading..."
+        contentElement = <LoadingElement/>
     } else {
         contentElement = data.map((value, index) => {
             return (

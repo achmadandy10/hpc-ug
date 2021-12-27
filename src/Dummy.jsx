@@ -1,14 +1,26 @@
-export const Facility = {
-    facility: [
-        { value: "kebutuhan 1", label: "Kebutuhan 1" },
-        { value: "kebutuhan 2", label: "Kebutuhan 2" },
-        { value: "kebutuhan 3", label: "Kebutuhan 3" },
-        { value: "kebutuhan 4", label: "Kebutuhan 4" },
-        { value: "kebutuhan 5", label: "Kebutuhan 5" },
-        { value: "kebutuhan 6", label: "Kebutuhan 6" },
-        { value: "kebutuhan 7", label: "Kebutuhan 7" },
-    ]
-}
+export const Facility = [
+    { value: "YB", label: "YB" },
+    { value: "ZB", label: "ZB" },
+    { value: "EB", label: "EB" },
+    { value: "PB", label: "PB" },
+    { value: "TB", label: "TB" },
+    { value: "GB", label: "GB" },
+    { value: "MB", label: "MB" },
+    { value: "kB", label: "kB" },
+    { value: "B", label: "B" },
+]
+
+// export const Facility = {
+//     facility: [
+//         { value: "kebutuhan 1", label: "Kebutuhan 1" },
+//         { value: "kebutuhan 2", label: "Kebutuhan 2" },
+//         { value: "kebutuhan 3", label: "Kebutuhan 3" },
+//         { value: "kebutuhan 4", label: "Kebutuhan 4" },
+//         { value: "kebutuhan 5", label: "Kebutuhan 5" },
+//         { value: "kebutuhan 6", label: "Kebutuhan 6" },
+//         { value: "kebutuhan 7", label: "Kebutuhan 7" },
+//     ]
+// }
 
 export const ListProposal = {
     proposal: [

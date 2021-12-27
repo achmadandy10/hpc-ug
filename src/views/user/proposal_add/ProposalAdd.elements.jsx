@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const ProposalSubmissionFormContainer = styled.div`
+export const ProposalAddFormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
 `
 
-export const ProposalSubmissionFormButton = styled.div`
+export const ProposalAddFormButton = styled.div`
     margin-top: 20px;
 `

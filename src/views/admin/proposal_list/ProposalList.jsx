@@ -1,23 +1,45 @@
 import Card from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import { useEffect, useState } from "react"
-import { ListProposal } from "../../../Dummy"
 import Table, { TableAction, TableStatus } from "../../../components/table/Table"
 import { ButtonIconLink, ButtonIconSubmit } from "../../../components/button/Button"
-import { FaCheck, FaEye, FaTimes } from "react-icons/fa"
+import { FaCheck, FaCheckDouble, FaEye, FaTimes } from "react-icons/fa"
 import dateFormat from "dateformat"
 import Swal from "sweetalert2"
+import axios from "axios"
 
 const ProposalList = () => {
     const [loading, setLoading] = useState(true)
     const [rows, setRows] = useState(null)
     
+    const GetDetail = () => {
+        var url = ''
+        if (sessionStorage.getItem('role') === "Proposal") {
+            url = 'admin-proposal'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+        
+        axios.get('/api/' + url + '/proposal-submission/show-all').then(res => {
+            if (res.data.meta.code === 200) {
+                setRows(res.data.data.submission)
+            }
+            setLoading(false)    
+        })
+    }
+
     useEffect(() => {
-        setRows(ListProposal.proposal)
-        setLoading(false)
+        GetDetail()
     }, [])
 
     const approvedSubmit = (id) => {
+        var url = ''
+        if (sessionStorage.getItem('role') === "Proposal") {
+            url = 'admin-proposal'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
         Swal.fire({
             icon: 'question',
             title: 'Yakin ingin menyetujui?',
@@ -29,16 +51,34 @@ const ProposalList = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    icon:'success',
-                    title: 'Sukses!',
-                    text:'Proposal berhasil disetujui.',
+                axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
+                    if (res.data.meta.code === 200) {
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Proposal berhasil disetujui.',
+                        })
+                        GetDetail()
+                    } else {
+                        Swal.fire({
+                            icon:'danger',
+                            title: 'Gagal!',
+                            text:'Proposal gagal disetujui.',
+                        })
+                    }
                 })
             }
         })
     }
 
     const rejectedSubmit = (id) => {
+        var url = ''
+        if (sessionStorage.getItem('role') === "Proposal") {
+            url = 'admin-proposal'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
         Swal.fire({
             icon: 'question',
             title: 'Yakin ingin menolak?',
@@ -50,10 +90,60 @@ const ProposalList = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    icon:'success',
-                    title: 'Sukses!',
-                    text:'Proposal berhasil ditolak.',
+                axios.post('/api/' + url + '/proposal-submission/rejected/' + id).then(res => {
+                    if (res.data.meta.code === 200) {
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Proposal berhasil ditolak.',
+                        })
+                        GetDetail()
+                    } else {
+                        Swal.fire({
+                            icon:'danger',
+                            title: 'Gagal!',
+                            text:'Proposal gagal ditolak.',
+                        })
+                    }
+                })
+            }
+        })
+    }
+    
+    const finishedSubmit = (id) => {
+        var url = ''
+        if (sessionStorage.getItem('role') === "Proposal") {
+            url = 'admin-proposal'
+        } else if (sessionStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
+        Swal.fire({
+            icon: 'question',
+            title: 'Yakin ingin menolak?',
+            text: 'Harap periksa data baik-baik sebelum menyetujui.',
+            showCancelButton: true,
+            confirmButtonColor: "#5B3A89",
+            cancelButtonColor: "#F34636",
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Setuju',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
+                    if (res.data.meta.code === 200) {
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Proposal berhasil ditolak.',
+                        })
+                        GetDetail()
+                    } else {
+                        Swal.fire({
+                            icon:'danger',
+                            title: 'Gagal!',
+                            text:'Proposal gagal ditolak.',
+                        })
+                    }
                 })
             }
         })
@@ -68,7 +158,7 @@ const ProposalList = () => {
         {
             field: 'short_description',
             headerName: 'Deskripsi Singkat Penelitian',
-            width: 400,
+            width: 350,
         },
         {
             field: 'status',
@@ -90,13 +180,13 @@ const ProposalList = () => {
             },
             renderCell: (params) => {
                 let newStatus = ''
-                if (params.row.status === "approved") {
+                if (params.row.status === "Approved") {
                     newStatus = "Disetujui"
-                } else if (params.row.status === "rejected") {
+                } else if (params.row.status === "Rejected") {
                     newStatus = "Ditolak"
-                } else if (params.row.status === "pending") {
+                } else if (params.row.status === "Pending") {
                     newStatus = "Tertunda"
-                } else if (params.row.status === "finished") {
+                } else if (params.row.status === "Finished") {
                     newStatus = "Selesai"
                 }
 
@@ -128,21 +218,38 @@ const ProposalList = () => {
         {
             field: 'action',
             headerName: 'Aksi',
-            width: 100,
+            width: 150,
             disableExport: true,
             filterable: false,
             renderCell: (params) => {
+                let element = ''
+
+                if (params.row.status === "Pending") {
+                    element = (
+                        <>
+                            <ButtonIconSubmit onClicked={ () => approvedSubmit(params.row.id) } color="success">
+                                <FaCheck/>
+                            </ButtonIconSubmit>
+                            <ButtonIconSubmit onClicked={ () => rejectedSubmit(params.row.id) } color="danger">
+                                <FaTimes/>
+                            </ButtonIconSubmit>
+                        </>
+                    )
+                } else if (params.row.status === "Approved") {
+                    element = (
+                        <>
+                            <ButtonIconSubmit onClicked={ () => finishedSubmit(params.row.id) } color="primary">
+                                <FaCheckDouble/>
+                            </ButtonIconSubmit>
+                        </>
+                    )
+                }
                 return (
                     <TableAction>
-                        <ButtonIconLink to={ "/user/" + params.row.id } color="info">
+                        <ButtonIconLink to={ "/admin/usulan/pratinjau/" + params.row.id } color="info">
                             <FaEye/>
                         </ButtonIconLink>
-                        <ButtonIconSubmit onClicked={ () => approvedSubmit(params.row.id) } color="success">
-                            <FaCheck/>
-                        </ButtonIconSubmit>
-                        <ButtonIconSubmit onClicked={ () => rejectedSubmit(params.row.id) } color="danger">
-                            <FaTimes/>
-                        </ButtonIconSubmit>
+                        { element }
                     </TableAction>
                 )
             }

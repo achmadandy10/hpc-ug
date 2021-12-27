@@ -57,7 +57,7 @@ export const CategoryListPopup = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    `
+`
 
 export const CategoryListSubmit = styled.div`
     margin-top: 20px;

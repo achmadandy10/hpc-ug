@@ -126,6 +126,34 @@ const Sidebar = ({ type }) => {
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>
+
+                        <SidebarMenu>
+                            <SidebarTitle>Tentang</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/buat-tentang">
+                                    <FaPenSquare/>
+                                    Buat Tentang
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/tentang">
+                                    <FaList/>
+                                    Daftar Tentang
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+
+                        <SidebarMenu>
+                            <SidebarTitle>Layanan</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/buat-layanan">
+                                    <FaPenSquare/>
+                                    Buat Layanan
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/layanan">
+                                    <FaList/>
+                                    Daftar Layanan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
                     </SidebarMenuContainer>
                 </div>
 
