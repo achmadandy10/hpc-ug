@@ -1,32 +1,49 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { ButtonLink } from "../../../components/button/Button"
+import { LoadingElement } from "../../../components/loading/Loading"
 import { AboutContainer, AboutContent, AboutContentImg, AboutContentItem, AboutContentOverlay, AboutContentTitle, AboutTitle } from "./About.elements"
 
 const About = () => {
+    const [loading, setLoading] = useState(true)
+    const [about, setAbout] = useState([])
+
+    useEffect(() => {
+        const GetUri = () => {
+            axios.get('/api/content/uri').then(res => {
+                if (res.data.meta.code === 200) {
+                    setAbout(res.data.data.uri_about)
+                }
+                setLoading(false)
+            })
+        }
+
+        GetUri()
+    }, [])
+
+    let element = ''
+
+    if (loading) {
+        element = <LoadingElement/>
+    } else {
+        element = about.map((v, idx) => {
+            return (
+                <AboutContentItem key={idx}>
+                    <AboutContentImg src={v.thumbnail}/>
+                    <AboutContentOverlay>
+                        <AboutContentTitle>{v.label}</AboutContentTitle>
+                        <ButtonLink to={"/tentang/"+v.slug}>Lihat</ButtonLink>
+                    </AboutContentOverlay>
+                </AboutContentItem>
+            )
+        })
+    }
+
     return (
         <AboutContainer>
             <AboutTitle>Tentang</AboutTitle>
             <AboutContent>
-                <AboutContentItem>
-                    <AboutContentImg src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmovietvtechgeeks.com%2Fwp-content%2Fuploads%2F2015%2F05%2Fmost-common-server-problems.jpg&f=1&nofb=1"/>
-                    <AboutContentOverlay>
-                        <AboutContentTitle>HPC</AboutContentTitle>
-                        <ButtonLink to="/tentang/hpc">Lihat</ButtonLink>
-                    </AboutContentOverlay>
-                </AboutContentItem>
-                <AboutContentItem>
-                    <AboutContentImg src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmovietvtechgeeks.com%2Fwp-content%2Fuploads%2F2015%2F05%2Fmost-common-server-problems.jpg&f=1&nofb=1"/>
-                    <AboutContentOverlay>
-                        <AboutContentTitle>DGX A-100</AboutContentTitle>
-                        <ButtonLink to="/tentang/dgx-a-100">Lihat</ButtonLink>
-                    </AboutContentOverlay>
-                </AboutContentItem>
-                <AboutContentItem>
-                    <AboutContentImg src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmovietvtechgeeks.com%2Fwp-content%2Fuploads%2F2015%2F05%2Fmost-common-server-problems.jpg&f=1&nofb=1"/>
-                    <AboutContentOverlay>
-                        <AboutContentTitle>Syarat Penggunaan</AboutContentTitle>
-                        <ButtonLink to="/tentang/syarat-penggunaan">Lihat</ButtonLink>
-                    </AboutContentOverlay>
-                </AboutContentItem>
+                { element }
             </AboutContent>
         </AboutContainer>
     )

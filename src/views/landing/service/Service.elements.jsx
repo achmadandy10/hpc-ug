@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AboutContainer = styled.div`
+export const ServiceContainer = styled.div`
     width: 100%;
     overflow: hidden;
     background: var(--body-color);
@@ -13,19 +13,19 @@ export const AboutContainer = styled.div`
     gap: 20px;
 `
 
-export const AboutTitle = styled.h2`
+export const ServiceTitle = styled.h2`
     font-size: var(--h1-font-size);
     font-weight: var(--font-semi-bold);
     color: var(--title-color);
 `
 
-export const AboutContent = styled.div`
+export const ServiceContent = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 `
 
-export const AboutContentItem = styled.div`
+export const ServiceContentItem = styled.div`
     flex: 1 1 400px;
     position: relative;
     width: 400px;
@@ -34,7 +34,7 @@ export const AboutContentItem = styled.div`
     box-shadow: var(--bs-smooth);
 `
 
-export const AboutContentImg = styled.img`
+export const ServiceContentImg = styled.img`
     display: block;
     width: 100%;
     height: 100%;
@@ -42,7 +42,7 @@ export const AboutContentImg = styled.img`
     box-shadow: var(--bs-smooth);
 `
 
-export const AboutContentOverlay = styled.div`
+export const ServiceContentOverlay = styled.div`
     position: absolute;
     top: 0;
     left: 0;
@@ -71,7 +71,7 @@ export const AboutContentOverlay = styled.div`
     }
 `
 
-export const AboutContentTitle = styled.h4`
+export const ServiceContentTitle = styled.h4`
     color: #FFF;
     font-size: var(--h2-font-size);
     font-weight: 500;

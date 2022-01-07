@@ -2,13 +2,53 @@ import { NavbarLogo, NavbarLogoContainer, NavbarHamburgerBottom, NavbarHamburger
 import UG from '../../images/logo.png'
 import Kedaireka from '../../images/kedaireka.svg'
 import Kemendikbud from '../../images/kemendikbud.png'
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ButtonLink } from "../button/Button";
 import { FaChevronDown } from "react-icons/fa"
+import axios from "axios"
 
 const Navbar = () => {
     const toggleMenu = useRef(null);
     const menu = useRef(null);
+    const [loading, setLoading] = useState(true)
+    const [about, setAbout] = useState([])
+    const [service, setService] = useState([])
+
+    useEffect(() => {
+        const GetUri = () => {
+            axios.get('/api/content/uri').then(res => {
+                if (res.data.meta.code === 200) {
+                    setAbout(res.data.data.uri_about)
+                    setService(res.data.data.uri_service)
+                }
+                setLoading(false)
+            })
+        }
+        GetUri()
+    }, [])
+
+    let uri_about = ''
+    let uri_service = ''
+
+    if (loading) {
+        uri_about = 'loading...'
+        uri_service = 'loading...'
+    } else {
+        uri_about = about.map((v, idx) => {
+            return (
+                <NavbarSubMenuItem key={idx}>
+                    <NavbarSubMenuLink to={"/tentang/" + v.slug}>{ v.label }</NavbarSubMenuLink>
+                </NavbarSubMenuItem>
+            )
+        })
+        uri_service = service.map((v, idx) => {
+            return (
+                <NavbarSubMenuItem key={idx}>
+                    <NavbarSubMenuLink to={"/layanan/" + v.slug}>{ v.label }</NavbarSubMenuLink>
+                </NavbarSubMenuItem>
+            )
+        })
+    }
 
     const toggleMenuClicked = () => {
         const child = toggleMenu.current.children
@@ -49,33 +89,14 @@ const Navbar = () => {
                     <NavbarMenuItem>
                         <NavbarMenuLink to="/tentang">Tentang <FaChevronDown/></NavbarMenuLink>
                         <NavbarSubMenuList>
-                            <NavbarSubMenuItem>
-                                <NavbarSubMenuLink to="/tentang/hpc">HPC</NavbarSubMenuLink>
-                            </NavbarSubMenuItem>
-                            <NavbarSubMenuItem>
-                                <NavbarSubMenuLink to="/tentang/dgx-a-100">DGX A-100</NavbarSubMenuLink>
-                            </NavbarSubMenuItem>
-                            <NavbarSubMenuItem>
-                                <NavbarSubMenuLink to="/tentang/syarat-dan-ketentuan">Syarat dan Ketentuan</NavbarSubMenuLink>
-                            </NavbarSubMenuItem>
+                            { uri_about }
                         </NavbarSubMenuList>
                     </NavbarMenuItem>
                     
                     <NavbarMenuItem>
                         <NavbarMenuLink to="/layanan">Layanan <FaChevronDown/></NavbarMenuLink>
                         <NavbarSubMenuList>
-                            <NavbarSubMenuItem>
-                                <NavbarSubMenuLink to="/layanan/prototyping">Prototyping</NavbarSubMenuLink>
-                            </NavbarSubMenuItem>
-                            <NavbarSubMenuItem>
-                                <NavbarSubMenuLink to="/layanan/training">Training</NavbarSubMenuLink>
-                            </NavbarSubMenuItem>
-                            <NavbarSubMenuItem>
-                                <NavbarSubMenuLink to="/layanan/database">Database</NavbarSubMenuLink>
-                            </NavbarSubMenuItem>
-                            <NavbarSubMenuItem>
-                                <NavbarSubMenuLink to="/layanan/hpc">HPC</NavbarSubMenuLink>
-                            </NavbarSubMenuItem>
+                            { uri_service }
                         </NavbarSubMenuList>
                     </NavbarMenuItem>
 
