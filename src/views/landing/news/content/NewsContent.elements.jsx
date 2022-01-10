@@ -62,5 +62,43 @@ export const NewsContentDetailCategoryLink = styled(Link)`
 `
 
 export const NewsContentFeature = styled.div`
-    flex: 1;
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`
+
+export const NewsContentFeatureCard = styled.div`
+    background: var(--container-color);
+    box-shadow: var(--bs-smooth);
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+`
+
+export const NewsContentFeatureCardImg = styled.img`
+    height: 100%;
+    width: 70px;
+`
+
+export const NewsContentFeatureCardDetail = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
+
+export const NewsContentFeatureCardTitle = styled.h3`
+    font-size: var(--h3-font-size);
+    font-weight: var(--font-semi-bold);
+    color: var(--title-color);
+`
+
+export const NewsContentFeatureCardBody = styled.p`
+    font-size: var(--small-font-size);
+    font-weight: 300;
+    color: var(--text-color);
+`
+
+export const NewsContentFeatureCardButton = styled.div`
+    margin-top: 10px;
 `

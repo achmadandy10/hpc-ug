@@ -1,7 +1,6 @@
-import Card, { CardInfo } from "../../../components/card/Card"
+import Card from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
-import { DashboardInfoContainer } from "./Dashboard.elements"
-import { FaEye, FaFileInvoice, FaEdit, FaTrash } from "react-icons/fa"
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa"
 import Table, { TableAction, TableStatus } from "../../../components/table/Table"
 import { useEffect, useState } from "react"
 import dateFormat from "dateformat"
@@ -32,11 +31,6 @@ const Dashboard = () => {
     useEffect(() => {
         GetDetail()
     }, [])
-
-    function countStatus(type) {
-        const countTypes = rows.filter(search => search.status === type);
-        return countTypes.length;
-    }
 
     const deleteSubmit = (id, status) => {
         if (status === "Approved" || status === "Finished") {
@@ -191,33 +185,6 @@ const Dashboard = () => {
     return (
         <PageLayout>
             <PageHeader title="Dasbor"/>
-
-            <DashboardInfoContainer>
-                <CardInfo
-                    icon={ <FaFileInvoice/> }
-                    title="Disetujui"
-                    count={countStatus("Approved")}
-                    type="success"
-                />
-                <CardInfo
-                    icon={ <FaFileInvoice/> }
-                    title="Tertunda"
-                    count={countStatus("Pending")}
-                    type="warning"
-                />
-                <CardInfo
-                    icon={ <FaFileInvoice/> }
-                    title="Ditolak"
-                    count={countStatus("Rejected")}
-                    type="danger"
-                />
-                <CardInfo
-                    icon={ <FaFileInvoice/> }
-                    title="Selesai"
-                    count={countStatus("Finished")}
-                    type="primary"
-                />
-            </DashboardInfoContainer>
 
             <Card>
                 <Table
