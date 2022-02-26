@@ -32,9 +32,9 @@ const FacilityEdit = () => {
 
     const GetFacility = () => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -48,9 +48,9 @@ const FacilityEdit = () => {
     useEffect(() => {
         const GetDetail = () => {
             var url = ''
-            if (sessionStorage.getItem('role') === "Proposal") {
+            if (localStorage.getItem('role') === "Proposal") {
                 url = 'admin-proposal'
-            } else if (sessionStorage.getItem('role') === "Super") {
+            } else if (localStorage.getItem('role') === "Super") {
                 url = 'admin-super'
             }
     
@@ -95,9 +95,9 @@ const FacilityEdit = () => {
         data.append('mass_unit', form.mass_unit)
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -136,9 +136,9 @@ const FacilityEdit = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 var url = ''
-                if (sessionStorage.getItem('role') === "Proposal") {
+                if (localStorage.getItem('role') === "Proposal") {
                     url = 'admin-proposal'
-                } else if (sessionStorage.getItem('role') === "Super") {
+                } else if (localStorage.getItem('role') === "Super") {
                     url = 'admin-super'
                 }
                 axios.post('/api/' + url + '/facility/delete/' + id).then(res => {

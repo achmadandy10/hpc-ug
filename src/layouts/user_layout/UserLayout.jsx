@@ -5,7 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { UserRouter } from "../../routes/user/UserRouter"
 
 const UserLayout = () => {
-    const role = sessionStorage.getItem('role')
+    const role = localStorage.getItem('role')
     return (
         <UserLayoutContainer>
             <Topbar/>

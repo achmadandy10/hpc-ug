@@ -56,8 +56,8 @@ const Register = () => {
                         role = 'External'
                     }
                     
-                    sessionStorage.setItem('token', res.data.data.access_token);
-                    sessionStorage.setItem('role', role);
+                    localStorage.setItem('token', res.data.data.access_token);
+                    localStorage.setItem('role', role);
 
                     const Toast = Swal.mixin({
                         toast: true,

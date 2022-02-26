@@ -3,13 +3,15 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { FaCheck, FaCheckDouble, FaEye, FaFileInvoice, FaTimes, FaUsers } from "react-icons/fa"
 import Swal from "sweetalert2"
-import { ButtonIconLink, ButtonIconSubmit } from "../../../components/button/Button"
+import { ButtonIconLink, ButtonIconSubmit, ButtonSubmit } from "../../../components/button/Button"
 import Card, { CardInfo } from "../../../components/card/Card"
 import { LoadingElement } from "../../../components/loading/Loading"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
 import Table, { TableAction, TableStatus } from "../../../components/table/Table"
 import { DashboardInfoContainer } from "./Dashboard.elements"
 import dateFormat from "dateformat"
+import Popup from "../../../components/popup/Popup"
+import { InputField } from "../../../components/text_field/TextField"
 
 const Content = () => {
     function countStatus(arr, type) {
@@ -39,17 +41,69 @@ const Content = () => {
 
 const Proposal = () => {
     const [loading, setLoading] = useState(true)
+    const [days, setDays] = useState([])
+    const [machine, setMachine] = useState([])
+    const [loadingApproved, setLoadingApproved] = useState(false)
+    const [popupApproved, setPopupApproved] = useState(false)
+    const [formApproved, setFormApproved] = useState({
+        id_proposal: '',
+        docker_image: '',
+        username: '',
+        id_hari: '',
+        durasi: '',
+        id_mesin: '',
+    })
     const [proposal, setProposal] = useState([])
     const [user, setUser] = useState([])
 
+    const inputApprovedChange = (name, value) => {
+        setFormApproved({ ...formApproved, [name]: value })
+    }
+
+
     const GetDetail = () => {
-        axios.get(`/api/admin-propsal/proposal-submission/show-all`).then(res => {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+          
+        fetch("http://202.125.94.143:8181/hari", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            result.data.map(v => {
+                const data = {
+                    label: v.nama.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                        return letter.toUpperCase()
+                    }),
+                    value: v.id,
+                }
+
+                return setDays(days => [...days, data])
+            })
+        })
+        .catch(error => console.log('error', error));
+          
+        fetch("http://202.125.94.143:8181/mesin", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            result.data.map(v => {
+                const data = {
+                    label: v.nama_mesin,
+                    value: v.id_mesin,
+                }
+
+                return setMachine(machine => [...machine, data])
+            })
+        })
+        .catch(error => console.log('error', error));
+
+        axios.get(`/api/admin-proposal/proposal-submission/show-all`).then(res => {
             if (res.data.meta.code === 200) {
                 setProposal(res.data.data.submission)
             }
         })
 
-        axios.get(`/api/admin-propsal/user/show-all`).then(res => {
+        axios.get(`/api/admin-proposal/user/show-all`).then(res => {
             if (res.data.meta.code === 200) {
                 setUser(res.data.data.user)
                 setLoading(false)
@@ -61,6 +115,16 @@ const Proposal = () => {
         GetDetail()
     }, [])
 
+    const handleApproved = (id) => {
+        setFormApproved({ 
+            ...formApproved, 
+            id_proposal: id,
+            username: proposal.filter(v => v.id === id)[0].user.email.split("@")[0],
+            docker_image: proposal.filter(v => v.id === id)[0].docker_image
+        })
+        setPopupApproved(!popupApproved)
+    }
+
     function countStatus(type) {
         const countTypes = proposal.filter(search => search.status === type);
         return countTypes.length;
@@ -71,10 +135,12 @@ const Proposal = () => {
     }
 
     const approvedSubmit = (id) => {
+        setLoadingApproved(false)
+
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -89,31 +155,71 @@ const Proposal = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
-                    if (res.data.meta.code === 200) {
+                var formdata = new FormData();
+
+                formdata.append("DockerImages", formApproved.docker_image);
+                formdata.append("username", formApproved.username);
+                formdata.append("id_hari", formApproved.id_hari);
+                formdata.append("durasi", formApproved.durasi);
+                formdata.append("id_mesin", formApproved.id_mesin);
+
+                var requestOptions = {
+                    method: 'POST',
+                    body: formdata,
+                    redirect: 'follow'
+                };
+
+                fetch("http://202.125.94.143:8181/approval", requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw response;
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    if (result.error === true) {
                         Swal.fire({
-                            icon:'success',
-                            title: 'Sukses!',
-                            text:'Proposal berhasil disetujui.',
+                            icon:'warning',
+                            title: result.message,
                         })
-                        GetDetail()
                     } else {
-                        Swal.fire({
-                            icon:'danger',
-                            title: 'Gagal!',
-                            text:'Proposal gagal disetujui.',
+                        axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
+                            if (res.data.meta.code === 200) {
+                                Swal.fire({
+                                    icon:'success',
+                                    title: 'Sukses!',
+                                    text:'Proposal berhasil disetujui.',
+                                })
+                                GetDetail()
+                            } else {
+                                Swal.fire({
+                                    icon:'danger',
+                                    title: 'Gagal!',
+                                    text:'Proposal gagal disetujui.',
+                                })
+                            }
                         })
                     }
                 })
+                .catch(error => {
+                    if (error.status === 422) {
+                        Swal.fire({
+                            icon:'warning',
+                            title: error.statusText,
+                            text:'harap lengkapi form.',
+                        })
+                    }
+                    return false
+                });
             }
         })
     }
 
     const rejectedSubmit = (id) => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -150,9 +256,9 @@ const Proposal = () => {
     
     const finishedSubmit = (id) => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -265,9 +371,70 @@ const Proposal = () => {
                 if (params.row.status === "Pending") {
                     element = (
                         <>
-                            <ButtonIconSubmit onClicked={ () => approvedSubmit(params.row.id) } color="success">
+                            <ButtonIconSubmit onClicked={ () => handleApproved(params.row.id) } color="success">
                                 <FaCheck/>
                             </ButtonIconSubmit>
+                            <Popup
+                                trigger={ popupApproved } 
+                                setTrigger={ setPopupApproved }
+                                title="Tambah Mesin"
+                            >
+                                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                                    <InputField
+                                        label="Docker Image"
+                                        id="docker_image"
+                                        name="docker_image"
+                                        value={ formApproved.docker_image }
+                                        onChanged={ inputApprovedChange }
+                                        type="text"
+                                        readOnly
+                                    />
+                                    <InputField
+                                        label="Username"
+                                        id="username"
+                                        name="username"
+                                        value={ formApproved.username }
+                                        onChanged={ inputApprovedChange }
+                                        type="text"
+                                        readOnly
+                                    />
+                                    <InputField
+                                        label="Hari"
+                                        id="id_hari"
+                                        name="id_hari"
+                                        value={formApproved.id_hari}
+                                        onChanged={inputApprovedChange}
+                                        type="select"
+                                        option={days}
+                                        placeholder={"Pilih Hari"}
+                                        isLoading={loading}
+                                    />
+                                    <InputField
+                                        label="Durasi"
+                                        id="durasi"
+                                        name="durasi"
+                                        value={ formApproved.durasi }
+                                        onChanged={ inputApprovedChange }
+                                        type="number"
+                                    />
+                                    <InputField
+                                        label="Mesin"
+                                        id="id_mesin"
+                                        name="id_mesin"
+                                        value={formApproved.id_mesin}
+                                        onChanged={inputApprovedChange}
+                                        type="select"
+                                        option={machine}
+                                        placeholder={"Pilih Mesin"}
+                                        isLoading={loading}
+                                    />
+                                    <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
+                                        <ButtonSubmit color="primary" loading={ loadingApproved } onClicked={ () => approvedSubmit(formApproved.id_proposal) }>
+                                            Tambah
+                                        </ButtonSubmit>
+                                    </div>
+                                </div>
+                            </Popup>
                             <ButtonIconSubmit onClicked={ () => rejectedSubmit(params.row.id) } color="danger">
                                 <FaTimes/>
                             </ButtonIconSubmit>
@@ -338,10 +505,61 @@ const Proposal = () => {
 
 const Super = () => {
     const [loading, setLoading] = useState(true)
+    const [days, setDays] = useState([])
+    const [machine, setMachine] = useState([])
+    const [loadingApproved, setLoadingApproved] = useState(false)
+    const [popupApproved, setPopupApproved] = useState(false)
+    const [formApproved, setFormApproved] = useState({
+        id_proposal: '',
+        docker_image: '',
+        username: '',
+        id_hari: '',
+        durasi: '',
+        id_mesin: '',
+    })
     const [proposal, setProposal] = useState([])
     const [user, setUser] = useState([])
+    
+    const inputApprovedChange = (name, value) => {
+        setFormApproved({ ...formApproved, [name]: value })
+    }
 
     const GetDetail = () => {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+          
+        fetch("http://202.125.94.143:8181/hari", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            result.data.map(v => {
+                const data = {
+                    label: v.nama.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                        return letter.toUpperCase()
+                    }),
+                    value: v.id,
+                }
+
+                return setDays(days => [...days, data])
+            })
+        })
+        .catch(error => console.log('error', error));
+          
+        fetch("http://202.125.94.143:8181/mesin", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            result.data.map(v => {
+                const data = {
+                    label: v.nama_mesin,
+                    value: v.id_mesin,
+                }
+
+                return setMachine(machine => [...machine, data])
+            })
+        })
+        .catch(error => console.log('error', error));
+
         axios.get(`/api/admin-super/proposal-submission/show-all`).then(res => {
             if (res.data.meta.code === 200) {
                 setProposal(res.data.data.submission)
@@ -360,6 +578,16 @@ const Super = () => {
         GetDetail()
     }, [])
 
+    const handleApproved = (id) => {
+        setFormApproved({ 
+            ...formApproved, 
+            id_proposal: id,
+            username: proposal.filter(v => v.id === id)[0].user.email.split("@")[0],
+            docker_image: proposal.filter(v => v.id === id)[0].docker_image
+        })
+        setPopupApproved(!popupApproved)
+    }
+
     function countStatus(type) {
         const countTypes = proposal.filter(search => search.status === type);
         return countTypes.length;
@@ -370,10 +598,12 @@ const Super = () => {
     }
 
     const approvedSubmit = (id) => {
+        setLoadingApproved(false)
+
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -388,31 +618,71 @@ const Super = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
-                    if (res.data.meta.code === 200) {
+                var formdata = new FormData();
+
+                formdata.append("DockerImages", formApproved.docker_image);
+                formdata.append("username", formApproved.username);
+                formdata.append("id_hari", formApproved.id_hari);
+                formdata.append("durasi", formApproved.durasi);
+                formdata.append("id_mesin", formApproved.id_mesin);
+
+                var requestOptions = {
+                    method: 'POST',
+                    body: formdata,
+                    redirect: 'follow'
+                };
+
+                fetch("http://202.125.94.143:8181/approval", requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw response;
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    if (result.error === true) {
                         Swal.fire({
-                            icon:'success',
-                            title: 'Sukses!',
-                            text:'Proposal berhasil disetujui.',
+                            icon:'warning',
+                            title: result.message,
                         })
-                        GetDetail()
                     } else {
-                        Swal.fire({
-                            icon:'danger',
-                            title: 'Gagal!',
-                            text:'Proposal gagal disetujui.',
+                        axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
+                            if (res.data.meta.code === 200) {
+                                Swal.fire({
+                                    icon:'success',
+                                    title: 'Sukses!',
+                                    text:'Proposal berhasil disetujui.',
+                                })
+                                GetDetail()
+                            } else {
+                                Swal.fire({
+                                    icon:'danger',
+                                    title: 'Gagal!',
+                                    text:'Proposal gagal disetujui.',
+                                })
+                            }
                         })
                     }
                 })
+                .catch(error => {
+                    if (error.status === 422) {
+                        Swal.fire({
+                            icon:'warning',
+                            title: error.statusText,
+                            text:'harap lengkapi form.',
+                        })
+                    }
+                    return false
+                });
             }
         })
     }
 
     const rejectedSubmit = (id) => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -449,9 +719,9 @@ const Super = () => {
     
     const finishedSubmit = (id) => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -564,9 +834,70 @@ const Super = () => {
                 if (params.row.status === "Pending") {
                     element = (
                         <>
-                            <ButtonIconSubmit onClicked={ () => approvedSubmit(params.row.id) } color="success">
+                            <ButtonIconSubmit onClicked={ () => handleApproved(params.row.id) } color="success">
                                 <FaCheck/>
                             </ButtonIconSubmit>
+                            <Popup
+                                trigger={ popupApproved } 
+                                setTrigger={ setPopupApproved }
+                                title="Tambah Mesin"
+                            >
+                                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                                    <InputField
+                                        label="Docker Image"
+                                        id="docker_image"
+                                        name="docker_image"
+                                        value={ formApproved.docker_image }
+                                        onChanged={ inputApprovedChange }
+                                        type="text"
+                                        readOnly
+                                    />
+                                    <InputField
+                                        label="Username"
+                                        id="username"
+                                        name="username"
+                                        value={ formApproved.username }
+                                        onChanged={ inputApprovedChange }
+                                        type="text"
+                                        readOnly
+                                    />
+                                    <InputField
+                                        label="Hari"
+                                        id="id_hari"
+                                        name="id_hari"
+                                        value={formApproved.id_hari}
+                                        onChanged={inputApprovedChange}
+                                        type="select"
+                                        option={days}
+                                        placeholder={"Pilih Hari"}
+                                        isLoading={loading}
+                                    />
+                                    <InputField
+                                        label="Durasi"
+                                        id="durasi"
+                                        name="durasi"
+                                        value={ formApproved.durasi }
+                                        onChanged={ inputApprovedChange }
+                                        type="number"
+                                    />
+                                    <InputField
+                                        label="Mesin"
+                                        id="id_mesin"
+                                        name="id_mesin"
+                                        value={formApproved.id_mesin}
+                                        onChanged={inputApprovedChange}
+                                        type="select"
+                                        option={machine}
+                                        placeholder={"Pilih Mesin"}
+                                        isLoading={loading}
+                                    />
+                                    <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
+                                        <ButtonSubmit color="primary" loading={ loadingApproved } onClicked={ () => approvedSubmit(formApproved.id_proposal) }>
+                                            Tambah
+                                        </ButtonSubmit>
+                                    </div>
+                                </div>
+                            </Popup>
                             <ButtonIconSubmit onClicked={ () => rejectedSubmit(params.row.id) } color="danger">
                                 <FaTimes/>
                             </ButtonIconSubmit>
@@ -644,11 +975,11 @@ const Super = () => {
 }
 
 const Dashboard = () => {
-    if (sessionStorage.getItem('role') === "Content") {
+    if (localStorage.getItem('role') === "Content") {
         return <Content/>
-    } else if (sessionStorage.getItem('role') === "Proposal") {
+    } else if (localStorage.getItem('role') === "Proposal") {
         return <Proposal/>
-    }  else if (sessionStorage.getItem('role') === "Super") {
+    }  else if (localStorage.getItem('role') === "Super") {
         return <Super/>
     } 
 }

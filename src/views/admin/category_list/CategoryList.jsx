@@ -43,9 +43,9 @@ const CategoryList = () => {
 
     async function GetCategory() {
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -68,9 +68,9 @@ const CategoryList = () => {
     useEffect(() => {
         const Category = () => {
             var url = ''
-            if (sessionStorage.getItem('role') === "Content") {
+            if (localStorage.getItem('role') === "Content") {
                 url = 'admin-content'
-            } else if (sessionStorage.getItem('role') === "Super") {
+            } else if (localStorage.getItem('role') === "Super") {
                 url = 'admin-super'
             }
 
@@ -102,9 +102,9 @@ const CategoryList = () => {
         data.append('thumbnail', form.thumbnail)
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -132,9 +132,9 @@ const CategoryList = () => {
         data.append('thumbnail', form_edit.thumbnail)
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -157,9 +157,9 @@ const CategoryList = () => {
         setStore(true)
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
         Swal.fire({

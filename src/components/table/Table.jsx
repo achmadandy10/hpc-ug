@@ -1,10 +1,12 @@
+import { Stack } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { TableActionContainer, TableContainer, TableStatusContainer } from "./Table.elements"
 
-const Table = ({ tableRows, tableLoading, tableColumns, pageSize }) => {
+const Table = ({ tableRows, tableLoading, tableColumns, pageSize, tableId, tableInfo }) => {
     return (
         <TableContainer>
             <DataGrid
+                getRowId={ tableId && (() => tableId) }
                 pageSize={ pageSize ? pageSize : 100}
                 loading={ tableLoading }
                 rows={tableRows}
@@ -18,6 +20,16 @@ const Table = ({ tableRows, tableLoading, tableColumns, pageSize }) => {
                 }}
                 components={{
                     Toolbar: GridToolbar,
+                    NoRowsOverlay: () => (
+                        <Stack height="100%" alignItems="center" justifyContent="center">
+                          { tableInfo ? tableInfo : "Tidak ada data"  }
+                        </Stack>
+                    ),
+                    NoResultsOverlay: () => (
+                        <Stack height="100%" alignItems="center" justifyContent="center">
+                            Data tidak ditemukan
+                        </Stack>
+                    )
                 }}
             />
         </TableContainer>

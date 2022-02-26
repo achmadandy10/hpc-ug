@@ -53,8 +53,8 @@ const Topbar = () => {
             if (result.isConfirmed) {
                 axios.post('/api/logout').then(res => {
                     if (res.data.meta.code === 200) {
-                        sessionStorage.removeItem('token')
-                        sessionStorage.removeItem('role')
+                        localStorage.removeItem('token')
+                        localStorage.removeItem('role')
 
                         Swal.fire({
                             icon:'success',
@@ -83,7 +83,7 @@ const Topbar = () => {
     }
 
     var profileLink = ''
-    const role = sessionStorage.getItem("role")
+    const role = localStorage.getItem("role")
 
     if (role === "Content" || role === "Proposal" || role === "Super") {
         profileLink = "/admin/profil"

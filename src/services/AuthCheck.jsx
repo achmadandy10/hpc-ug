@@ -2,8 +2,8 @@ import { useHistory } from "react-router-dom"
 
 function AuthCheck() {
     const history = useHistory()
-    const token = sessionStorage.getItem('token') 
-    const role = sessionStorage.getItem('role') 
+    const token = localStorage.getItem('token') 
+    const role = localStorage.getItem('role') 
 
     if (token && role) {
         if (role === "Content" || role === "Proposal" || role === "Super") {

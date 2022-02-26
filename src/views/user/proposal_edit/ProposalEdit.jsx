@@ -14,8 +14,6 @@ const ProposalEdit = () => {
     const history = useHistory()
     const [store, setStore] = useState(false)
     const [get, setGet] = useState(true)
-    const [facility, setFacility] = useState([])
-    const [detail, setDetail] = useState({})
     const [form, setForm] = useState({
         phone_number: '',
         research_field: '',
@@ -26,7 +24,7 @@ const ProposalEdit = () => {
         output_plan: '',
         previous_experience: '',
         facility_needs: '',
-        use_stock: '',
+        docker_image: '',
         previous_proposal_file: '',
         proposal_file: '',
         status: '',
@@ -35,15 +33,14 @@ const ProposalEdit = () => {
 
     const GetUpdate = () => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Internal") {
+        if (localStorage.getItem('role') === "Internal") {
             url = 'user-internal'
-        } else if (sessionStorage.getItem('role') === "External") {
+        } else if (localStorage.getItem('role') === "External") {
             url = 'user-external'
         }
 
         axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
             if (res.data.meta.code === 200) {
-                setDetail(res.data.data.submission.facility)
                 setForm({
                     phone_number: res.data.data.submission.phone_number,
                     research_field: res.data.data.submission.research_field,
@@ -54,7 +51,7 @@ const ProposalEdit = () => {
                     output_plan: res.data.data.submission.output_plan,
                     previous_experience: res.data.data.submission.previous_experience,
                     facility_needs: res.data.data.submission.facility_id,
-                    use_stock: res.data.data.submission.use_stock,
+                    docker_image: res.data.data.submission.docker_image,
                     previous_proposal_file: res.data.data.submission.proposal_file,
                     proposal_file: '',
                     status: res.data.data.submission.status,
@@ -66,32 +63,16 @@ const ProposalEdit = () => {
     }
 
     useEffect(() => {
-        const GetFacility = () => {
-            var url = ''
-            if (sessionStorage.getItem('role') === "Internal") {
-                url = 'user-internal'
-            } else if (sessionStorage.getItem('role') === "External") {
-                url = 'user-external'
-            }
-
-            axios.get('/api/' + url + '/facility/select').then(res => {
-                if (res.data.meta.code === 200) {
-                    setFacility(res.data.data.facility)
-                }
-            })
-        }
-
         const GetDetail = () => {
             var url = ''
-            if (sessionStorage.getItem('role') === "Internal") {
+            if (localStorage.getItem('role') === "Internal") {
                 url = 'user-internal'
-            } else if (sessionStorage.getItem('role') === "External") {
+            } else if (localStorage.getItem('role') === "External") {
                 url = 'user-external'
             }
 
             axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
                 if (res.data.meta.code === 200) {
-                    setDetail(res.data.data.submission.facility)
                     setForm({
                         phone_number: res.data.data.submission.phone_number,
                         research_field: res.data.data.submission.research_field,
@@ -101,8 +82,8 @@ const ProposalEdit = () => {
                         activity_plan: res.data.data.submission.activity_plan,
                         output_plan: res.data.data.submission.output_plan,
                         previous_experience: res.data.data.submission.previous_experience,
-                        facility_needs: res.data.data.submission.facility_id,
-                        use_stock: res.data.data.submission.use_stock,
+                        facility_needs: res.data.data.submission.facility_needs,
+                        docker_image: res.data.data.submission.docker_image,
                         previous_proposal_file: res.data.data.submission.proposal_file,
                         proposal_file: '',
                         error_list: [],
@@ -111,8 +92,7 @@ const ProposalEdit = () => {
                 setGet(false)
             })
         }
-
-        GetFacility()
+        
         GetDetail()
     }, [id])
 
@@ -125,42 +105,8 @@ const ProposalEdit = () => {
         setForm({ ...form, [name]: value })
     }
 
-    const selectChange = (name, value) => {
-        var url = ''
-        if (sessionStorage.getItem('role') === "Internal") {
-            url = 'user-internal'
-        } else if (sessionStorage.getItem('role') === "External") {
-            url = 'user-external'
-        }
-
-        axios.get('/api/' + url + '/facility/show/' + value).then(res => {
-            if (res.data.meta.code === 200) {
-                setForm({ ...form, [name]: value })
-                setDetail(res.data.data.facility)
-            }
-        })
-    }
-
     const formSubmit = () => {
         setStore(true)
-
-        if (form.use_stock > detail.remaining_stock) {
-            Swal.fire({
-                icon:'warning',
-                title: 'Peringatan!',
-                text:'Jumlah Kebutuhan tidak boleh > ' + detail.remaining_stock + '.',
-            })
-            setStore(false)
-            return false
-        } else if (form.use_stock < 1) {
-            Swal.fire({
-                icon:'warning',
-                title: 'Peringatan!',
-                text:'Jumlah Kebutuhan tidak boleh < 1.',
-            })
-            setStore(false)
-            return false
-        }
 
         const data = new FormData()
 
@@ -173,13 +119,13 @@ const ProposalEdit = () => {
         data.append('output_plan', form.output_plan)
         data.append('previous_experience', form.previous_experience)
         data.append('facility_needs', form.facility_needs)
-        data.append('use_stock', form.use_stock)
+        data.append('docker_image', form.docker_image)
         data.append('proposal_file', form.proposal_file)
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Internal") {
+        if (localStorage.getItem('role') === "Internal") {
             url = 'user-internal'
-        } else if (sessionStorage.getItem('role') === "External") {
+        } else if (localStorage.getItem('role') === "External") {
             url = 'user-external'
         }
 
@@ -208,9 +154,9 @@ const ProposalEdit = () => {
             })
         } else {
             var url = ''
-            if (sessionStorage.getItem('role') === "Internal") {
+            if (localStorage.getItem('role') === "Internal") {
                 url = 'user-internal'
-            } else if (sessionStorage.getItem('role') === "External") {
+            } else if (localStorage.getItem('role') === "External") {
                 url = 'user-external'
             }
 
@@ -345,42 +291,28 @@ const ProposalEdit = () => {
                             id="facility_needs"
                             name="facility_needs"
                             value={ form.facility_needs }
-                            onChanged={ selectChange }
-                            type="select"
-                            option={ facility }
-                            placeholder={"Pilih Kebutuhan"}
-                            isLoading={ get }
+                            onChanged={ inputChange }
+                            type="text"
+                            placeholder="Masukkan Kebutuhan Fasilitas"
                             error={ form.error_list.facility_needs }
                         />
-                        {
-                            form.facility_needs !== "" ?
-                                <>
-                                    <InputField
-                                        label="Sisa Stok"
-                                        value={ detail.remaining_stock + " " + detail.mass_unit }
-                                        disabled
-                                    />
-                                    <InputField
-                                        label={"Jumlah Kebutuhan / " + detail.mass_unit}
-                                        id="use_stock"
-                                        name="use_stock"
-                                        value={ form.use_stock }
-                                        onChanged={ inputChange }
-                                        type="number"
-                                        placeholder="Masukkan Jumlah Kebutuhan"
-                                        error={ form.error_list.use_stock }
-                                    />
-                                </>
-                            :
-                                ""
-                        }
+                        <InputField
+                            label="Docker Image"
+                            id="docker_image"
+                            name="docker_image"
+                            value={ form.docker_image }
+                            onChanged={ inputChange }
+                            type="text"
+                            placeholder="Masukkan Docker Image"
+                            error={ form.error_list.docker_image }
+                        />
                         <InputField
                             label="File Proposal Sebelumnya"
                             type="see-file"
                             onClicked={ () => window.open(form.previous_proposal_file, "_blank") }
                         />
                         <InputField
-                            label="Unggah Proposal"
+                            label="Unggah Proposal Baru"
                             id="proposal_file"
                             name="proposal_file"
                             onChanged={ inputChange }

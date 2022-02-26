@@ -10,6 +10,7 @@ export const RegisterContainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        height: auto
     }
 `
 
@@ -49,6 +50,11 @@ export const RegisterContent = styled.div`
     flex-direction: column;
     width: 50%;
     height: 100%;
+    
+    @media only Screen and (max-width: 768px) {
+        width: 100%;
+        padding: 20px;
+    }
 `
 
 export const RegisterTitle = styled.h2`
@@ -89,4 +95,10 @@ export const RegisterFieldName = styled.div`
     display: flex;
     gap: 20px;
     justify-content: space-between;
+
+    @media only Screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 0px;
+        margin-bottom: 20px;
+    }
 `

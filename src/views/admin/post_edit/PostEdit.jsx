@@ -33,9 +33,9 @@ const PostEdit = () => {
 
     useEffect(() => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -92,9 +92,9 @@ const PostEdit = () => {
         data.append('status', post.status)
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -125,9 +125,9 @@ const PostEdit = () => {
         data.append('status', 'Post')
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -158,9 +158,9 @@ const PostEdit = () => {
         data.append('status', 'Draft')
 
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 

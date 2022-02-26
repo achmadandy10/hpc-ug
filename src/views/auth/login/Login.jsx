@@ -24,7 +24,8 @@ const Login = () => {
 
     AuthCheck()
 
-    const formSubmit = () => {
+    const formSubmit = (e) => {
+        e.preventDefault()
         setLoading(true)
         
         const data = {
@@ -48,8 +49,9 @@ const Login = () => {
                         role = 'External'
                     }
 
-                    sessionStorage.setItem('token', res.data.data.access_token);
-                    sessionStorage.setItem('role', role);
+                    localStorage.setItem('token', res.data.data.access_token);
+                    localStorage.setItem('role', role);
+                    localStorage.setItem('username', res.data.data.user.email.split("@")[0]);
 
                     const Toast = Swal.mixin({
                         toast: true,
@@ -95,13 +97,14 @@ const Login = () => {
                     :
                         ""
                 }
-                <LoginForm>
+                <LoginForm onSubmit={ formSubmit }>
                     <TextField
                         label="Alamat Email"
                         id="email"
                         name="email"
                         type="text"
                         onChanged={ inputChange }
+                        required
                     />
                     <TextField
                         label="Kata Sandi"
@@ -118,7 +121,6 @@ const Login = () => {
                             height={ 50 }
                             type="submit"
                             loading={ loading }
-                            onClicked={ formSubmit }
                         >
                             Masuk
                         </ButtonSubmit>

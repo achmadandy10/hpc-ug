@@ -101,7 +101,7 @@ export const InputField = ({ onClicked, initialValue, defaultValue, styled, labe
                         <option value="" disabled>Loading...</option>
                     :
                         <>
-                            <option value="" disabled>-- Pilih --</option>
+                            <option value="" disabled>-- {placeholder} --</option>
                             {
                                 option.map((data, idx) => {
                                     return (
@@ -344,16 +344,16 @@ export const TextEditor = ({ value, name, onChanged, error }) => {
                         xhr.withCredentials = true;
                         
                         var url = ''
-                        if (sessionStorage.getItem('role') === "Content") {
+                        if (localStorage.getItem('role') === "Content") {
                             url = '/api/admin-content/upload-image'
-                        } else if (sessionStorage.getItem('role') === "Super") {
+                        } else if (localStorage.getItem('role') === "Super") {
                             url = '/api/admin-super/upload-image'
                         }
 
                         xhr.open('POST', process.env.REACT_APP_API_URL + url);
                         // var token = '{{ csrf_token() }}';
                         // xhr.setRequestHeader("X-CSRF-Token", token);
-                        var auth = sessionStorage.getItem('token');
+                        var auth = localStorage.getItem('token');
                         xhr.setRequestHeader('Authorization', auth ? `Bearer ${auth}` : '' );
                         xhr.onload = function() {
                             var json;

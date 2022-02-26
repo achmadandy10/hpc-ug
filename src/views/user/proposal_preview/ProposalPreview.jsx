@@ -10,7 +10,6 @@ import { LoadingElement } from "../../../components/loading/Loading"
 const ProposalPreview = () => {
     const { id } = useParams()
     const [get, setGet] = useState(true)
-    const [detail, setDetail] = useState({})
     const [form, setForm] = useState({
         phone_number: '',
         research_field: '',
@@ -21,24 +20,23 @@ const ProposalPreview = () => {
         output_plan: '',
         previous_experience: '',
         facility_needs: '',
-        use_stock: '',
+        docker_image: '',
         previous_proposal_file: '',
         proposal_file: '',
         error_list: [],
     })
-
+    
     useEffect(() => {
         const GetDetail = () => {
             var url = ''
-            if (sessionStorage.getItem('role') === "Internal") {
+            if (localStorage.getItem('role') === "Internal") {
                 url = 'user-internal'
-            } else if (sessionStorage.getItem('role') === "External") {
+            } else if (localStorage.getItem('role') === "External") {
                 url = 'user-external'
             }
 
             axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
                 if (res.data.meta.code === 200) {
-                    setDetail(res.data.data.submission.facility)
                     setForm({
                         phone_number: res.data.data.submission.phone_number,
                         research_field: res.data.data.submission.research_field,
@@ -48,8 +46,8 @@ const ProposalPreview = () => {
                         activity_plan: res.data.data.submission.activity_plan,
                         output_plan: res.data.data.submission.output_plan,
                         previous_experience: res.data.data.submission.previous_experience,
-                        facility_needs: res.data.data.submission.facility_id,
-                        use_stock: res.data.data.submission.use_stock,
+                        facility_needs: res.data.data.submission.facility_needs,
+                        docker_image: res.data.data.submission.docker_image,
                         previous_proposal_file: res.data.data.submission.proposal_file,
                         proposal_file: '',
                         error_list: [],
@@ -138,12 +136,12 @@ const ProposalPreview = () => {
                         />
                         <InputField
                             label="Kebutuhan Fasilitas"
-                            value={ detail.name }
+                            value={ form.facility_needs }
                             readOnly
                         />
                         <InputField
-                            label={"Jumlah Kebutuhan / " + detail.mass_unit}
-                            value={ form.use_stock }
+                            label="Docker Image"
+                            value={ form.docker_image }
                             readOnly
                         />
                         <InputField

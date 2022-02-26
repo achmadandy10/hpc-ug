@@ -5,7 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { AdminRouter } from "../../routes/admin/AdminRouter"
 
 const AdminLayout = () => {
-    const role = sessionStorage.getItem('role')
+    const role = localStorage.getItem('role')
     return (
         <AdminLayoutContainer>
             <Topbar/>

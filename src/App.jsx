@@ -13,7 +13,7 @@ axios.defaults.headers.post['Accept'] = 'appilaction/json';
 axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(function (config) {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   config.headers.Authorization = token ? `Bearer ${token}` : '';
   return config;
 });
@@ -21,6 +21,9 @@ axios.interceptors.request.use(function (config) {
 const LandingLayout = lazy(() => import('./layouts/landing_layout/LandingLayout'))
 const Login = lazy(() => import('./views/auth/login/Login'))
 const Register = lazy(() => import('./views/auth/register/Register'))
+const Error403 = lazy(() => import('./views/error/error_403/Error403'))
+const Error404 = lazy(() => import('./views/error/error_404/Error404'))
+const Error500 = lazy(() => import('./views/error/error_500/Error500'))
 
 
 function App() {
@@ -32,6 +35,9 @@ function App() {
           <Switch>
               <Route path="/masuk" component={ Login }/>
               <Route path="/daftar" component={ Register }/>
+              <Route path="/403" component={ Error403 }/>
+              <Route path="/404" component={ Error404 }/>
+              <Route path="/500" component={ Error500 }/>
 
               <UserPrivateRoute path="/user" name="User"/>
               <AdminPrivateRoute path="/admin" name="Admin"/>

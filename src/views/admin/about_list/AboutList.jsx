@@ -25,9 +25,9 @@ const AboutList = () => {
 
     const GetAbout = () => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -44,9 +44,9 @@ const AboutList = () => {
 
     const draftAbout = (id, slug) => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -83,9 +83,9 @@ const AboutList = () => {
 
     const deleteAbout = (id, slug) => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Content") {
+        if (localStorage.getItem('role') === "Content") {
             url = 'admin-content'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 

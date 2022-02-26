@@ -15,9 +15,9 @@ const AboutPreview = () => {
     useEffect(() => {
         const GetAbout = () => {
             var url = ''
-            if (sessionStorage.getItem('role') === "Content") {
+            if (localStorage.getItem('role') === "Content") {
                 url = 'admin-content'
-            } else if (sessionStorage.getItem('role') === "Super") {
+            } else if (localStorage.getItem('role') === "Super") {
                 url = 'admin-super'
             }
 

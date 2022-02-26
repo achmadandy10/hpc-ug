@@ -9,6 +9,7 @@ export const LoginContainer = styled.div`
     justify-content: center;
     flex-direction: column;
     gap: 20px;
+    padding: 20px;
 `
 
 export const LoginImg = styled.img`
@@ -25,6 +26,10 @@ export const LoginContent = styled.div`
     justify-content: center;
     flex-direction: column;
     border-radius: 3px;
+
+    @media only Screen and (max-width: 768px) {
+        padding: 20px;
+    }
 `
 
 export const LoginTitle = styled.h2`
@@ -44,7 +49,7 @@ export const LoginError = styled.div`
     color: var(--danger-color);
 `
 
-export const LoginForm = styled.div`
+export const LoginForm = styled.form`
     display: flex;
     align-items: center;
     flex-direction: column;

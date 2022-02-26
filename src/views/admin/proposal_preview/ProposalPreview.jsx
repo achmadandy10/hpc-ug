@@ -9,11 +9,22 @@ import Swal from "sweetalert2"
 import { useParams } from "react-router-dom"
 import { LoadingElement } from "../../../components/loading/Loading"
 import { FaCheck, FaCheckDouble, FaTimes } from "react-icons/fa"
+import Popup from "../../../components/popup/Popup"
 
 const ProposalPreview = () => {
     const { id } = useParams()
     const [get, setGet] = useState(true)
-    const [detail, setDetail] = useState({})
+    const [days, setDays] = useState([])
+    const [machine, setMachine] = useState([])
+    const [loadingApproved, setLoadingApproved] = useState(false)
+    const [popupApproved, setPopupApproved] = useState(false)
+    const [formApproved, setFormApproved] = useState({
+        docker_image: '',
+        username: '',
+        id_hari: '',
+        durasi: '',
+        id_mesin: '',
+    })
     const [form, setForm] = useState({
         phone_number: '',
         research_field: '',
@@ -24,24 +35,27 @@ const ProposalPreview = () => {
         output_plan: '',
         previous_experience: '',
         facility_needs: '',
-        use_stock: '',
+        docker_image: '',
         previous_proposal_file: '',
         proposal_file: '',
         status: '',
         error_list: [],
     })
 
+    const inputApprovedChange = (name, value) => {
+        setFormApproved({ ...formApproved, [name]: value })
+    }
+
     const GetUpdate = () => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
         axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
             if (res.data.meta.code === 200) {
-                setDetail(res.data.data.submission.facility)
                 setForm({
                     phone_number: res.data.data.submission.phone_number,
                     research_field: res.data.data.submission.research_field,
@@ -51,8 +65,8 @@ const ProposalPreview = () => {
                     activity_plan: res.data.data.submission.activity_plan,
                     output_plan: res.data.data.submission.output_plan,
                     previous_experience: res.data.data.submission.previous_experience,
-                    facility_needs: res.data.data.submission.facility_id,
-                    use_stock: res.data.data.submission.use_stock,
+                    facility_needs: res.data.data.submission.facility_needs,
+                    docker_image: res.data.data.submission.docker_image,
                     previous_proposal_file: res.data.data.submission.proposal_file,
                     proposal_file: '',
                     status: res.data.data.submission.status,
@@ -63,19 +77,60 @@ const ProposalPreview = () => {
         })
     }
 
-
     useEffect(() => {
         const GetDetail = () => {
             var url = ''
-            if (sessionStorage.getItem('role') === "Proposal") {
+            if (localStorage.getItem('role') === "Proposal") {
                 url = 'admin-proposal'
-            } else if (sessionStorage.getItem('role') === "Super") {
+            } else if (localStorage.getItem('role') === "Super") {
                 url = 'admin-super'
             }
 
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+              
+            fetch("http://202.125.94.143:8181/hari", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                result.data.map(v => {
+                    const data = {
+                        label: v.nama.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                            return letter.toUpperCase()
+                        }),
+                        value: v.id,
+                    }
+    
+                    return setDays(days => [...days, data])
+                })
+            })
+            .catch(error => console.log('error', error));
+              
+            fetch("http://202.125.94.143:8181/mesin", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                result.data.map(v => {
+                    const data = {
+                        label: v.nama_mesin,
+                        value: v.id_mesin,
+                    }
+    
+                    return setMachine(machine => [...machine, data])
+                })
+            })
+            .catch(error => console.log('error', error));
+
             axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
                 if (res.data.meta.code === 200) {
-                    setDetail(res.data.data.submission.facility)
+                    setFormApproved({
+                        id_proposal: id,
+                        docker_image: res.data.data.submission.docker_image,
+                        username: res.data.data.submission.user.email.split("@")[0],
+                        id_hari: '',
+                        durasi: '',
+                        id_mesin: '',
+                    })
                     setForm({
                         phone_number: res.data.data.submission.phone_number,
                         research_field: res.data.data.submission.research_field,
@@ -85,8 +140,8 @@ const ProposalPreview = () => {
                         activity_plan: res.data.data.submission.activity_plan,
                         output_plan: res.data.data.submission.output_plan,
                         previous_experience: res.data.data.submission.previous_experience,
-                        facility_needs: res.data.data.submission.facility_id,
-                        use_stock: res.data.data.submission.use_stock,
+                        facility_needs: res.data.data.submission.facility_needs,
+                        docker_image: res.data.data.submission.docker_image,
                         previous_proposal_file: res.data.data.submission.proposal_file,
                         proposal_file: '',
                         status: res.data.data.submission.status,
@@ -105,10 +160,12 @@ const ProposalPreview = () => {
     }
 
     const approvedSubmit = () => {
+        setLoadingApproved(false)
+        
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -123,31 +180,73 @@ const ProposalPreview = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
-                    if (res.data.meta.code === 200) {
-                        Swal.fire({
-                            icon:'success',
-                            title: 'Sukses!',
-                            text:'Proposal berhasil disetujui.',
-                        })
-                        GetUpdate()
-                    } else {
-                        Swal.fire({
-                            icon:'danger',
-                            title: 'Gagal!',
-                            text:'Proposal gagal disetujui.',
-                        })
-                    }
-                })
+                if (result.isConfirmed) {
+                    var formdata = new FormData();
+    
+                    formdata.append("DockerImages", formApproved.docker_image);
+                    formdata.append("username", formApproved.username);
+                    formdata.append("id_hari", formApproved.id_hari);
+                    formdata.append("durasi", formApproved.durasi);
+                    formdata.append("id_mesin", formApproved.id_mesin);
+    
+                    var requestOptions = {
+                        method: 'POST',
+                        body: formdata,
+                        redirect: 'follow'
+                    };
+    
+                    fetch("http://202.125.94.143:8181/approval", requestOptions)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw response;
+                        }
+                        return response.json();
+                    })
+                    .then(result => {
+                        if (result.error === true) {
+                            Swal.fire({
+                                icon:'warning',
+                                title: result.message,
+                            })
+                        } else {
+                            axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
+                                if (res.data.meta.code === 200) {
+                                    Swal.fire({
+                                        icon:'success',
+                                        title: 'Sukses!',
+                                        text:'Proposal berhasil disetujui.',
+                                    })
+                                    GetUpdate()
+                                } else {
+                                    Swal.fire({
+                                        icon:'danger',
+                                        title: 'Gagal!',
+                                        text:'Proposal gagal disetujui.',
+                                    })
+                                }
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        if (error.status === 422) {
+                            Swal.fire({
+                                icon:'warning',
+                                title: error.statusText,
+                                text:'harap lengkapi form.',
+                            })
+                        }
+                        return false
+                    });
+                }
             }
         })
     }
 
     const rejectedSubmit = () => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -184,9 +283,9 @@ const ProposalPreview = () => {
     
     const finishedSubmit = () => {
         var url = ''
-        if (sessionStorage.getItem('role') === "Proposal") {
+        if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
-        } else if (sessionStorage.getItem('role') === "Super") {
+        } else if (localStorage.getItem('role') === "Super") {
             url = 'admin-super'
         }
 
@@ -243,7 +342,7 @@ const ProposalPreview = () => {
                     fullwidth
                     height={ 50 }
                     type="submit"
-                    onClicked={ approvedSubmit }
+                    onClicked={ () => setPopupApproved(!popupApproved) }
                 >
                     <FaCheck/>
                     Setujui
@@ -335,12 +434,12 @@ const ProposalPreview = () => {
                         />
                         <InputField
                             label="Kebutuhan Fasilitas"
-                            value={ detail.name }
+                            value={ form.facility_needs }
                             readOnly
                         />
                         <InputField
-                            label={"Jumlah Kebutuhan / " + detail.mass_unit}
-                            value={ form.use_stock }
+                            label="Docker Image"
+                            value={ form.docker_image }
                             readOnly
                         />
                         <InputField
@@ -354,6 +453,67 @@ const ProposalPreview = () => {
                             onClicked={ () => window.open(form.previous_proposal_file, "_blank") }
                         />
                     </ProposalPreviewFormContainer>
+                    <Popup
+                        trigger={ popupApproved } 
+                        setTrigger={ setPopupApproved }
+                        title="Tambah Mesin"
+                    >
+                        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                            <InputField
+                                label="Docker Image"
+                                id="docker_image"
+                                name="docker_image"
+                                value={ formApproved.docker_image }
+                                onChanged={ inputApprovedChange }
+                                type="text"
+                                readOnly
+                            />
+                            <InputField
+                                label="Username"
+                                id="username"
+                                name="username"
+                                value={ formApproved.username }
+                                onChanged={ inputApprovedChange }
+                                type="text"
+                                readOnly
+                            />
+                            <InputField
+                                label="Hari"
+                                id="id_hari"
+                                name="id_hari"
+                                value={formApproved.id_hari}
+                                onChanged={inputApprovedChange}
+                                type="select"
+                                option={days}
+                                placeholder={"Pilih Hari"}
+                                isLoading={get}
+                            />
+                            <InputField
+                                label="Durasi"
+                                id="durasi"
+                                name="durasi"
+                                value={ formApproved.durasi }
+                                onChanged={ inputApprovedChange }
+                                type="number"
+                            />
+                            <InputField
+                                label="Mesin"
+                                id="id_mesin"
+                                name="id_mesin"
+                                value={formApproved.id_mesin}
+                                onChanged={inputApprovedChange}
+                                type="select"
+                                option={machine}
+                                placeholder={"Pilih Mesin"}
+                                isLoading={get}
+                            />
+                            <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
+                                <ButtonSubmit color="primary" loading={ loadingApproved } onClicked={ approvedSubmit }>
+                                    Tambah
+                                </ButtonSubmit>
+                            </div>
+                        </div>
+                    </Popup>
                     <ProposalPreviewFormButton>
                         { element }
                     </ProposalPreviewFormButton>

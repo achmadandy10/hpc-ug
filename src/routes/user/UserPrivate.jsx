@@ -28,8 +28,9 @@ const UserPrivateRoute = ({ ...res }) => {
 
     axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
         if (err.response.status === 401) {
-            sessionStorage.removeItem('token')
-            sessionStorage.removeItem('role')
+            localStorage.removeItem('token')
+            localStorage.removeItem('role')
+            localStorage.removeItem('username')
 
             history.push("/masuk")
         }

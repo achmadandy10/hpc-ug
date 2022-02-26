@@ -21,7 +21,7 @@ export const TableStatusContainer = styled.label`
     height: 30px;
     width: 100px;
     ${({ status }) => {
-        if (status === "Approved") {
+        if (status === "Approved" || status === 'active') {
             return `
                 color: var(--success-color);
                 background: #c3ffc2;

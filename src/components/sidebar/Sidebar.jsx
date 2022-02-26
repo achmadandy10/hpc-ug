@@ -21,8 +21,9 @@ const Sidebar = ({ type }) => {
             if (result.isConfirmed) {
                 axios.post('/api/logout').then(res => {
                     if (res.data.meta.code === 200) {
-                        sessionStorage.removeItem('token')
-                        sessionStorage.removeItem('role')
+                        localStorage.removeItem('token')
+                        localStorage.removeItem('role')
+                        localStorage.removeItem('username')
 
                         Swal.fire({
                             icon:'success',
