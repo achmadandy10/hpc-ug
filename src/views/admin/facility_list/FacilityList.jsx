@@ -33,7 +33,7 @@ const FacilityList = () => {
             redirect: 'follow'
         };
           
-        fetch("http://202.125.94.143:8181/mesin", requestOptions)
+        fetch(`${process.env.REACT_APP_API_URL_2}/mesin`, requestOptions)
         .then(response => response.json())
         .then(result => {
             setRows(result.data)
@@ -64,7 +64,7 @@ const FacilityList = () => {
             body: formdata,
         };
 
-        fetch('http://202.125.94.143:8181/mesin', requestOptions)
+        fetch(`${process.env.REACT_APP_API_URL_2}/mesin`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 throw response;

@@ -23,6 +23,7 @@ const ProposalPreview = () => {
         docker_image: '',
         previous_proposal_file: '',
         proposal_file: '',
+        status: '',
         error_list: [],
     })
     
@@ -50,6 +51,7 @@ const ProposalPreview = () => {
                         docker_image: res.data.data.submission.docker_image,
                         previous_proposal_file: res.data.data.submission.proposal_file,
                         proposal_file: '',
+                        status: res.data.data.submission.status,
                         error_list: [],
                     })
                 }

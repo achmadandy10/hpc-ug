@@ -91,7 +91,7 @@ const ProposalPreview = () => {
                 redirect: 'follow'
             };
               
-            fetch("http://202.125.94.143:8181/hari", requestOptions)
+            fetch(`${process.env.REACT_APP_API_URL_2}/hari`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 result.data.map(v => {
@@ -107,7 +107,7 @@ const ProposalPreview = () => {
             })
             .catch(error => console.log('error', error));
               
-            fetch("http://202.125.94.143:8181/mesin", requestOptions)
+            fetch(`${process.env.REACT_APP_API_URL_2}/mesin`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 result.data.map(v => {
@@ -195,7 +195,7 @@ const ProposalPreview = () => {
                         redirect: 'follow'
                     };
     
-                    fetch("http://202.125.94.143:8181/approval", requestOptions)
+                    fetch(`${process.env.REACT_APP_API_URL_2}/approval`, requestOptions)
                     .then(response => {
                         if (!response.ok) {
                             throw response;
