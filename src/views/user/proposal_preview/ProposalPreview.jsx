@@ -35,7 +35,7 @@ const ProposalPreview = () => {
             } else if (localStorage.getItem('role') === "External") {
                 url = 'user-external'
             }
-
+            
             axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
                 if (res.data.meta.code === 200) {
                     setForm({
@@ -154,7 +154,7 @@ const ProposalPreview = () => {
                         <InputField
                             label="File Proposal"
                             type="see-file"
-                            onClicked={ () => window.open(form.previous_proposal_file, "_blank") }
+                            onClicked={ () => window.open(process.env.REACT_APP_API_URL + '/proposal/file/' + form.previous_proposal_file, "_blank") }
                         />
                     </ProposalPreviewFormContainer>
                 </Card>
