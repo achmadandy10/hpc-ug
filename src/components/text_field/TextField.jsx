@@ -8,6 +8,7 @@ import { TextField as TextFieldMui } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { ButtonSubmit } from "../button/Button";
+import CurrencyFormat from "react-currency-format";
 
 export const inputFileClear = () => {
     const inputFile = document.querySelectorAll('input[type=file]')
@@ -24,6 +25,29 @@ export const InputField = ({ onClicked, initialValue, defaultValue, styled, labe
         const fieldValue = e.target.value
 
         onChanged(fieldName, fieldValue)
+    }
+
+    const currencyFieldChange = (e) => {
+        const fieldName = e.target.name
+        const cleanPrefix = e.target.value.replace("Rp. ", "")
+        const cleanNumber = cleanPrefix.replaceAll(",", "")
+        const fieldValue = cleanNumber
+
+        onChanged(fieldName, fieldValue)
+    }
+
+    const checkboxFieldChange = (e) => {
+        if (e.target.checked) {
+            const fieldName = e.target.name
+            const fieldValue = e.target.value
+            
+            onChanged(fieldName, fieldValue)
+        } else {
+            const fieldName = e.target.name
+            const fieldValue = ''
+    
+            onChanged(fieldName, fieldValue)
+        }
     }
 
     const fieldImageChange = (e) => {
@@ -181,10 +205,26 @@ export const InputField = ({ onClicked, initialValue, defaultValue, styled, labe
                 name={name}
                 disabled={disabled}
                 value={value}
-                onChange={fieldChange}
+                onChange={checkboxFieldChange}
                 error={error}
                 required={required}
                 readOnly={readOnly}
+            />
+        )
+    } else if (type === "currency") {
+        InputType = (
+            <CurrencyFormat
+                placeholder={ placeholder } 
+                value={ value } 
+                customInput={InputFieldForm}
+                thousandSeparator={true} 
+                onChange={ currencyFieldChange }
+                prefix={'Rp. '}
+                name={name}
+                id={id}
+                required={required}
+                readOnly={readOnly}
+                disabled={disabled}
             />
         )
     } else if (type === "see-file") {
@@ -211,16 +251,26 @@ export const InputField = ({ onClicked, initialValue, defaultValue, styled, labe
     }
     return (
         <InputFieldContainer style_input={ styled }>
-            <InputFieldLabel htmlFor={id}>{ label }</InputFieldLabel>
-            <div 
-                style={{
-                    flex: "4",
-                    width: "100%"
-                }}
-            >
-                { InputType }
-                { error && <InputFieldError>{ error }</InputFieldError>}
-            </div>
+            { type === "checkbox" ? (
+                <>
+                    { InputType }
+                    { error && <InputFieldError>{ error }</InputFieldError>}
+                    <InputFieldLabel style={{ fontWeight: "300", fontSize: "15px" }} htmlFor={id}>{ label }</InputFieldLabel>
+                </>
+            ) : (
+                <>
+                    <InputFieldLabel htmlFor={id}>{ label }</InputFieldLabel>
+                    <div 
+                        style={{
+                            flex: "4",
+                            width: "100%"
+                        }}
+                    >
+                        { InputType }
+                        { error && <InputFieldError>{ error }</InputFieldError>}
+                    </div>
+                </>
+            ) }
         </InputFieldContainer>
     )
 }

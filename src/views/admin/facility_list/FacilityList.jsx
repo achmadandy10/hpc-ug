@@ -102,6 +102,11 @@ const FacilityList = () => {
 
     const columns = [
         {
+            field: 'id_mesin',
+            headerName: 'ID Mesin',
+            width: 300,
+        },
+        {
             field: 'nama_mesin',
             headerName: 'Nama Mesin',
             width: 150,
@@ -114,7 +119,7 @@ const FacilityList = () => {
         {
             field: 'description',
             headerName: 'Deskripsi',
-            width: 250,
+            width: 170,
         },
         {
             field: 'gpu',

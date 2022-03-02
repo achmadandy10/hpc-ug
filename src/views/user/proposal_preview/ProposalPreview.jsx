@@ -12,6 +12,14 @@ const ProposalPreview = () => {
     const [get, setGet] = useState(true)
     const [form, setForm] = useState({
         phone_number: '',
+        educational_level: '',
+        application_file: '',
+        study_program: '',
+        gpu: '',
+        ram: '',
+        storage: '',
+        partner: '',
+        duration: '',
         research_field: '',
         short_description: '',
         data_description: '',
@@ -19,7 +27,7 @@ const ProposalPreview = () => {
         activity_plan: '',
         output_plan: '',
         previous_experience: '',
-        facility_needs: '',
+        research_fee: '',
         docker_image: '',
         previous_proposal_file: '',
         proposal_file: '',
@@ -40,6 +48,14 @@ const ProposalPreview = () => {
                 if (res.data.meta.code === 200) {
                     setForm({
                         phone_number: res.data.data.submission.phone_number,
+                        educational_level: res.data.data.submission.educational_level,
+                        application_file: res.data.data.submission.application_file,
+                        study_program: res.data.data.submission.study_program,
+                        gpu: res.data.data.submission.gpu,
+                        ram: res.data.data.submission.ram,
+                        storage: res.data.data.submission.storage,
+                        partner: res.data.data.submission.partner,
+                        duration: res.data.data.submission.duration,
                         research_field: res.data.data.submission.research_field,
                         short_description: res.data.data.submission.short_description,
                         data_description: res.data.data.submission.data_description,
@@ -47,7 +63,7 @@ const ProposalPreview = () => {
                         activity_plan: res.data.data.submission.activity_plan,
                         output_plan: res.data.data.submission.output_plan,
                         previous_experience: res.data.data.submission.previous_experience,
-                        facility_needs: res.data.data.submission.facility_needs,
+                        research_fee: res.data.data.submission.research_fee,
                         docker_image: res.data.data.submission.docker_image,
                         previous_proposal_file: res.data.data.submission.proposal_file,
                         proposal_file: '',
@@ -89,6 +105,46 @@ const ProposalPreview = () => {
                         <InputField
                             label="Nomor Handphone"
                             value={ form.phone_number }
+                            readOnly
+                        />
+                        <InputField
+                            label="Jenjang Pendidikan"
+                            value={ form.educational_level }
+                            readOnly
+                        />
+                        <InputField
+                            label="File Permohonan"
+                            type="see-file"
+                            onClicked={ () => window.open(process.env.REACT_APP_API_URL + '/application_dgx/file/' + form.application_file, "_blank") }
+                        />
+                        <InputField
+                            label="Program Studi"
+                            value={ form.study_program }
+                            readOnly
+                        />
+                        <InputField
+                            label="Jumlah GPU / (GB)"
+                            value={ form.gpu }
+                            readOnly
+                        />
+                        <InputField
+                            label="Jumlah RAM / (GB)"
+                            value={ form.ram }
+                            readOnly
+                        />
+                        <InputField
+                            label="Jumlah Storage / (GB)"
+                            value={ form.storage }
+                            readOnly
+                        />
+                        <InputField
+                            label="Nama Partner / Mahasiswa"
+                            value={ form.partner }
+                            readOnly
+                        />
+                        <InputField
+                            label="Durasi / (Hari)"
+                            value={ form.partner }
                             readOnly
                         />
                         <InputField
@@ -144,6 +200,12 @@ const ProposalPreview = () => {
                         <InputField
                             label="Docker Image"
                             value={ form.docker_image }
+                            readOnly
+                        />
+                        <InputField
+                            label="Biaya Penelitian"
+                            value={ form.research_fee }
+                            type="currency"
                             readOnly
                         />
                         <InputField
