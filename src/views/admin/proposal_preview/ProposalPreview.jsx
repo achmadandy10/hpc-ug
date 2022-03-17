@@ -231,6 +231,15 @@ const ProposalPreview = () => {
                         body: formdata,
                         redirect: 'follow'
                     };
+
+                    if (formApproved.appr_description === null) {
+                        Swal.fire({
+                            icon:'warning',
+                            text:'harap lengkapi form.',
+                        })
+
+                        return false;
+                    }
     
                     fetch(`${process.env.REACT_APP_API_URL_2}/approval`, requestOptions)
                     .then(response => {

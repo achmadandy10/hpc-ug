@@ -268,6 +268,15 @@ const Proposal = () => {
                     redirect: 'follow'
                 };
 
+                if (formApproved.appr_description === null) {
+                    Swal.fire({
+                        icon:'warning',
+                        text:'harap lengkapi form.',
+                    })
+
+                    return false;
+                }
+
                 fetch(`${process.env.REACT_APP_API_URL_2}/approval`, requestOptions)
                 .then(response => {
                     if (!response.ok) {
@@ -276,7 +285,7 @@ const Proposal = () => {
                     return response.json();
                 })
                 .then(result => {
-                    if (result.error === true || formApproved.appr_description === null) {
+                    if (result.error === true) {
                         Swal.fire({
                             icon:'warning',
                             title: result.message,
@@ -306,13 +315,7 @@ const Proposal = () => {
                     }
                 })
                 .catch(error => {
-                    if (error.status === 422 || formApproved.appr_description === null) {
-                        Swal.fire({
-                            icon:'warning',
-                            title: error.statusText,
-                            text:'harap lengkapi form.',
-                        })
-                    } else {
+                    if (error.status === 422) {
                         Swal.fire({
                             icon:'warning',
                             title: error.statusText,
@@ -799,6 +802,15 @@ const Super = () => {
                     redirect: 'follow'
                 };
 
+                if (formApproved.appr_description === null) {
+                    Swal.fire({
+                        icon:'warning',
+                        text:'harap lengkapi form.',
+                    })
+
+                    return false;
+                }
+
                 fetch(`${process.env.REACT_APP_API_URL_2}/approval`, requestOptions)
                 .then(response => {
                     if (!response.ok) {
@@ -807,7 +819,7 @@ const Super = () => {
                     return response.json();
                 })
                 .then(result => {
-                    if (result.error === true || formApproved.appr_description === null) {
+                    if (result.error === true) {
                         Swal.fire({
                             icon:'warning',
                             title: result.message,
@@ -837,13 +849,7 @@ const Super = () => {
                     }
                 })
                 .catch(error => {
-                    if (error.status === 422 || formApproved.appr_description === null) {
-                        Swal.fire({
-                            icon:'warning',
-                            title: error.statusText,
-                            text:'harap lengkapi form.',
-                        })
-                    } else {
+                    if (error.status === 422) {
                         Swal.fire({
                             icon:'warning',
                             title: error.statusText,

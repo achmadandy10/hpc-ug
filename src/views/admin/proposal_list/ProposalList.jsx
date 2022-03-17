@@ -24,6 +24,7 @@ const ProposalList = () => {
         username: '',
         id_hari: '',
         durasi: '',
+        appr_description: '',
         id_mesin: '',
     })
     const [formRevision, setFormRevision] = useState({
@@ -149,6 +150,15 @@ const ProposalList = () => {
                     redirect: 'follow'
                 };
 
+                if (formApproved.appr_description === null) {
+                    Swal.fire({
+                        icon:'warning',
+                        text:'harap lengkapi form.',
+                    })
+
+                    return false;
+                }
+
                 fetch(`${process.env.REACT_APP_API_URL_2}/approval`, requestOptions)
                 .then(response => {
                     if (!response.ok) {
@@ -163,7 +173,11 @@ const ProposalList = () => {
                             title: result.message,
                         })
                     } else {
-                        axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
+                        var formdata = new FormData();
+
+                        formdata.append("appr_description", formApproved.appr_description);
+
+                        axios.post('/api/' + url + '/proposal-submission/approved/' + id, formdata).then(res => {
                             if (res.data.meta.code === 200) {
                                 Swal.fire({
                                     icon:'success',
