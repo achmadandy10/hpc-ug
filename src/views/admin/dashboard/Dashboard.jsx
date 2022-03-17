@@ -126,6 +126,7 @@ const Proposal = () => {
         id_hari: '',
         durasi: '',
         id_mesin: '',
+        appr_description: '',
         error_list: '',
     })
     const [formRejected, setFormRejected] = useState({
@@ -275,7 +276,7 @@ const Proposal = () => {
                     return response.json();
                 })
                 .then(result => {
-                    if (result.error === true) {
+                    if (result.error === true || formApproved.appr_description === null) {
                         Swal.fire({
                             icon:'warning',
                             title: result.message,
@@ -305,7 +306,13 @@ const Proposal = () => {
                     }
                 })
                 .catch(error => {
-                    if (error.status === 422) {
+                    if (error.status === 422 || formApproved.appr_description === null) {
+                        Swal.fire({
+                            icon:'warning',
+                            title: error.statusText,
+                            text:'harap lengkapi form.',
+                        })
+                    } else {
                         Swal.fire({
                             icon:'warning',
                             title: error.statusText,
@@ -539,7 +546,6 @@ const Proposal = () => {
                                     <TextEditor
                                         label="Detail Setujui"
                                         name="appr_description"
-                                        value={ formApproved.appr_description }
                                         onChanged={ inputApprovedChange }
                                         error={ formApproved.error_list.appr_description }
                                     />
@@ -561,7 +567,6 @@ const Proposal = () => {
                                 <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                                     <TextEditor
                                         name="rev_description"
-                                        value={ formRejected.rev_description }
                                         onChanged={ inputRejectedChange }
                                         error={ formRejected.error_list.rev_description }
                                     />
