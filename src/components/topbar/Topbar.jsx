@@ -1,6 +1,17 @@
-import { TopbarContainer, TopbarLeft, TopbarLogoContainer, TopbarLogoImg, TopbarLogoTitle, TopbarProfile, TopbarProfileDropdownContainer, TopbarProfileDropdownLink, TopbarProfileDropdownList, TopbarProfileDropdownLogout, TopbarProfileImg, TopbarProfileName, TopbarRight, TopbarToggle, TopbarWrapper } from "./Topbar.elements"
+import { 
+    TopbarContainer, 
+    TopbarLeft, 
+    TopbarLogoContainer, 
+    TopbarLogoImg, 
+    TopbarLogoTitle, 
+    TopbarProfile, 
+    TopbarProfileDropdownContainer, 
+    // TopbarProfileDropdownLink, 
+    TopbarProfileDropdownList, TopbarProfileDropdownLogout, TopbarProfileImg, TopbarProfileName, TopbarRight, TopbarToggle, TopbarWrapper } from "./Topbar.elements"
 import Logo from "../../images/logo.png"
-import { FaBars, FaChevronDown, FaSignOutAlt, FaUser } from "react-icons/fa"
+import { FaBars, FaChevronDown, FaSignOutAlt, 
+    // FaUser
+ } from "react-icons/fa"
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import Swal from "sweetalert2"
@@ -12,9 +23,15 @@ const Topbar = () => {
 
     useEffect(() => {
         const getProfile = () => {
+            var url = ''
+            if (localStorage.getItem('role') === "Content" || localStorage.getItem('role') === "Super" || localStorage.getItem('role') === "Proposal") {
+                url = 'admin_profile'
+            } else {
+                url = 'user_profile'
+            }
             axios.get('/api/profile').then(res => {
                 if (res.data.meta.code === 200) {
-                    setProfile(res.data.data.profile)
+                    setProfile(res.data.data.profile[url])
                 }
             })
         }
@@ -55,6 +72,7 @@ const Topbar = () => {
                     if (res.data.meta.code === 200) {
                         localStorage.removeItem('token')
                         localStorage.removeItem('role')
+                        localStorage.removeItem('username')
 
                         Swal.fire({
                             icon:'success',
@@ -82,14 +100,14 @@ const Topbar = () => {
         sidebar.classList.toggle("show")
     }
 
-    var profileLink = ''
-    const role = localStorage.getItem("role")
+    // var profileLink = ''
+    // const role = localStorage.getItem("role")
 
-    if (role === "Content" || role === "Proposal" || role === "Super") {
-        profileLink = "/admin/profil"
-    } else if (role === "Internal" || role === "External") {
-        profileLink = "/user/profil"
-    }
+    // if (role === "Content" || role === "Proposal" || role === "Super") {
+    //     profileLink = "/admin/profil"
+    // } else if (role === "Internal" || role === "External") {
+    //     profileLink = "/user/profil"
+    // }
 
     return (
         <TopbarContainer>
@@ -107,15 +125,15 @@ const Topbar = () => {
 
                 <TopbarRight>
                     <TopbarProfile>
-                        <TopbarProfileName>{ profile.first_name + " " + profile.last_name }</TopbarProfileName>
+                        <TopbarProfileName>{ profile.first_name + " " + (profile.last_name === null ? '' : profile.last_name) }</TopbarProfileName>
                         <TopbarProfileImg src={ profile.avatar !== null ? profile.avatar : "https://ui-avatars.com/api/?name=" + profile.first_name + "+" + profile.last_name + "background=0D8ABC&color=fff" }/>
                         <FaChevronDown onClick={ () => toggleActive(1) }/>
                         <TopbarProfileDropdownContainer className={ toggleActiveClass(1) }>
                             <TopbarProfileDropdownList>
-                                <TopbarProfileDropdownLink to={ profileLink } onClick={() => setDropdown(null)}>
+                                {/* <TopbarProfileDropdownLink to={ profileLink } onClick={() => setDropdown(null)}>
                                     <FaUser/>
                                     Profil
-                                </TopbarProfileDropdownLink>
+                                </TopbarProfileDropdownLink> */}
                                 <TopbarProfileDropdownLogout onClick={ logoutSubmit }>
                                     <FaSignOutAlt/>
                                     Keluar

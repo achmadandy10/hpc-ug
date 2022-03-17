@@ -1,6 +1,6 @@
 import Card, { CardHeader } from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
-import { FaEye } from "react-icons/fa"
+import { FaEye, FaPenSquare } from "react-icons/fa"
 import Table, { TableAction, TableStatus } from "../../../components/table/Table"
 import { useEffect, useState } from "react"
 import dateFormat from "dateformat"
@@ -161,9 +161,9 @@ const Dashboard = () => {
                 if (params.row.status === "approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "rejected") {
-                    newStatus = "Ditolak"
+                    newStatus = "Revisi"
                 } else if (params.row.status === "pending") {
-                    newStatus = "Tertunda"
+                    newStatus = "Belum Disetujui"
                 } else if (params.row.status === "finished") {
                     newStatus = "Selesai"
                 }
@@ -175,9 +175,9 @@ const Dashboard = () => {
                 if (params.row.status === "Approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "Rejected") {
-                    newStatus = "Ditolak"
+                    newStatus = "Revisi"
                 } else if (params.row.status === "Pending") {
-                    newStatus = "Tertunda"
+                    newStatus = "Belum Disetujui"
                 } else if (params.row.status === "Finished") {
                     newStatus = "Selesai"
                 }
@@ -214,12 +214,29 @@ const Dashboard = () => {
             disableExport: true,
             filterable: false,
             renderCell: (params) => {
+                let button = ''
+                
+                if (params.row.status === "Rejected") {
+                    button = 
+                        <TableAction>
+                            <ButtonIconLink to={ "/user/usulan/ubah/" + params.row.id } color="info">
+                                <FaPenSquare/>
+                            </ButtonIconLink>
+                        </TableAction>
+                    
+                    
+                } else {
+                    button = 
+                        <TableAction>
+                            <ButtonIconLink to={ "/user/usulan/pratinjau/" + params.row.id } color="info">
+                                <FaEye/>
+                            </ButtonIconLink>
+                        </TableAction>
+                }
                 return (
-                    <TableAction>
-                        <ButtonIconLink to={ "/user/usulan/pratinjau/" + params.row.id } color="info">
-                            <FaEye/>
-                        </ButtonIconLink>
-                    </TableAction>
+                    <>
+                        { button }
+                    </>
                 )
             }
         },
@@ -250,9 +267,9 @@ const Dashboard = () => {
                 if (params.row.status === "approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "rejected") {
-                    newStatus = "Ditolak"
+                    newStatus = "Revisi"
                 } else if (params.row.status === "pending") {
-                    newStatus = "Tertunda"
+                    newStatus = "Belum Disetujui"
                 } else if (params.row.status === "finished") {
                     newStatus = "Selesai"
                 } else {
@@ -266,9 +283,9 @@ const Dashboard = () => {
                 if (params.row.status === "Approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "Rejected") {
-                    newStatus = "Ditolak"
+                    newStatus = "Revisi"
                 } else if (params.row.status === "Pending") {
-                    newStatus = "Tertunda"
+                    newStatus = "Belum Disetujui"
                 } else if (params.row.status === "Finished") {
                     newStatus = "Selesai"
                 } else {

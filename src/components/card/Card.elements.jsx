@@ -5,6 +5,7 @@ export const CardContainer = styled.div`
     box-shadow: var(--bs-smooth);
     padding: 20px;
     border-radius: 3px;
+    width: 100%;
 `
 
 export const CardTitle = styled.h2`

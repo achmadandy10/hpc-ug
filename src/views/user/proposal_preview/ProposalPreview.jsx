@@ -81,11 +81,11 @@ const ProposalPreview = () => {
     var status = ''
 
     if (form.status === "Pending") {
-        status = "Tertunda"
+        status = "Belum Disetujui"
     } else if (form.status === "Approved") {
         status = "Disetujui"
     } else if (form.status === "Rejected") {
-        status = "Ditolak"
+        status = "Revisi"
     } else if (form.status === "Finished") {
         status = "Selesai"
     }
@@ -144,7 +144,7 @@ const ProposalPreview = () => {
                         />
                         <InputField
                             label="Durasi / (Hari)"
-                            value={ form.partner }
+                            value={ form.duration }
                             readOnly
                         />
                         <InputField
@@ -190,11 +190,6 @@ const ProposalPreview = () => {
                             value={ form.previous_experience }
                             id="revious_experience"
                             type="textarea"
-                            readOnly
-                        />
-                        <InputField
-                            label="Kebutuhan Fasilitas"
-                            value={ form.facility_needs }
                             readOnly
                         />
                         <InputField

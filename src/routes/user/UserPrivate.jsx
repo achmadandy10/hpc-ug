@@ -8,6 +8,7 @@ import LoadingPage from "../../components/loading/Loading"
 import UserLayout from "../../layouts/user_layout/UserLayout"
 
 const UserPrivateRoute = ({ ...res }) => {
+    const history = useHistory();
     const [authState, setAuth] = useState(false)
     const [loadingState, setLoading] = useState(true)
 
@@ -15,6 +16,8 @@ const UserPrivateRoute = ({ ...res }) => {
         axios.get('/api/check_user').then( res => {
             if (res.data.meta.code === 200) {
                 setAuth(true)                
+            } else {
+                history.push('/verifikasi')
             }
             setLoading(false)
         })
@@ -22,9 +25,7 @@ const UserPrivateRoute = ({ ...res }) => {
         return () => {
             setAuth(false)
         }
-    }, [])
-
-    const history = useHistory();
+    }, [history])
 
     axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
         if (err.response.status === 401) {

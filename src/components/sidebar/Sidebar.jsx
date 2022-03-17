@@ -63,6 +63,15 @@ const Sidebar = ({ type }) => {
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarTitle>Prosedur dan Template</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/user/prosedur-template">
+                                    <FaFileInvoice/>
+                                    Daftar Prosedur
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
                     </SidebarMenuContainer>
                 </div>
 
@@ -88,6 +97,15 @@ const Sidebar = ({ type }) => {
                                 <SidebarListItem activeClassName="active" to="/user/pengajuan-usulan">
                                     <FaFileInvoice/>
                                     Pengajuan Usulan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarTitle>Prosedur dan Template</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/user/prosedur-template">
+                                    <FaFileInvoice/>
+                                    Daftar Prosedur
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>
@@ -192,6 +210,15 @@ const Sidebar = ({ type }) => {
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarTitle>Prosedur dan Template</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/prosedur-template">
+                                    <FaFileInvoice/>
+                                    Daftar Prosedur
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
                     </SidebarMenuContainer>
                 </div>
 
@@ -211,6 +238,16 @@ const Sidebar = ({ type }) => {
                     </SidebarDashboard>
 
                     <SidebarMenuContainer>
+                        <SidebarMenu>
+                            <SidebarTitle>Pengumuman</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/buat-pengumuman">
+                                    <FaPenSquare/>
+                                    Buat Pengumuman
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+
                         <SidebarMenu>
                             <SidebarTitle>Konten</SidebarTitle>
                             <SidebarList>
@@ -246,6 +283,15 @@ const Sidebar = ({ type }) => {
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarTitle>Prosedur dan Template</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/prosedur-template">
+                                    <FaFileInvoice/>
+                                    Daftar Prosedur
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
                         
                         <SidebarMenu>
                             <SidebarTitle>Tentang</SidebarTitle>
@@ -271,6 +317,24 @@ const Sidebar = ({ type }) => {
                                 <SidebarListItem activeClassName="active" to="/admin/layanan">
                                     <FaList/>
                                     Daftar Layanan
+                                </SidebarListItem>
+                            </SidebarList>
+                        </SidebarMenu>
+
+                        <SidebarMenu>
+                            <SidebarTitle>Manajemen User</SidebarTitle>
+                            <SidebarList>
+                                <SidebarListItem activeClassName="active" to="/admin/buat-admin">
+                                    <FaPenSquare/>
+                                    Buat Admin
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-admin">
+                                    <FaList/>
+                                    Daftar Admin
+                                </SidebarListItem>
+                                <SidebarListItem activeClassName="active" to="/admin/daftar-user">
+                                    <FaList/>
+                                    Daftar User
                                 </SidebarListItem>
                             </SidebarList>
                         </SidebarMenu>

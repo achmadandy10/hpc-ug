@@ -19,9 +19,10 @@ export const TableStatusContainer = styled.label`
     align-items: center;
     justify-content: center;
     height: 30px;
-    width: 100px;
+    width: 120px;
+    padding: 10px 20px;
     ${({ status }) => {
-        if (status === "Approved" || status === 'active') {
+        if (status === "Approved" || status === 'active' || status === 'Post') {
             return `
                 color: var(--success-color);
                 background: #c3ffc2;
@@ -31,7 +32,7 @@ export const TableStatusContainer = styled.label`
                 color: var(--danger-color);
                 background: #ffb8b1;
             `
-        } else if (status === "Pending") {
+        } else if (status === "Pending" || status === "Draft") {
             return `
                 color: var(--warning-color);
                 background: #ffdbb5;

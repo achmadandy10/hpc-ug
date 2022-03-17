@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { ButtonSubmit } from "../../../components/button/Button"
 import Card, { CardHeader } from "../../../components/card/Card"
 import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayout"
-import { InputField } from "../../../components/text_field/TextField"
+import { InputField, TextEditor } from "../../../components/text_field/TextField"
 import { ProposalPreviewFormButton, ProposalPreviewFormContainer } from "./ProposalPreview.elements"
 import axios from "axios"
 import Swal from "sweetalert2"
@@ -17,13 +17,21 @@ const ProposalPreview = () => {
     const [days, setDays] = useState([])
     const [machine, setMachine] = useState([])
     const [loadingApproved, setLoadingApproved] = useState(false)
+    const [loadingRejected, setLoadingRejected] = useState(false)
     const [popupApproved, setPopupApproved] = useState(false)
+    const [popupRejected, setPopupRejected] = useState(false)
+    const [formRejected, setFormRejected] = useState({
+        rev_description: '',
+        error_list: [],
+    })
     const [formApproved, setFormApproved] = useState({
         docker_image: '',
         username: '',
         id_hari: '',
         durasi: '',
+        appr_description: '',
         id_mesin: '',
+        error_list: ''
     })
     const [form, setForm] = useState({
         phone_number: '',
@@ -52,6 +60,10 @@ const ProposalPreview = () => {
 
     const inputApprovedChange = (name, value) => {
         setFormApproved({ ...formApproved, [name]: value })
+    }
+
+    const inputRejectedChange = (name, value) => {
+        setFormRejected({ ...formRejected, [name]: value })
     }
 
     const GetUpdate = () => {
@@ -146,6 +158,7 @@ const ProposalPreview = () => {
                         id_hari: '',
                         durasi: '',
                         id_mesin: '',
+                        error_list: '',
                     })
                     setForm({
                         phone_number: res.data.data.submission.phone_number,
@@ -233,7 +246,11 @@ const ProposalPreview = () => {
                                 title: result.message,
                             })
                         } else {
-                            axios.post('/api/' + url + '/proposal-submission/approved/' + id).then(res => {
+                            var formdata = new FormData();
+    
+                            formdata.append("appr_description", formApproved.appr_description);
+
+                            axios.post('/api/' + url + '/proposal-submission/approved/' + id, formdata).then(res => {
                                 if (res.data.meta.code === 200) {
                                     Swal.fire({
                                         icon:'success',
@@ -247,6 +264,7 @@ const ProposalPreview = () => {
                                         title: 'Gagal!',
                                         text:'Proposal gagal disetujui.',
                                     })
+                                    setFormApproved({ ...formApproved, error_list: res.data.data.validation_errors })
                                 }
                             })
                         }
@@ -267,6 +285,8 @@ const ProposalPreview = () => {
     }
 
     const rejectedSubmit = () => {
+        setLoadingRejected(true)
+        
         var url = ''
         if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
@@ -276,8 +296,8 @@ const ProposalPreview = () => {
 
         Swal.fire({
             icon: 'question',
-            title: 'Yakin ingin menolak?',
-            text: 'Harap periksa data baik-baik sebelum menyetujui.',
+            title: 'Yakin ingin merevisi?',
+            text: 'Harap periksa data baik-baik sebelum revisi.',
             showCancelButton: true,
             confirmButtonColor: "#5B3A89",
             cancelButtonColor: "#F34636",
@@ -285,22 +305,25 @@ const ProposalPreview = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/proposal-submission/rejected/' + id).then(res => {
+                var formdata = new FormData();
+
+                formdata.append("rev_description", formRejected.rev_description);
+
+                axios.post('/api/' + url + '/proposal-submission/rejected/' + id, formdata).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
                             title: 'Sukses!',
-                            text:'Proposal berhasil ditolak.',
+                            text:'Proposal berhasil Revisi.',
                         })
                         GetUpdate()
                     } else {
-                        Swal.fire({
-                            icon:'danger',
-                            title: 'Gagal!',
-                            text:'Proposal gagal ditolak.',
-                        })
+                        setFormRejected({ ...formRejected, error_list: res.data.data.validation_errors })
                     }
+                    setLoadingRejected(false)
                 })
+            } else {
+                setLoadingRejected(false)
             }
         })
     }
@@ -315,7 +338,7 @@ const ProposalPreview = () => {
 
         Swal.fire({
             icon: 'question',
-            title: 'Yakin ingin menolak?',
+            title: 'Yakin ingin merevisi?',
             text: 'Harap periksa data baik-baik sebelum menyetujui.',
             showCancelButton: true,
             confirmButtonColor: "#5B3A89",
@@ -329,14 +352,14 @@ const ProposalPreview = () => {
                         Swal.fire({
                             icon:'success',
                             title: 'Sukses!',
-                            text:'Proposal berhasil ditolak.',
+                            text:'Proposal berhasil Revisi.',
                         })
                         GetUpdate()
                     } else {
                         Swal.fire({
                             icon:'danger',
                             title: 'Gagal!',
-                            text:'Proposal gagal ditolak.',
+                            text:'Proposal gagal Revisi.',
                         })
                     }
                 })
@@ -347,11 +370,11 @@ const ProposalPreview = () => {
     var status = ''
 
     if (form.status === "Pending") {
-        status = "Tertunda"
+        status = "Belum Disetujui"
     } else if (form.status === "Approved") {
         status = "Disetujui"
     } else if (form.status === "Rejected") {
-        status = "Ditolak"
+        status = "Revisi"
     } else if (form.status === "Finished") {
         status = "Selesai"
     }
@@ -376,7 +399,7 @@ const ProposalPreview = () => {
                     fullwidth
                     height={ 50 }
                     type="submit"
-                    onClicked={ rejectedSubmit }
+                    onClicked={ () => setPopupRejected(!popupRejected) }
                 >
                     <FaTimes/>
                     Tolak
@@ -448,7 +471,7 @@ const ProposalPreview = () => {
                         />
                         <InputField
                             label="Durasi / (Hari)"
-                            value={ form.partner }
+                            value={ form.duration }
                             readOnly
                         />
                         <InputField
@@ -572,9 +595,36 @@ const ProposalPreview = () => {
                                 placeholder={"Pilih Mesin"}
                                 isLoading={get}
                             />
+                            <TextEditor
+                                label="Detail Setujui"
+                                name="appr_description"
+                                value={ formApproved.appr_description }
+                                onChanged={ inputApprovedChange }
+                                error={ formApproved.error_list.appr_description }
+                            />
                             <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
                                 <ButtonSubmit color="primary" loading={ loadingApproved } onClicked={ approvedSubmit }>
                                     Tambah
+                                </ButtonSubmit>
+                            </div>
+                        </div>
+                    </Popup>
+
+                    <Popup
+                        trigger={ popupRejected } 
+                        setTrigger={ setPopupRejected }
+                        title="Detail Revisi"
+                    >
+                        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                            <TextEditor
+                                name="rev_description"
+                                value={ formRejected.rev_description }
+                                onChanged={ inputRejectedChange }
+                                error={ formRejected.error_list.rev_description }
+                            />
+                            <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
+                                <ButtonSubmit color="primary" loading={ loadingRejected } onClicked={ () => rejectedSubmit(formRejected.id_proposal) }>
+                                    Revisi
                                 </ButtonSubmit>
                             </div>
                         </div>

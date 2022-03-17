@@ -1,4 +1,5 @@
 import Dashboard from "../../views/user/dashboard/Dashboard";
+import Procedure from "../../views/user/procedure/Procedure";
 import Profile from "../../views/user/profile/Profile";
 import ProposalAdd from "../../views/user/proposal_add/ProposalAdd";
 import ProposalEdit from "../../views/user/proposal_edit/ProposalEdit";
@@ -11,4 +12,5 @@ export const UserRouter = [
     { path: "/user/usulan/ubah/:id", exact: true, name: "User Proposal Edit", component: ProposalEdit },
     { path: "/user/usulan/pratinjau/:id", exact: true, name: "User Proposal Preview", component: ProposalPreview },
     { path: "/user/profil", exact: true, name: "User Profile", component: Profile },
+    { path: "/user/prosedur-template", exact: true, name: "User Procedure", component: Procedure },
 ]

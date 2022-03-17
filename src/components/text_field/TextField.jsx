@@ -356,11 +356,15 @@ const TextField = ({ label, type, id, name, value, readOnly, disabled, required,
     )
 }
 
-export const TextEditor = ({ value, name, onChanged, error }) => {
+export const TextEditor = ({ label, value, name, onChanged, error }) => {
     return (
-        <>
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            {label && (
+                <label style={{ color: "var(--title-color)",
+                    fontSize: "var(--normal-font-size)" }} htmlFor="">{ label }</label>
+            )}
             <Editor
-                apiKey='fnabl7d5djugpqwk8afwh93fbc0bfvuqjm81pm6ai3an5xmy'
+                apiKey={ process.env.REACT_APP_API_TINYMCE }
                 value={ value }
                 // initialValue={ value }
                 onEditorChange={ (value) => onChanged(name, value) }
@@ -431,7 +435,7 @@ export const TextEditor = ({ value, name, onChanged, error }) => {
                 :
                     ""
             }
-        </>
+        </div>
     )
 }
 

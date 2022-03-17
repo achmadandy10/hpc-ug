@@ -17,6 +17,7 @@ const Register = () => {
         last_name: '',
         college: '',
         email: '',
+        phone_number: '',
         password: '',
         password_confirmation: '',
         error_list: [],
@@ -28,13 +29,15 @@ const Register = () => {
 
     AuthCheck()
 
-    const formSubmit = () => {
+    const formSubmit = (e) => {
+        e.preventDefault()
         setStore(true)
         
         const data = {
             first_name: form.first_name,
             last_name: form.last_name,
             college: form.college,
+            phone_number: form.phone_number,
             email: form.email,
             password: form.password,
             password_confirmation: form.password_confirmation,
@@ -58,6 +61,7 @@ const Register = () => {
                     
                     localStorage.setItem('token', res.data.data.access_token);
                     localStorage.setItem('role', role);
+                    localStorage.setItem('username', res.data.data.user.email.split("@")[0]);
 
                     const Toast = Swal.mixin({
                         toast: true,
@@ -108,7 +112,7 @@ const Register = () => {
                 <RegisterContent>
                     <RegisterTitle>Buat akun HPC anda</RegisterTitle>
                 
-                    <RegisterForm>
+                    <RegisterForm onSubmit={ formSubmit }>
                         <RegisterFieldName>
                             <TextField
                                 label="Nama Depan"
@@ -132,6 +136,14 @@ const Register = () => {
                             type="text"
                             onChanged={ inputChange }
                             error={ form.error_list.college }
+                        />
+                        <TextField
+                            label="Nomor Handphone"
+                            id="phone_number"
+                            name="phone_number"
+                            type="text"
+                            onChanged={ inputChange }
+                            error={ form.error_list.phone_number }
                         />
                         <TextField
                             label="Alamat Email"
@@ -164,7 +176,6 @@ const Register = () => {
                                 height={ 50 }
                                 type="submit"
                                 loading={ store }
-                                onClicked={ formSubmit }
                             >
                                 Daftar
                             </ButtonSubmit>

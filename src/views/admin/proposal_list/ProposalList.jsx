@@ -15,7 +15,9 @@ const ProposalList = () => {
     const [days, setDays] = useState([])
     const [machine, setMachine] = useState([])
     const [loadingApproved, setLoadingApproved] = useState(false)
+    const [loadingRevision, setLoadingRevision] = useState(false)
     const [popupApproved, setPopupApproved] = useState(false)
+    const [popupReject, setPopupReject] = useState(false)
     const [formApproved, setFormApproved] = useState({
         id_proposal: '',
         docker_image: '',
@@ -24,10 +26,19 @@ const ProposalList = () => {
         durasi: '',
         id_mesin: '',
     })
+    const [formRevision, setFormRevision] = useState({
+        id_proposal: '',
+        rev_description: '',
+        error_list: [],
+    })
     const [rows, setRows] = useState(null)
     
     const inputApprovedChange = (name, value) => {
         setFormApproved({ ...formApproved, [name]: value })
+    }
+
+    const inputRevisionChange = (name, value) => {
+        setFormRevision({ ...formRevision, [name]: value })
     }
 
     const GetDetail = () => {
@@ -93,6 +104,14 @@ const ProposalList = () => {
             docker_image: rows.filter(v => v.id === id)[0].docker_image
         })
         setPopupApproved(!popupApproved)
+    }
+
+    const handleRejected = (id) => {
+        setFormRevision({ 
+            ...formApproved, 
+            id_proposal: id,
+        })
+        setPopupReject(!popupReject)
     }
     
     const approvedSubmit = (id) => {
@@ -177,6 +196,8 @@ const ProposalList = () => {
     }
 
     const rejectedSubmit = (id) => {
+        setLoadingRevision(true)
+        
         var url = ''
         if (localStorage.getItem('role') === "Proposal") {
             url = 'admin-proposal'
@@ -186,8 +207,8 @@ const ProposalList = () => {
 
         Swal.fire({
             icon: 'question',
-            title: 'Yakin ingin menolak?',
-            text: 'Harap periksa data baik-baik sebelum menyetujui.',
+            title: 'Yakin ingin merevisi?',
+            text: 'Harap periksa data baik-baik sebelum revisi.',
             showCancelButton: true,
             confirmButtonColor: "#5B3A89",
             cancelButtonColor: "#F34636",
@@ -195,22 +216,25 @@ const ProposalList = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post('/api/' + url + '/proposal-submission/rejected/' + id).then(res => {
+                var formdata = new FormData();
+
+                formdata.append("rev_description", formRevision.rev_description);
+
+                axios.post('/api/' + url + '/proposal-submission/rejected/' + id, formdata).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
                             title: 'Sukses!',
-                            text:'Proposal berhasil ditolak.',
+                            text:'Proposal berhasil Revisi.',
                         })
                         GetDetail()
                     } else {
-                        Swal.fire({
-                            icon:'danger',
-                            title: 'Gagal!',
-                            text:'Proposal gagal ditolak.',
-                        })
+                        setFormRevision({ ...formRevision, error_list: res.data.data.validation_errors })
                     }
+                    setLoadingRevision(false)
                 })
+            } else {
+                setLoadingRevision(false)
             }
         })
     }
@@ -234,19 +258,20 @@ const ProposalList = () => {
             confirmButtonText: 'Setuju',
         }).then((result) => {
             if (result.isConfirmed) {
+                
                 axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
                             title: 'Sukses!',
-                            text:'Proposal berhasil ditolak.',
+                            text:'Proposal berhasil Revisi.',
                         })
                         GetDetail()
                     } else {
                         Swal.fire({
                             icon:'danger',
                             title: 'Gagal!',
-                            text:'Proposal gagal ditolak.',
+                            text:'Proposal gagal Revisi.',
                         })
                     }
                 })
@@ -274,9 +299,9 @@ const ProposalList = () => {
                 if (params.row.status === "approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "rejected") {
-                    newStatus = "Ditolak"
+                    newStatus = "Revisi"
                 } else if (params.row.status === "pending") {
-                    newStatus = "Tertunda"
+                    newStatus = "Belum Disetujui"
                 } else if (params.row.status === "finished") {
                     newStatus = "Selesai"
                 }
@@ -288,9 +313,9 @@ const ProposalList = () => {
                 if (params.row.status === "Approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "Rejected") {
-                    newStatus = "Ditolak"
+                    newStatus = "Revisi"
                 } else if (params.row.status === "Pending") {
-                    newStatus = "Tertunda"
+                    newStatus = "Belum Disetujui"
                 } else if (params.row.status === "Finished") {
                     newStatus = "Selesai"
                 }
@@ -396,9 +421,31 @@ const ProposalList = () => {
                                     </div>
                                 </div>
                             </Popup>
-                            <ButtonIconSubmit onClicked={ () => rejectedSubmit(params.row.id) } color="danger">
+
+                            <ButtonIconSubmit onClicked={ () => handleRejected(params.row.id) } color="danger">
                                 <FaTimes/>
                             </ButtonIconSubmit>
+                            <Popup
+                                trigger={ popupReject } 
+                                setTrigger={ setPopupReject }
+                                title="Detail Revisi"
+                            >
+                                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                                    <InputField
+                                        id="rev_description"
+                                        name="rev_description"
+                                        value={ formRevision.rev_description }
+                                        onChanged={ inputRevisionChange }
+                                        type="textarea"
+                                        styled={"flex"}
+                                    />
+                                    <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
+                                        <ButtonSubmit color="primary" loading={ loadingRevision } onClicked={ () => rejectedSubmit(formRevision.id_proposal) }>
+                                            Revisi
+                                        </ButtonSubmit>
+                                    </div>
+                                </div>
+                            </Popup>
                         </>
                     )
                 } else if (params.row.status === "Approved") {

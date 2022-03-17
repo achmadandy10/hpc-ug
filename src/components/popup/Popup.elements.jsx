@@ -10,6 +10,8 @@ export const PopupInner = styled.div`
     transition: .2s;
     visibility: hidden;
     transform: scale(0);
+    max-height: 90vh;
+    overflow-y: auto;
 `
 
 export const PopupContainer = styled.div`
