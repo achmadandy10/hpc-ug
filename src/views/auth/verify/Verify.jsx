@@ -6,8 +6,11 @@ import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useEffect } from "react"
 import { useState } from "react"
+import { useQuery } from "../../../services/QueryParams"
 
 const Verify = () => {
+    const query = useQuery()
+    const [verified, setVerified] = useState(true) 
     const history = useHistory()
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
@@ -15,23 +18,27 @@ const Verify = () => {
 
     useEffect(() => {
         const CheckUser = () => {
-            axios.get(`/api/profile`).then(res => {
-                if (res.data.meta.code === 200) {
-                    if (res.data.data.profile.email_verified_at !== null) {
-                        history.push('/masuk')
-                    } else {
-                        setEmail(res.data.data.profile.email)
+            if (query.get('verified' !== true)) {
+                setVerified(false)
+            } else{
+                axios.get(`/api/profile`).then(res => {
+                    if (res.data.meta.code === 200) {
+                        if (res.data.data.profile.email_verified_at !== null) {
+                            history.push('/masuk')
+                        } else {
+                            setEmail(res.data.data.profile.email)
+                        }
                     }
-                }
-            }).catch(err => {
-                if (err.response.request.status === 401) {
-                    history.push('/masuk')
-                }
-            })
+                }).catch(err => {
+                    if (err.response.request.status === 401) {
+                        history.push('/masuk')
+                    }
+                })
+            }
         }
 
         CheckUser()
-    }, [history])        
+    }, [history, query])        
 
     const resendMail = (e) => {
         e.preventDefault()
@@ -43,6 +50,12 @@ const Verify = () => {
                 setLoading(false)
             })
         })
+    }
+
+    if (!verified) {
+        return (
+            <>Gagal Verifikasi</>       
+        )
     }
 
     return (
