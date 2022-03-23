@@ -13,6 +13,7 @@ const ProposalAdd = () => {
     const [store, setStore] = useState(false)
     const [study, setStudy] = useState([])
     const [form, setForm] = useState({
+        type_of_proposal: '',
         phone_number: '',
         educational_level: '',
         application_file: '',
@@ -37,6 +38,12 @@ const ProposalAdd = () => {
         term_3: '',
         error_list: [],
     })
+
+    const type_of_proposal = [
+        { label: 'Penelitian TA', value: 'Penelitian TA' },
+        { label: 'Penelitian Non TA', value: 'Penelitian Non TA' },
+        { label: 'Kerjasama Industri', value: 'Kerjasama Industri' },
+    ]
 
     const educational_level = [
         { label: 'D3', value: 'D3' },
@@ -153,6 +160,7 @@ const ProposalAdd = () => {
 
         const data = new FormData()
 
+        data.append('type_of_proposal', form.type_of_proposal)
         data.append('phone_number', form.phone_number)
         data.append('educational_level', form.educational_level)
         data.append('application_file', form.application_file)
@@ -204,6 +212,17 @@ const ProposalAdd = () => {
                 <Card>
                     <CardHeader title="Formulir Pengajuan Usulan" />
                     <ProposalAddFormContainer>
+                        <InputField
+                            label="Jenis Penelitian"
+                            id="type_of_proposal"
+                            name="type_of_proposal"
+                            value={form.type_of_proposal}
+                            onChanged={inputChange}
+                            type="select"
+                            option={ type_of_proposal.sort(dynamicSort("label")) }
+                            placeholder="Masukkan Jenis Penelitian"
+                            error={form.error_list.type_of_proposal}
+                        />
                         <InputField
                             label="Nomor Handphone"
                             id="phone_number"

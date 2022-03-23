@@ -143,6 +143,11 @@ const Dashboard = () => {
 
     const columnProposal = [
         {
+            field: 'type_of_proposal',
+            headerName: 'Jenis Penelitian',
+            width: 200,
+        },
+        {
             field: 'research_field',
             headerName: 'Bidang Penelitian',
             width: 200,

@@ -1,7 +1,9 @@
 import axios from "axios"
 import { useEffect } from "react"
 import { useState } from "react"
-import { FaCheck, FaCheckDouble, FaEye, FaFileInvoice, FaTimes, FaUsers } from "react-icons/fa"
+import { FaCheck, 
+    // FaCheckDouble, 
+    FaEye, FaFileInvoice, FaTimes, FaUsers } from "react-icons/fa"
 import Swal from "sweetalert2"
 import { ButtonIconLink, ButtonIconSubmit, ButtonSubmit } from "../../../components/button/Button"
 import Card, { CardHeader, CardInfo } from "../../../components/card/Card"
@@ -372,46 +374,51 @@ const Proposal = () => {
         })
     }
     
-    const finishedSubmit = (id) => {
-        var url = ''
-        if (localStorage.getItem('role') === "Proposal") {
-            url = 'admin-proposal'
-        } else if (localStorage.getItem('role') === "Super") {
-            url = 'admin-super'
-        }
+    // const finishedSubmit = (id) => {
+    //     var url = ''
+    //     if (localStorage.getItem('role') === "Proposal") {
+    //         url = 'admin-proposal'
+    //     } else if (localStorage.getItem('role') === "Super") {
+    //         url = 'admin-super'
+    //     }
 
-        Swal.fire({
-            icon: 'question',
-            title: 'Yakin ingin merevisi?',
-            text: 'Harap periksa data baik-baik sebelum menyetujui.',
-            showCancelButton: true,
-            confirmButtonColor: "#5B3A89",
-            cancelButtonColor: "#F34636",
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Setuju',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
-                    if (res.data.meta.code === 200) {
-                        Swal.fire({
-                            icon:'success',
-                            title: 'Sukses!',
-                            text:'Proposal berhasil Revisi.',
-                        })
-                        GetDetail()
-                    } else {
-                        Swal.fire({
-                            icon:'danger',
-                            title: 'Gagal!',
-                            text:'Proposal gagal Revisi.',
-                        })
-                    }
-                })
-            }
-        })
-    }
+    //     Swal.fire({
+    //         icon: 'question',
+    //         title: 'Yakin ingin merevisi?',
+    //         text: 'Harap periksa data baik-baik sebelum menyetujui.',
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#5B3A89",
+    //         cancelButtonColor: "#F34636",
+    //         cancelButtonText: 'Batal',
+    //         confirmButtonText: 'Setuju',
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
+    //                 if (res.data.meta.code === 200) {
+    //                     Swal.fire({
+    //                         icon:'success',
+    //                         title: 'Sukses!',
+    //                         text:'Proposal berhasil Revisi.',
+    //                     })
+    //                     GetDetail()
+    //                 } else {
+    //                     Swal.fire({
+    //                         icon:'danger',
+    //                         title: 'Gagal!',
+    //                         text:'Proposal gagal Revisi.',
+    //                     })
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }
 
     const columnsProposal = [
+        {
+            field: 'type_of_proposal',
+            headerName: 'Jenis Penelitian',
+            width: 200,
+        },
         {
             field: 'research_field',
             headerName: 'Bidang Penelitian',
@@ -582,15 +589,16 @@ const Proposal = () => {
                             </Popup>
                         </>
                     )
-                } else if (params.row.status === "Approved") {
-                    element = (
-                        <>
-                            <ButtonIconSubmit onClicked={ () => finishedSubmit(params.row.id) } color="primary">
-                                <FaCheckDouble/>
-                            </ButtonIconSubmit>
-                        </>
-                    )
-                }
+                } 
+                // else if (params.row.status === "Approved") {
+                //     element = (
+                //         <>
+                //             <ButtonIconSubmit onClicked={ () => finishedSubmit(params.row.id) } color="primary">
+                //                 <FaCheckDouble/>
+                //             </ButtonIconSubmit>
+                //         </>
+                //     )
+                // }
                 return (
                     <TableAction>
                         <ButtonIconLink to={ "/admin/usulan/pratinjau/" + params.row.id } color="info">
@@ -906,46 +914,51 @@ const Super = () => {
         })
     }
     
-    const finishedSubmit = (id) => {
-        var url = ''
-        if (localStorage.getItem('role') === "Proposal") {
-            url = 'admin-proposal'
-        } else if (localStorage.getItem('role') === "Super") {
-            url = 'admin-super'
-        }
+    // const finishedSubmit = (id) => {
+    //     var url = ''
+    //     if (localStorage.getItem('role') === "Proposal") {
+    //         url = 'admin-proposal'
+    //     } else if (localStorage.getItem('role') === "Super") {
+    //         url = 'admin-super'
+    //     }
 
-        Swal.fire({
-            icon: 'question',
-            title: 'Yakin ingin merevisi?',
-            text: 'Harap periksa data baik-baik sebelum menyetujui.',
-            showCancelButton: true,
-            confirmButtonColor: "#5B3A89",
-            cancelButtonColor: "#F34636",
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Setuju',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
-                    if (res.data.meta.code === 200) {
-                        Swal.fire({
-                            icon:'success',
-                            title: 'Sukses!',
-                            text:'Proposal berhasil Revisi.',
-                        })
-                        GetDetail()
-                    } else {
-                        Swal.fire({
-                            icon:'danger',
-                            title: 'Gagal!',
-                            text:'Proposal gagal Revisi.',
-                        })
-                    }
-                })
-            }
-        })
-    }
+    //     Swal.fire({
+    //         icon: 'question',
+    //         title: 'Yakin ingin menyelesaikan?',
+    //         text: 'Harap periksa data baik-baik sebelum menyetujui.',
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#5B3A89",
+    //         cancelButtonColor: "#F34636",
+    //         cancelButtonText: 'Batal',
+    //         confirmButtonText: 'Setuju',
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
+    //                 if (res.data.meta.code === 200) {
+    //                     Swal.fire({
+    //                         icon:'success',
+    //                         title: 'Sukses!',
+    //                         text:'Proposal berhasil Revisi.',
+    //                     })
+    //                     GetDetail()
+    //                 } else {
+    //                     Swal.fire({
+    //                         icon:'danger',
+    //                         title: 'Gagal!',
+    //                         text:'Proposal gagal Revisi.',
+    //                     })
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }
 
     const columnsProposal = [
+        {
+            field: 'type_of_proposal',
+            headerName: 'Jenis Penelitian',
+            width: 200,
+        },
         {
             field: 'research_field',
             headerName: 'Bidang Penelitian',
@@ -1116,15 +1129,16 @@ const Super = () => {
                             </Popup>
                         </>
                     )
-                } else if (params.row.status === "Approved") {
-                    element = (
-                        <>
-                            <ButtonIconSubmit onClicked={ () => finishedSubmit(params.row.id) } color="primary">
-                                <FaCheckDouble/>
-                            </ButtonIconSubmit>
-                        </>
-                    )
-                }
+                } 
+                // else if (params.row.status === "Approved") {
+                //     element = (
+                //         <>
+                //             <ButtonIconSubmit onClicked={ () => finishedSubmit(params.row.id) } color="primary">
+                //                 <FaCheckDouble/>
+                //             </ButtonIconSubmit>
+                //         </>
+                //     )
+                // }
                 return (
                     <TableAction>
                         <ButtonIconLink to={ "/admin/usulan/pratinjau/" + params.row.id } color="info">

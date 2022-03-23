@@ -116,6 +116,7 @@ export const SectionTwoRightData = withReveal(styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
     @media only Screen and (max-width: 768px) {
         height: 100px;
     }

@@ -15,6 +15,7 @@ const ProposalEdit = () => {
     const [get, setGet] = useState(true)
     const [study, setStudy] = useState([])
     const [form, setForm] = useState({
+        type_of_proposal: '',
         phone_number: '',
         research_field: '',
         short_description: '',
@@ -42,6 +43,12 @@ const ProposalEdit = () => {
         status: '',
         error_list: [],
     })
+
+    const type_of_proposal = [
+        { label: 'Penelitian TA', value: 'Penelitian TA' },
+        { label: 'Penelitian Non TA', value: 'Penelitian Non TA' },
+        { label: 'Kerjasama Industri', value: 'Kerjasama Industri' },
+    ]
 
     const educational_level = [
         { label: 'D3', value: 'D3' },
@@ -146,6 +153,7 @@ const ProposalEdit = () => {
                     }
 
                     setForm({
+                        type_of_proposal: res.data.data.submission.type_of_proposal,
                         phone_number: res.data.data.submission.phone_number,
 
                         educational_level: res.data.data.submission.educational_level,
@@ -258,6 +266,7 @@ const ProposalEdit = () => {
 
         const data = new FormData()
 
+        data.append('type_of_proposal', form.type_of_proposal)
         data.append('phone_number', form.phone_number)
 
         data.append('educational_level', form.educational_level)
@@ -316,13 +325,24 @@ const ProposalEdit = () => {
                                     Catatan Revisi
                                 </strong> 
                                 <div>
-                                    { form.rev_description }
+                                    <div dangerouslySetInnerHTML={{ __html: form.rev_description }}/>
                                 </div>
                             </ProposalEditRevDesc>
                         ) : ""
                     }
                     <CardHeader title="Formulir Pengajuan Usulan"/>
                     <ProposalEditFormContainer>
+                        <InputField
+                            label="Jenis Penelitian"
+                            id="type_of_proposal"
+                            name="type_of_proposal"
+                            value={form.type_of_proposal}
+                            onChanged={inputChange}
+                            type="select"
+                            option={ type_of_proposal.sort(dynamicSort("label")) }
+                            placeholder="Masukkan Jenis Penelitian"
+                            error={form.error_list.type_of_proposal}
+                        />
                         <InputField
                             label="Nomor Handphone"
                             id="phone_number"
@@ -333,7 +353,7 @@ const ProposalEdit = () => {
                             placeholder="Masukkan Nomor Handphone"
                             error={ form.error_list.phone_number }
                         />
-                         <InputField
+                        <InputField
                             label="Jenjang Pendidikan"
                             id="educational_level"
                             name="educational_level"
@@ -344,7 +364,7 @@ const ProposalEdit = () => {
                             placeholder="Masukkan Jenjang Pendidikan"
                             error={form.error_list.educational_level}
                         />
-                         <InputField
+                        <InputField
                             label="Program Studi"
                             id="study_program"
                             name="study_program"

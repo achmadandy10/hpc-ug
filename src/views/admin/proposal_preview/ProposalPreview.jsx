@@ -34,6 +34,7 @@ const ProposalPreview = () => {
         error_list: ''
     })
     const [form, setForm] = useState({
+        type_of_proposal: '',
         phone_number: '',
         educational_level: '',
         application_file: '',
@@ -77,6 +78,7 @@ const ProposalPreview = () => {
         axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
             if (res.data.meta.code === 200) {
                 setForm({
+                    type_of_proposal: res.data.data.submission.type_of_proposal,
                     phone_number: res.data.data.submission.phone_number,
                     educational_level: res.data.data.submission.educational_level,
                     application_file: res.data.data.submission.application_file,
@@ -161,6 +163,7 @@ const ProposalPreview = () => {
                         error_list: '',
                     })
                     setForm({
+                        type_of_proposal: res.data.data.submission.type_of_proposal,
                         phone_number: res.data.data.submission.phone_number,
                         educational_level: res.data.data.submission.educational_level,
                         application_file: res.data.data.submission.application_file,
@@ -438,6 +441,11 @@ const ProposalPreview = () => {
                 <Card>
                     <CardHeader title="Formulir Pengajuan Usulan"/>
                     <ProposalPreviewFormContainer>
+                        <InputField
+                            label="Jenis Penelitian"
+                            value={ form.type_of_proposal }
+                            readOnly
+                        />
                         <InputField
                             label="Nomor Handphone"
                             value={ form.phone_number }

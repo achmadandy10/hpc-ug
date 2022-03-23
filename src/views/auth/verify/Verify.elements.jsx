@@ -41,6 +41,15 @@ export const VerifySuccess = styled.span`
     margin-bottom: 20px;
 `
 
+export const VerifyDanger = styled.span`
+    color: var(--danger-color);
+    background: #FFC2C2;
+    font-size: var(--h3-font-size);
+    border-radius: 3px;
+    padding: 20px;
+    margin-bottom: 20px;
+`
+
 export const VerifyTitle = styled.h2`
     font-size: var(--h1-font-size);
     font-weight: var(--font-semi-bold);

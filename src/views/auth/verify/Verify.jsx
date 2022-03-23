@@ -1,5 +1,5 @@
 import { ButtonSubmit } from "../../../components/button/Button"
-import { VerifyButtonContainer, VerifyContainer, VerifyContent, VerifyForm, VerifyImg, VerifySuccess, VerifyTitle } from "./Verify.elements"
+import { VerifyButtonContainer, VerifyContainer, VerifyContent, VerifyDanger, VerifyForm, VerifyImg, VerifySuccess, VerifyTitle } from "./Verify.elements"
 import Logo from '../../../images/logo.png'
 import { CopyRight } from "../../../components/footer/Footer"
 import axios from 'axios'
@@ -18,23 +18,22 @@ const Verify = () => {
 
     useEffect(() => {
         const CheckUser = () => {
-            if (query.get('verified' !== true)) {
+            if (query.get('verified') === false) {
                 setVerified(false)
-            } else{
-                axios.get(`/api/profile`).then(res => {
-                    if (res.data.meta.code === 200) {
-                        if (res.data.data.profile.email_verified_at !== null) {
-                            history.push('/masuk')
-                        } else {
-                            setEmail(res.data.data.profile.email)
-                        }
-                    }
-                }).catch(err => {
-                    if (err.response.request.status === 401) {
-                        history.push('/masuk')
-                    }
-                })
             }
+            axios.get(`/api/profile`).then(res => {
+                if (res.data.meta.code === 200) {
+                    if (res.data.data.profile.email_verified_at !== null) {
+                        history.push('/masuk')
+                    } else {
+                        setEmail(res.data.data.profile.email)
+                    }
+                }
+            }).catch(err => {
+                if (err.response.request.status === 401) {
+                    history.push('/masuk')
+                }
+            })
         }
 
         CheckUser()
@@ -44,6 +43,8 @@ const Verify = () => {
         e.preventDefault()
         setLoading(true)
 
+        setVerified(true)
+
         axios.get(`/sanctum/csrf-cookie`).then(() => {
             axios.post('/api/email/verification-notification').then((res) => {
                 setCondition(true)
@@ -51,18 +52,15 @@ const Verify = () => {
             })
         })
     }
-
-    if (!verified) {
-        return (
-            <>Gagal Verifikasi</>       
-        )
-    }
-
     return (
         <VerifyContainer>
             <VerifyImg src={ Logo }/>
 
             <VerifyContent>
+                { !verified && (
+                    <VerifyDanger>Verifikasi anda gagal, silahkan klik "Kirim Ulang" untuk mendapatkan email verifikasi kembali.</VerifyDanger>
+                ) }
+
                 { condition && (
                     <VerifySuccess>Kami telah mengirimkan email kepada {email}, silahkan periksa email anda untuk melakukan verifikasi.</VerifySuccess>
                 ) }
@@ -71,7 +69,7 @@ const Verify = () => {
                     <VerifyButtonContainer>
                         <p style={{ marginBottom: "20px" }}>
                             Sebelum melanjutkan, harap periksa email Anda untuk tautan verifikasi. 
-                            jika Anda tidak menerima surat, silahkan klik kirim ulang.
+                            jika Anda tidak menerima surat, silahkan klik "Kirim Ulang".
                         </p>
                         <ButtonSubmit
                             color="primary"
