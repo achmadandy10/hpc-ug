@@ -44,11 +44,11 @@ const UserList = () => {
     }
 
     const columns = [
-        {
-            field: 'id',
-            headerName: 'ID',
-            width: 150,
-        },
+        // {
+        //     field: 'id',
+        //     headerName: 'ID',
+        //     width: 150,
+        // },
         {
             field: 'name',
             headerName: 'Nama',
