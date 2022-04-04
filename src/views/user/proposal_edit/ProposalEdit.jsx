@@ -148,7 +148,7 @@ const ProposalEdit = () => {
 
             axios.get('/api/' + url + '/proposal-submission/show/' + id).then(res => {
                 if (res.data.meta.code === 200) {
-                    if (res.data.data.submission.status !== "Rejected") {
+                    if (res.data.data.submission.status !== "Revision") {
                         return history.push(`/user/usulan/pratinjau/${id}`)
                     }
 
@@ -319,7 +319,7 @@ const ProposalEdit = () => {
 
                 <Card>
                     {
-                        form.status === "Rejected" ? (
+                        form.status === "Revision" ? (
                             <ProposalEditRevDesc>
                                 <strong>
                                     Catatan Revisi

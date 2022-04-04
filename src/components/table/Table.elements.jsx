@@ -32,7 +32,7 @@ export const TableStatusContainer = styled.label`
                 color: var(--danger-color);
                 background: #ffb8b1;
             `
-        } else if (status === "Pending" || status === "Draft") {
+        } else if (status === "Pending" || status === "Draft" || status === "Revision") {
             return `
                 color: var(--warning-color);
                 background: #ffdbb5;

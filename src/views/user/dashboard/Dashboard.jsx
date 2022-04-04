@@ -166,11 +166,13 @@ const Dashboard = () => {
                 if (params.row.status === "approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "rejected") {
-                    newStatus = "Revisi"
+                    newStatus = "ditolak"
                 } else if (params.row.status === "pending") {
                     newStatus = "Belum Disetujui"
                 } else if (params.row.status === "finished") {
                     newStatus = "Selesai"
+                } else if (params.row.status === "revision") {
+                    newStatus = "Revisi"
                 }
 
                 return newStatus
@@ -180,11 +182,13 @@ const Dashboard = () => {
                 if (params.row.status === "Approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "Rejected") {
-                    newStatus = "Revisi"
+                    newStatus = "Ditolak"
                 } else if (params.row.status === "Pending") {
                     newStatus = "Belum Disetujui"
                 } else if (params.row.status === "Finished") {
                     newStatus = "Selesai"
+                } else if (params.row.status === "Revision") {
+                    newStatus = "Revisi"
                 }
 
                 return (
@@ -221,7 +225,7 @@ const Dashboard = () => {
             renderCell: (params) => {
                 let button = ''
                 
-                if (params.row.status === "Rejected") {
+                if (params.row.status === "Revision") {
                     button = 
                         <TableAction>
                             <ButtonIconLink to={ "/user/usulan/ubah/" + params.row.id } color="info">

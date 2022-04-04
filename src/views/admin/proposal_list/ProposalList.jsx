@@ -3,8 +3,8 @@ import PageLayout, { PageHeader } from "../../../components/page_layout/PageLayo
 import { useEffect, useState } from "react"
 import Table, { TableAction, TableStatus } from "../../../components/table/Table"
 import { ButtonIconLink, ButtonIconSubmit, ButtonSubmit } from "../../../components/button/Button"
-import { FaCheck, 
-    // FaCheckDouble, 
+import { FaBook, FaCheck, 
+    FaCheckDouble, 
     FaEye, FaTimes } from "react-icons/fa"
 import dateFormat from "dateformat"
 import Swal from "sweetalert2"
@@ -103,13 +103,13 @@ const ProposalList = () => {
         setFormApproved({ 
             ...formApproved, 
             id_proposal: id,
-            username: rows.filter(v => v.id === id)[0].user.email.split("@")[0],
+            username: rows.filter(v => v.id === id)[0].user.email,
             docker_image: rows.filter(v => v.id === id)[0].docker_image
         })
         setPopupApproved(!popupApproved)
     }
 
-    const handleRejected = (id) => {
+    const handleRevision = (id) => {
         setFormRevision({ 
             ...formApproved, 
             id_proposal: id,
@@ -211,7 +211,7 @@ const ProposalList = () => {
         })
     }
 
-    const rejectedSubmit = (id) => {
+    const revisionSubmit = (id) => {
         setLoadingRevision(true)
         
         var url = ''
@@ -236,7 +236,7 @@ const ProposalList = () => {
 
                 formdata.append("rev_description", formRevision.rev_description);
 
-                axios.post('/api/' + url + '/proposal-submission/rejected/' + id, formdata).then(res => {
+                axios.post('/api/' + url + '/proposal-submission/revision/' + id, formdata).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
@@ -254,52 +254,91 @@ const ProposalList = () => {
             }
         })
     }
-    
-    // const finishedSubmit = (id) => {
-    //     var url = ''
-    //     if (localStorage.getItem('role') === "Proposal") {
-    //         url = 'admin-proposal'
-    //     } else if (localStorage.getItem('role') === "Super") {
-    //         url = 'admin-super'
-    //     }
 
-    //     Swal.fire({
-    //         icon: 'question',
-    //         title: 'Yakin ingin menyelesaikan proposal?',
-    //         text: 'Harap periksa data baik-baik sebelum menyetujui.',
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#5B3A89",
-    //         cancelButtonColor: "#F34636",
-    //         cancelButtonText: 'Batal',
-    //         confirmButtonText: 'Setuju',
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
+    const rejectedSubmit = (id) => {
+        var url = ''
+        if (localStorage.getItem('role') === "Proposal") {
+            url = 'admin-proposal'
+        } else if (localStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
+        Swal.fire({
+            icon: 'question',
+            title: 'Yakin ingin merevisi?',
+            text: 'Harap periksa data baik-baik sebelum menolak.',
+            showCancelButton: true,
+            confirmButtonColor: "#5B3A89",
+            cancelButtonColor: "#F34636",
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Setuju',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/api/' + url + '/proposal-submission/rejected/' + id).then(res => {
+                    if (res.data.meta.code === 200) {
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Proposal berhasil ditolak.',
+                        })
+                        GetDetail()
+                    }
+                })
+            }
+        })
+    }
+    
+    const finishedSubmit = (id) => {
+        var url = ''
+        if (localStorage.getItem('role') === "Proposal") {
+            url = 'admin-proposal'
+        } else if (localStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
+        Swal.fire({
+            icon: 'question',
+            title: 'Yakin ingin menyelesaikan proposal?',
+            text: 'Harap periksa data baik-baik sebelum menyetujui.',
+            showCancelButton: true,
+            confirmButtonColor: "#5B3A89",
+            cancelButtonColor: "#F34636",
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Setuju',
+        }).then((result) => {
+            if (result.isConfirmed) {
                 
-    //             axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
-    //                 if (res.data.meta.code === 200) {
-    //                     Swal.fire({
-    //                         icon:'success',
-    //                         title: 'Sukses!',
-    //                         text:'Proposal berhasil Revisi.',
-    //                     })
-    //                     GetDetail()
-    //                 } else {
-    //                     Swal.fire({
-    //                         icon:'danger',
-    //                         title: 'Gagal!',
-    //                         text:'Proposal gagal Revisi.',
-    //                     })
-    //                 }
-    //             })
-    //         }
-    //     })
-    // }
+                axios.post('/api/' + url + '/proposal-submission/finished/' + id).then(res => {
+                    if (res.data.meta.code === 200) {
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Proposal berhasil Revisi.',
+                        })
+                        GetDetail()
+                    } else {
+                        Swal.fire({
+                            icon:'danger',
+                            title: 'Gagal!',
+                            text:'Proposal gagal Revisi.',
+                        })
+                    }
+                })
+            }
+        })
+    }
 
     const columns = [
         {
-            field: 'type_of_proposal',
-            headerName: 'Jenis Penelitian',
+            field: 'username',
+            headerName: 'Username',
             width: 200,
+            valueGetter: (params) => {
+                return (params.row.user.email)
+            },
+            renderCell: (params) => {
+                return (params.row.user.email)
+            },
         },
         {
             field: 'research_field',
@@ -320,11 +359,13 @@ const ProposalList = () => {
                 if (params.row.status === "approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "rejected") {
-                    newStatus = "Revisi"
+                    newStatus = "ditolak"
                 } else if (params.row.status === "pending") {
                     newStatus = "Belum Disetujui"
                 } else if (params.row.status === "finished") {
                     newStatus = "Selesai"
+                } else if (params.row.status === "revision") {
+                    newStatus = "Revisi"
                 }
 
                 return newStatus
@@ -334,11 +375,13 @@ const ProposalList = () => {
                 if (params.row.status === "Approved") {
                     newStatus = "Disetujui"
                 } else if (params.row.status === "Rejected") {
-                    newStatus = "Revisi"
+                    newStatus = "Ditolak"
                 } else if (params.row.status === "Pending") {
                     newStatus = "Belum Disetujui"
                 } else if (params.row.status === "Finished") {
                     newStatus = "Selesai"
+                } else if (params.row.status === "Revision") {
+                    newStatus = "Revisi"
                 }
 
                 return (
@@ -443,7 +486,10 @@ const ProposalList = () => {
                                 </div>
                             </Popup>
 
-                            <ButtonIconSubmit onClicked={ () => handleRejected(params.row.id) } color="danger">
+                            <ButtonIconSubmit onClicked={ () => handleRevision(params.row.id) } color="warning">
+                                <FaBook/>
+                            </ButtonIconSubmit>
+                            <ButtonIconSubmit onClicked={ () => rejectedSubmit(params.row.id) } color="danger">
                                 <FaTimes/>
                             </ButtonIconSubmit>
                             <Popup
@@ -461,7 +507,7 @@ const ProposalList = () => {
                                         styled={"flex"}
                                     />
                                     <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
-                                        <ButtonSubmit color="primary" loading={ loadingRevision } onClicked={ () => rejectedSubmit(formRevision.id_proposal) }>
+                                        <ButtonSubmit color="primary" loading={ loadingRevision } onClicked={ () => revisionSubmit(formRevision.id_proposal) }>
                                             Revisi
                                         </ButtonSubmit>
                                     </div>
@@ -470,15 +516,15 @@ const ProposalList = () => {
                         </>
                     )
                 } 
-                // else if (params.row.status === "Approved") {
-                //     element = (
-                //         <>
-                //             <ButtonIconSubmit onClicked={ () => finishedSubmit(params.row.id) } color="primary">
-                //                 <FaCheckDouble/>
-                //             </ButtonIconSubmit>
-                //         </>
-                //     )
-                // }
+                else if (params.row.status === "Approved") {
+                    element = (
+                        <>
+                            <ButtonIconSubmit onClicked={ () => finishedSubmit(params.row.id) } color="primary">
+                                <FaCheckDouble/>
+                            </ButtonIconSubmit>
+                        </>
+                    )
+                }
                 return (
                     <TableAction>
                         <ButtonIconLink to={ "/admin/usulan/pratinjau/" + params.row.id } color="info">

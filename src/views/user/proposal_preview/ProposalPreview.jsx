@@ -87,6 +87,8 @@ const ProposalPreview = () => {
     } else if (form.status === "Approved") {
         status = "Disetujui"
     } else if (form.status === "Rejected") {
+        status = "Ditolak"
+    } else if (form.status === "Revision") {
         status = "Revisi"
     } else if (form.status === "Finished") {
         status = "Selesai"

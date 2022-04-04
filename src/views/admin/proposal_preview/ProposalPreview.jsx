@@ -8,7 +8,7 @@ import axios from "axios"
 import Swal from "sweetalert2"
 import { useParams } from "react-router-dom"
 import { LoadingElement } from "../../../components/loading/Loading"
-import { FaCheck, FaCheckDouble, FaTimes } from "react-icons/fa"
+import { FaBook, FaCheck, FaCheckDouble, FaTimes } from "react-icons/fa"
 import Popup from "../../../components/popup/Popup"
 
 const ProposalPreview = () => {
@@ -19,7 +19,7 @@ const ProposalPreview = () => {
     const [loadingApproved, setLoadingApproved] = useState(false)
     const [loadingRejected, setLoadingRejected] = useState(false)
     const [popupApproved, setPopupApproved] = useState(false)
-    const [popupRejected, setPopupRejected] = useState(false)
+    const [popupRevision, setPopupRevision] = useState(false)
     const [formRejected, setFormRejected] = useState({
         rev_description: '',
         error_list: [],
@@ -296,7 +296,7 @@ const ProposalPreview = () => {
         })
     }
 
-    const rejectedSubmit = () => {
+    const revisionSubmit = () => {
         setLoadingRejected(true)
         
         var url = ''
@@ -321,7 +321,7 @@ const ProposalPreview = () => {
 
                 formdata.append("rev_description", formRejected.rev_description);
 
-                axios.post('/api/' + url + '/proposal-submission/rejected/' + id, formdata).then(res => {
+                axios.post('/api/' + url + '/proposal-submission/revision/' + id, formdata).then(res => {
                     if (res.data.meta.code === 200) {
                         Swal.fire({
                             icon:'success',
@@ -379,6 +379,39 @@ const ProposalPreview = () => {
         })
     }
 
+    const rejectedSubmit = () => {
+        var url = ''
+        if (localStorage.getItem('role') === "Proposal") {
+            url = 'admin-proposal'
+        } else if (localStorage.getItem('role') === "Super") {
+            url = 'admin-super'
+        }
+
+        Swal.fire({
+            icon: 'question',
+            title: 'Yakin ingin menolak?',
+            text: 'Harap periksa data baik-baik sebelum menolak.',
+            showCancelButton: true,
+            confirmButtonColor: "#5B3A89",
+            cancelButtonColor: "#F34636",
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Setuju',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/api/' + url + '/proposal-submission/rejected/' + id).then(res => {
+                    if (res.data.meta.code === 200) {
+                        Swal.fire({
+                            icon:'success',
+                            title: 'Sukses!',
+                            text:'Proposal berhasil ditolak.',
+                        })
+                        GetUpdate()
+                    }
+                })
+            }
+        })
+    }
+
     var status = ''
 
     if (form.status === "Pending") {
@@ -386,6 +419,8 @@ const ProposalPreview = () => {
     } else if (form.status === "Approved") {
         status = "Disetujui"
     } else if (form.status === "Rejected") {
+        status = "Ditolak"
+    } else if (form.status === "Revision") {
         status = "Revisi"
     } else if (form.status === "Finished") {
         status = "Selesai"
@@ -407,11 +442,21 @@ const ProposalPreview = () => {
                     Setujui
                 </ButtonSubmit>
                 <ButtonSubmit
+                    color="warning"
+                    fullwidth
+                    height={ 50 }
+                    type="submit"
+                    onClicked={ () => setPopupRevision(!popupRevision) }
+                >
+                    <FaBook/>
+                    Revisi
+                </ButtonSubmit>
+                <ButtonSubmit
                     color="danger"
                     fullwidth
                     height={ 50 }
                     type="submit"
-                    onClicked={ () => setPopupRejected(!popupRejected) }
+                    onClicked={ () => rejectedSubmit(id) }
                 >
                     <FaTimes/>
                     Tolak
@@ -628,8 +673,8 @@ const ProposalPreview = () => {
                     </Popup>
 
                     <Popup
-                        trigger={ popupRejected } 
-                        setTrigger={ setPopupRejected }
+                        trigger={ popupRevision } 
+                        setTrigger={ setPopupRevision }
                         title="Detail Revisi"
                     >
                         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -640,7 +685,7 @@ const ProposalPreview = () => {
                                 error={ formRejected.error_list.rev_description }
                             />
                             <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end"}}>
-                                <ButtonSubmit color="primary" loading={ loadingRejected } onClicked={ () => rejectedSubmit(formRejected.id_proposal) }>
+                                <ButtonSubmit color="primary" loading={ loadingRejected } onClicked={ () => revisionSubmit(formRejected.id_proposal) }>
                                     Revisi
                                 </ButtonSubmit>
                             </div>
