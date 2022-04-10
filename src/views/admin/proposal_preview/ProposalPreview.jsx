@@ -156,7 +156,7 @@ const ProposalPreview = () => {
                     setFormApproved({
                         id_proposal: id,
                         docker_image: res.data.data.submission.docker_image,
-                        username: res.data.data.submission.user.email.split("@")[0],
+                        username: res.data.data.submission.user.email,
                         id_hari: '',
                         durasi: '',
                         id_mesin: '',
