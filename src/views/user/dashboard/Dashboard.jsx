@@ -91,7 +91,7 @@ const Dashboard = () => {
                 
                 return false
             }
-            setRows(result.data)
+            setRows({  ...rows, mesin: result.data})
             setStore(false)
         })
         .catch(error => console.log('error', error));
@@ -364,6 +364,7 @@ const Dashboard = () => {
                         </ButtonSubmit>
                     </div>
                     <Table
+                        tableId={'id_container'}
                         tableColumns={ columnMesin }
                         tableLoading={ loading }
                         tableRows={ rows.mesin }

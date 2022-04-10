@@ -61,7 +61,7 @@ const Register = () => {
                     
                     localStorage.setItem('token', res.data.data.access_token);
                     localStorage.setItem('role', role);
-                    localStorage.setItem('username', res.data.data.user.email.split("@")[0]);
+                    localStorage.setItem('username', res.data.data.user.email);
 
                     const Toast = Swal.mixin({
                         toast: true,
