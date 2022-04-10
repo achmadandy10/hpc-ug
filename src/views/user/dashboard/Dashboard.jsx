@@ -86,6 +86,7 @@ const Dashboard = () => {
         .then(response => response.json())
         .then(result => {
             if (result.data.length === 0) {
+                setRows({ ...rows, mesin: [] })
                 setInfo("Data tidak ditemukan")
                 setStore(false)
                 
