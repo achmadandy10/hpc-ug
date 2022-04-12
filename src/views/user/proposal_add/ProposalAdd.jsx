@@ -392,6 +392,7 @@ const ProposalAdd = () => {
                             type="text"
                             placeholder="Masukkan Docker Image"
                             error={form.error_list.docker_image}
+                            disabled
                         />
                         <InputField
                             label="Biaya Penelitian"

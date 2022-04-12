@@ -5,7 +5,7 @@ import { AppStyle } from './App.elements';
 import LoadingPage from './components/loading/Loading';
 import AdminPrivateRoute from './routes/admin/AdminPrivate';
 import UserPrivateRoute from './routes/user/UserPrivate';
-import { TinyStyle } from './TinyMCE.elements';
+// import { TinyStyle } from './TinyMCE.elements';
 require('dotenv').config()
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -32,7 +32,7 @@ function App() {
   return (
     <>
       <AppStyle/>
-      <TinyStyle/>
+      {/* <TinyStyle/> */}
       <Router>
         <Suspense fallback={ <LoadingPage/> }>
           <Switch>
